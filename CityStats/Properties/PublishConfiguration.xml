@@ -12,9 +12,12 @@ View your city's vital statistics
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
 	<!--Screenshot, can be set multiple times-->
-	<Screenshot Value="" />
+	<Screenshot Value="Properties/Screenshots/screenshot_1_in_game.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_2_in_game_info.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_3_in_game_info_2.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_4_closeup.png" />
 	<!--Tag, can be set multiple times-->
-	<Tag Value="" />
+	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the mod-->
@@ -24,9 +27,9 @@ View your city's vital statistics
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
-	<ChangeLog Value="" />
+	<ChangeLog Value="Initial publishing" />
 	<!--ChangeLog>
 	</ChangeLog-->
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
-	<ExternalLink Type="" Url="" />
+	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
 </Publish>

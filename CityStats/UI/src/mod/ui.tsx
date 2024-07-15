@@ -5,7 +5,7 @@ import StatsPanel from "./panel/stats-panel";
 
 const StatsMod = () => {
   // TODO: Persist panel open status
-  const [panelOpen, setPanelOpen] = useState(true);
+  const [panelOpen, setPanelOpen] = useState(false);
 
   const handleMenuButtonClick = () => {
     setPanelOpen((value) => !value);

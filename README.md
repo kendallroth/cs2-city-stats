@@ -1,6 +1,6 @@
-# City Stats
+# Cities Skylines 2: City Stats
 
-View overall statistics of the city at a glance.
+A mod for Cities Skylines 2 that allows viewing overall statistics of the city at a glance.
 
 ## Roadmap
 
@@ -15,3 +15,7 @@ View overall statistics of the city at a glance.
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
   - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
+
+## Credits
+
+- All the lovely people who worked on similar mods for Cities Skylines 1!
