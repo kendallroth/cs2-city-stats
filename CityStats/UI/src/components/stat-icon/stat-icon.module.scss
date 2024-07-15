@@ -1,0 +1,17 @@
+.statIconRoot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.statIcon {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+}
+
+.statIconWhite {
+  filter: brightness(0) invert(1);
+}

@@ -1,0 +1,5 @@
+# Dependencies
+node_modules/
+
+# Extracted Colossal Order assets (for dev only)
+extracted/

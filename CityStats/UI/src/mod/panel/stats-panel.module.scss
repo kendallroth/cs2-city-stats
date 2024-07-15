@@ -1,0 +1,42 @@
+.panel {
+  // Must remove panel from local positioning (to avoid affecting other mod buttons)
+  position: absolute;
+  top: 50rem;
+  left: 50%;
+
+  // TODO: Support opacity as a persisted mod setting
+  // opacity: 0.95;
+  transition: opacity ease-in-out 0.075s;
+
+  &:hover,&:focus-within {
+    opacity: 1;
+  }
+}
+
+.panelVisible {
+  opacity: 1;
+}
+
+.dragButton {
+  position: absolute;
+  left: 50%;
+  top: -10rem;
+  transform: translateX(-50%);
+  padding: 5rem;
+}
+
+.dragButtonIcon {
+  width: 20rem;
+  height: 20rem;
+}
+
+.panelStatsRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.statIconEducationText {
+  position: absolute;
+  color: var(--tooltipColor);
+  font-size: 12rem;
+}
