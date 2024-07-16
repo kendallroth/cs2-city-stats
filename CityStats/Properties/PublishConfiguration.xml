@@ -4,10 +4,28 @@
 	<!--Name of the mod to display to players-->
 	<DisplayName Value="City Stats" />
 	<!--Short description of the mod-->
-	<ShortDescription Value="View city statistics" />
+	<ShortDescription Value="View city statistics at a glance" />
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<LongDescription>
-View your city's vital statistics
+A mod for Cities Skylines 2 that allows viewing overall statistics of the city at a glance.
+
+## Roadmap
+
+- Display additional statistics
+  - Mail processing status (comparison between production and processing rates)
+- Implement settings
+  - Manage which statistics are displayed
+  - Toggle statistics panel via key binding
+  - Persist panel position and open states
+- Localization
+- Minor details
+  - Animate panel opening/closing
+  - Show statistic value in tooltip (or under icon)
+  - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
+
+## Credits
+
+- All the lovely people who worked on similar mods for Cities Skylines 1!
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
@@ -21,15 +39,15 @@ View your city's vital statistics
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.1" />
+	<ModVersion Value="0.2" />
 	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.0.*" />
+	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
-	<ChangeLog Value="Initial publishing" />
-	<!--ChangeLog>
-	</ChangeLog-->
+	<ChangeLog>
+- Fix out-of-date recommended game version
+	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
 </Publish>
