@@ -9,10 +9,20 @@
 	<LongDescription>
 A mod for Cities Skylines 2 that allows viewing overall statistics of the city at a glance.
 
+## Statistics
+
+- Electricity / Water / Sewage availability
+- Garbage processing, Landfill availability
+- Healthcare availability, Cemetery availability
+- Fire hazard, Crime rate
+- Elementary / Highschool / College / University availability
+- Unemployment
+
 ## Roadmap
 
 - Display additional statistics
   - Mail processing status (comparison between production and processing rates)
+  - Average citizen health
 - Implement settings
   - Manage which statistics are displayed
   - Toggle statistics panel via key binding
@@ -22,6 +32,8 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
   - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
+  - Improve police statistics (crime rate may not be useful)
+- Calculate homeless percentage
 
 ## Credits
 
@@ -37,7 +49,7 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
-	<ForumLink Value="" />
+	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
 	<ModVersion Value="0.2" />
 	<!--Recommended version of the base game to use the mod-->
