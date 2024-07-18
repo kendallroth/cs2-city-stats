@@ -51,11 +51,17 @@ namespace CityStats.Systems {
         }
 
 
+        /// <summary>
+        /// Toggle stats panel visibility
+        /// </summary>
         public void TogglePanelVisibility() {
             panelVisibleBinding.Update(!panelVisibleBinding.value);
         }
 
 
+        /// <summary>
+        /// Set stats panel visibility to a given value
+        /// </summary>
         public void SetPanelVisibility(bool open) {
             panelVisibleBinding.Update(open);
         }

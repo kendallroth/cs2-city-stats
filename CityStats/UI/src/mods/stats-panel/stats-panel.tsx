@@ -14,6 +14,7 @@ import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
 import StatIcon from "components/stat-icon/stat-icon";
+import { usePhotoMode } from "hooks/use-photo-mode";
 import type { Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
 import {
@@ -48,6 +49,8 @@ const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, f
 const StatsPanel = () => {
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
+
+  const photoMode = usePhotoMode();
 
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     trigger(MOD_NAME, TriggerBindings.setPanelPosition, { x: data.x, y: data.y } satisfies Vector2);
@@ -280,7 +283,8 @@ const StatsPanel = () => {
     },
   ];
 
-  if (!panelVisible) {
+  // Hide panel in photo mode (or when hidden otherwise)
+  if (!panelVisible || photoMode.active) {
     return null;
   }
 

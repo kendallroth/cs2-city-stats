@@ -59,7 +59,7 @@ namespace CityStats {
         [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
         public bool ResetBindings {
             set {
-                Mod.Log.Info("Reset key bindings");
+                Mod.Log.Debug("ResetBindings click");
                 ResetKeyBindings();
             }
         }

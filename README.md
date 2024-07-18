@@ -33,3 +33,4 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
+- For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
