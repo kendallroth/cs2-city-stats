@@ -1,45 +1,52 @@
-﻿using Colossal.IO.AssetDatabase;
+﻿using CityStats.Localization;
+using CityStats.Systems;
+using Colossal.IO.AssetDatabase;
 using Colossal.Logging;
 using Game;
 using Game.Input;
 using Game.Modding;
 using Game.SceneFlow;
+using Unity.Entities;
 using UnityEngine;
 
 namespace CityStats {
     public class Mod : IMod {
-        public static ILog log = LogManager.GetLogger($"{nameof(CityStats)}.{nameof(Mod)}").SetShowsErrorsInUI(false);
-        private Setting m_Setting;
-        public static ProxyAction m_ButtonAction;
+        /// <summary>
+        /// Mod logger
+        /// </summary>
+        public static ILog Log { get; } = LogManager.GetLogger(nameof(CityStats)).SetShowsErrorsInUI(false);
 
-        public const string kButtonActionName = "ButtonBinding";
+        /// <summary>
+        /// Mod settings (persisted)
+        /// </summary>
+        public static CityStatsSettings Settings { get; private set; }
 
         public void OnLoad(UpdateSystem updateSystem) {
-            log.Info(nameof(OnLoad));
+            Log.Info($"Mod loaded: {nameof(OnLoad)}");
 
-            if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
-                log.Info($"Current mod asset at {asset.path}");
+            if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset)) {
+                Log.Info($"Current mod asset at {asset.path}");
+            }
 
-            /*m_Setting = new Setting(this);
-            m_Setting.RegisterInOptionsUI();
-            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(m_Setting));
+            // Initialize/register settings and load persisted values
+            Settings = new CityStatsSettings(this);
+            Settings.RegisterInOptionsUI();
+            Settings.RegisterKeyBindings();
+            AssetDatabase.global.LoadSettings(nameof(CityStats), Settings, new CityStatsSettings(this));
 
-            m_Setting.RegisterKeyBindings();
+            // TODO: Implement/improve localization (ideally would not require individual classes)
+            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
 
-            m_ButtonAction = m_Setting.GetAction(kButtonActionName);
-
-            m_ButtonAction.shouldBeEnabled = true;
-
-            m_ButtonAction.onInteraction += (_, phase) => log.Info($"[{m_ButtonAction.name}] On{phase} {m_ButtonAction.ReadValue<float>()}");
-
-            AssetDatabase.global.LoadSettings(nameof(CityStats), m_Setting, new Setting(this));*/
+            // Register mod systems with ECS
+            updateSystem.UpdateAt<CityStatsUISystem>(SystemUpdatePhase.UIUpdate);
         }
 
         public void OnDispose() {
-            log.Info(nameof(OnDispose));
-            if (m_Setting != null) {
-                m_Setting.UnregisterInOptionsUI();
-                m_Setting = null;
+            Log.Info(nameof(OnDispose));
+
+            if (Settings != null) {
+                Settings.UnregisterInOptionsUI();
+                Settings = null;
             }
         }
     }
