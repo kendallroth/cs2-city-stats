@@ -59,12 +59,7 @@ const StatIcon = (props: StatIconProps) => {
     trackWidth = 3,
   } = props;
 
-  let progressPercent = getPercentFromValue(
-    progress,
-    progressMin,
-    progressMax,
-    "float"
-  );
+  let progressPercent = getPercentFromValue(progress, progressMin, progressMax, "float");
   const minMaxProgressOffset = 0.005;
   progressPercent = clamp(progressPercent, progressMin, progressMax);
   // Must prevent progress percent from reaching max value as this will cause SVG arc to appear invisible,
@@ -80,15 +75,13 @@ const StatIcon = (props: StatIconProps) => {
   const radius = center - trackWidth;
 
   const startAngle =
-    typeof startAngleRaw === "number"
-      ? startAngleRaw
-      : startAngleMap[startAngleRaw];
+    typeof startAngleRaw === "number" ? startAngleRaw : startAngleMap[startAngleRaw];
   const arcString = calculateArc(
     center,
     center,
     radius,
     startAngle,
-    (startAngle + 360) * progressPercent
+    (startAngle + 360) * progressPercent,
   );
 
   const svgStyle = {

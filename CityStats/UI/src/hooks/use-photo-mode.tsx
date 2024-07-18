@@ -9,4 +9,4 @@ export const usePhotoMode = () => {
   return {
     active: inPhotoMode,
   };
-}
+};

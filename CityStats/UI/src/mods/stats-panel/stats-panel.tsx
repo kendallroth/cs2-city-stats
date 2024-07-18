@@ -2,10 +2,7 @@ import { bindValue, trigger, useValue } from "cs2/api";
 import { infoview } from "cs2/bindings";
 import { Panel, PanelSection } from "cs2/ui";
 import type { CSSProperties, ReactNode } from "react";
-import Draggable, {
-  type DraggableData,
-  type DraggableEvent,
-} from "react-draggable";
+import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
 import { MOD_NAME, TriggerBindings, ValueBindings } from "constants";
 import cemeteryIcon from "assets/icons/cemetery.svg";
@@ -17,10 +14,7 @@ import StatIcon from "components/stat-icon/stat-icon";
 import { usePhotoMode } from "hooks/use-photo-mode";
 import type { Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
-import {
-  getPercentFromIndicatorValue,
-  getPercentFromValue,
-} from "utilities/number.util";
+import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import panelStyles from "./stats-panel.module.scss";
 import {
   type StatsPanelColorScaleStep,
@@ -40,7 +34,7 @@ interface StatsPanelItem {
   value: number;
 }
 
-const panelPosition$ = bindValue<Vector2>(MOD_NAME, ValueBindings.panelPosition, {x: 10, y: 10});
+const panelPosition$ = bindValue<Vector2>(MOD_NAME, ValueBindings.panelPosition, { x: 10, y: 10 });
 const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, false);
 
 // TODO: Improve performance by only subscribing to stats and rerendering when panel is visible, which
@@ -60,33 +54,22 @@ const StatsPanel = () => {
   const electricityAvailability = useValue(infoview.electricityAvailability$);
   const electricityAvailabilityPercent = getPercentFromIndicatorValue(
     electricityAvailability,
-    "float"
+    "float",
   );
   const waterAvailability = useValue(infoview.waterAvailability$);
-  const waterAvailabilityPercent = getPercentFromIndicatorValue(
-    waterAvailability,
-    "float"
-  );
+  const waterAvailabilityPercent = getPercentFromIndicatorValue(waterAvailability, "float");
 
   const sewageAvailability = useValue(infoview.sewageAvailability$);
-  const sewageAvailabilityPercent = getPercentFromIndicatorValue(
-    sewageAvailability,
-    "float"
-  );
+  const sewageAvailabilityPercent = getPercentFromIndicatorValue(sewageAvailability, "float");
 
   // Calculating garbage processing rate is more complicated (no existing calculation). Instead, the
   //   production and processing rates are compared, and used to determine a percentage. If either value
   //   is more than double the other, it is capped at double (for better display).
   const garbageDifferenceMultiplierCap = 2;
-  const calculateGarbageRate = (
-    productionRate: number,
-    processingRate: number
-  ) => {
+  const calculateGarbageRate = (productionRate: number, processingRate: number) => {
     // Cap output when processing or production rate are more than double the other
-    if (processingRate < productionRate / garbageDifferenceMultiplierCap)
-      return -1;
-    if (processingRate > garbageDifferenceMultiplierCap * productionRate)
-      return 1;
+    if (processingRate < productionRate / garbageDifferenceMultiplierCap) return -1;
+    if (processingRate > garbageDifferenceMultiplierCap * productionRate) return 1;
 
     // Ensure division-by-zero is handled via defaulting values to smallest possible float
     return processingRate < productionRate
@@ -95,22 +78,16 @@ const StatsPanel = () => {
   };
   const garbageProductionRate = useValue(infoview.garbageProductionRate$);
   const garbageProcessingRate = useValue(infoview.garbageProcessingRate$);
-  const garbageAvailability = calculateGarbageRate(
-    garbageProductionRate,
-    garbageProcessingRate
-  );
+  const garbageAvailability = calculateGarbageRate(garbageProductionRate, garbageProcessingRate);
   // NOTE: Until garbage processing has been unlocked
   const garbageProcessingPercent = getPercentFromValue(
     garbageAvailability,
     -1 / garbageDifferenceMultiplierCap,
     1 / garbageDifferenceMultiplierCap,
-    "float"
+    "float",
   );
   const landfillAvailability = useValue(infoview.landfillAvailability$);
-  const landfillAvailabilityPercent = getPercentFromIndicatorValue(
-    landfillAvailability,
-    "float"
-  );
+  const landfillAvailabilityPercent = getPercentFromIndicatorValue(landfillAvailability, "float");
   const garbageDisabled = garbageProductionRate === 0;
 
   // Administration
@@ -123,40 +100,31 @@ const StatsPanel = () => {
   const healthcareAvailability = useValue(infoview.healthcareAvailability$);
   const healthcareAvailabilityPercent = getPercentFromIndicatorValue(
     healthcareAvailability,
-    "float"
+    "float",
   );
   const cemeteryAvailability = useValue(infoview.cemeteryAvailability$);
-  const cemeteryAvailabilityPercent = getPercentFromIndicatorValue(
-    cemeteryAvailability,
-    "float"
-  );
+  const cemeteryAvailabilityPercent = getPercentFromIndicatorValue(cemeteryAvailability, "float");
 
   // Education
-  const educationElementaryAvailability = useValue(
-    infoview.elementaryAvailability$
-  );
+  const educationElementaryAvailability = useValue(infoview.elementaryAvailability$);
   const educationElementaryAvailabilityPercent = getPercentFromIndicatorValue(
     educationElementaryAvailability,
-    "float"
+    "float",
   );
-  const educationHighSchoolAvailability = useValue(
-    infoview.highSchoolAvailability$
-  );
+  const educationHighSchoolAvailability = useValue(infoview.highSchoolAvailability$);
   const educationHighSchoolAvailabilityPercent = getPercentFromIndicatorValue(
     educationHighSchoolAvailability,
-    "float"
+    "float",
   );
   const educationCollegeAvailability = useValue(infoview.collegeAvailability$);
   const educationCollegeAvailabilityPercent = getPercentFromIndicatorValue(
     educationCollegeAvailability,
-    "float"
+    "float",
   );
-  const educationUniversityAvailability = useValue(
-    infoview.universityAvailability$
-  );
+  const educationUniversityAvailability = useValue(infoview.universityAvailability$);
   const educationUniversityAvailabilityPercent = getPercentFromIndicatorValue(
     educationUniversityAvailability,
-    "float"
+    "float",
   );
 
   // Work
@@ -295,16 +263,13 @@ const StatsPanel = () => {
       handle={`.${panelStyles.dragButton}`}
       grid={[10, 10]}
       position={panelPosition}
-      onStop={handleDragStop}>
+      onStop={handleDragStop}
+    >
       {/* Empty parent is required to use 'transform' style on panel to center on screen (would be overridden by 'Draggable') */}
       <div>
         <Panel className={panelStyles.panel}>
           <div className={panelStyles.dragButton}>
-            <img
-              alt="drag"
-              className={panelStyles.dragButtonIcon}
-              src={dragIcon}
-            />
+            <img alt="drag" className={panelStyles.dragButtonIcon} src={dragIcon} />
           </div>
           <PanelSection>
             <div className={panelStyles.panelStatsRow}>
