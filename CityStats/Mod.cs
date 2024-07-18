@@ -11,10 +11,12 @@ using UnityEngine;
 
 namespace CityStats {
     public class Mod : IMod {
+        public const string NAME = "CityStats";
+
         /// <summary>
         /// Mod logger
         /// </summary>
-        public static ILog Log { get; } = LogManager.GetLogger(nameof(CityStats)).SetShowsErrorsInUI(false);
+        public static ILog Log { get; } = LogManager.GetLogger(Mod.NAME).SetShowsErrorsInUI(false);
 
         /// <summary>
         /// Mod settings (persisted)
@@ -32,7 +34,7 @@ namespace CityStats {
             Settings = new CityStatsSettings(this);
             Settings.RegisterInOptionsUI();
             Settings.RegisterKeyBindings();
-            AssetDatabase.global.LoadSettings(nameof(CityStats), Settings, new CityStatsSettings(this));
+            AssetDatabase.global.LoadSettings(Mod.NAME, Settings, new CityStatsSettings(this));
 
             // TODO: Implement/improve localization (ideally would not require individual classes)
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));

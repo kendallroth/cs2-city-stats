@@ -18,7 +18,7 @@ namespace CityStats {
     ///   be serialized in an entity via ECS!
     /// </remarks>
     // TODO: Figure out how to use interpolate C# string (allegedly requires upgrade to C#10)
-    [FileLocation("ModSettings/" + nameof(CityStats) + "/" + nameof(CityStats))]
+    [FileLocation("ModSettings/" + Mod.NAME + "/" + Mod.NAME)]
     [SettingsUIGroupOrder(GROUP_KEYBINDING)]
     [SettingsUIShowGroupName(GROUP_KEYBINDING)]
     public class CityStatsSettings : ModSetting {
@@ -32,7 +32,7 @@ namespace CityStats {
         /// <summary>
         /// Key binding to toggle panel visibility
         /// </summary>
-        [SettingsUIKeyboardBinding(BindingKeyboard.S, nameof(TogglePanelBinding), shift: true, ctrl: true)]
+        [SettingsUIKeyboardBinding(BindingKeyboard.S, nameof(TogglePanelBinding), ctrl: true, shift: true)]
         [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
         public ProxyBinding TogglePanelBinding { get; set; }
 

@@ -1,33 +1,71 @@
-﻿using Game.Input;
+﻿using CityStats.Data;
+using Colossal.UI.Binding;
+using Game.Input;
 using Game.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CityStats.Systems {
     internal partial class CityStatsUISystem : UISystemBase {
-        private static ProxyAction togglePanelBindingAction;
+        private ProxyAction togglePanelBindingAction;
+
+        private ValueBinding<Vector2> panelPositionBinding;
+        private ValueBinding<bool> panelVisibleBinding;
 
         protected override void OnCreate() {
             base.OnCreate();
 
+            // Mod options bindings
             togglePanelBindingAction = Mod.Settings.GetAction(nameof(CityStatsSettings.TogglePanelBinding));
-            // TODO: Wherever this moves should continue enabling the keybinding at startup (and not disabling it)
             togglePanelBindingAction.shouldBeEnabled = true;
-            togglePanelBindingAction.onInteraction += (_, phase) => Mod.Log.Info($"[{togglePanelBindingAction.name}] On{phase} {togglePanelBindingAction.ReadValue<float>()}");
+            togglePanelBindingAction.onInteraction += OnTogglePanelAction;
             // phases: Performed, Started, Cancelled, Waiting, Disabled
+
+            // Value bindings
+            panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
+            AddBinding(panelVisibleBinding);
+            panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
+            AddBinding(panelPositionBinding);
+
+            // Trigger bindings
+            var togglePanelVisibleTrigger = new TriggerBinding(Mod.NAME, UIBindingData.TRIGGER_TOGGLE_PANEL_VISIBLE, OnTogglePanelVisibilityTrigger);
+            AddBinding(togglePanelVisibleTrigger);
+            var setPanelVisibleTrigger = new TriggerBinding<bool>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_VISIBLE, OnSetPanelVisibilityTrigger);
+            AddBinding(setPanelVisibleTrigger);
+            var setPanelPositionTrigger = new TriggerBinding<Vector2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, SetPanelPositionTrigger);
+            AddBinding(setPanelPositionTrigger);
         }
 
 
-        protected override void OnUpdate() {
-            if (togglePanelBindingAction.WasPerformedThisFrame()) {
-                Mod.Log.Info($"[{togglePanelBindingAction.name}] toggled {togglePanelBindingAction.ReadValue<float>()}");
-                // TODO
-            }
+        private void OnTogglePanelAction(ProxyAction action, InputActionPhase phase) {
+            if (phase != InputActionPhase.Performed) return;
 
-            base.OnUpdate();
+            SetPanelVisiblity(!panelVisibleBinding.value);
+            Mod.Log.Debug($"[{togglePanelBindingAction.name}] Toggled panel via keybinding");
+        }
+
+
+        private void OnTogglePanelVisibilityTrigger() {
+            SetPanelVisiblity(!panelVisibleBinding.value);
+            Mod.Log.Debug($"[OnTogglePanelTrigger] Toggled panel via trigger");
+        }
+
+
+        private void OnSetPanelVisibilityTrigger(bool open) {
+            SetPanelVisiblity(open);
+            Mod.Log.Debug($"[OnTogglePanelTrigger] Toggled panel via trigger");
+        }
+
+
+        private void SetPanelPositionTrigger(Vector2 position) {
+            panelPositionBinding.Update(position);
+        }
+
+
+        private void SetPanelVisiblity(bool open) {
+            panelVisibleBinding.Update(open);
         }
     }
 }

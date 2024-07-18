@@ -18,7 +18,7 @@ namespace CityStats.Localization {
             {
                 { settings.GetSettingsLocaleID(), "City Stats" },
                 { settings.GetOptionTabLocaleID(CityStatsSettings.SECTION_MAIN), "Main" },
-                { settings.GetOptionTabLocaleID(CityStatsSettings.GROUP_KEYBINDING), "Keybindings" },
+                { settings.GetOptionGroupLocaleID(CityStatsSettings.GROUP_KEYBINDING), "Keybindings" },
 
                 { settings.GetOptionLabelLocaleID(nameof(CityStatsSettings.TogglePanelBinding)), "Toggle panel" },
                 { settings.GetOptionDescLocaleID(nameof(CityStatsSettings.TogglePanelBinding)), $"Hotkey to toggle panel display" },
