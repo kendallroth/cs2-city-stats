@@ -30,11 +30,11 @@ namespace CityStats.Systems {
             AddBinding(panelPositionBinding);
 
             // Trigger bindings
-            var togglePanelVisibleTrigger = new TriggerBinding(Mod.NAME, UIBindingData.TRIGGER_TOGGLE_PANEL_VISIBLE, OnTogglePanelVisibilityTrigger);
+            var togglePanelVisibleTrigger = new TriggerBinding(Mod.NAME, UIBindingData.TRIGGER_TOGGLE_PANEL_VISIBLE, TogglePanelVisibility);
             AddBinding(togglePanelVisibleTrigger);
-            var setPanelVisibleTrigger = new TriggerBinding<bool>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_VISIBLE, OnSetPanelVisibilityTrigger);
+            var setPanelVisibleTrigger = new TriggerBinding<bool>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_VISIBLE, SetPanelVisibility);
             AddBinding(setPanelVisibleTrigger);
-            var setPanelPositionTrigger = new TriggerBinding<Vector2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, SetPanelPositionTrigger);
+            var setPanelPositionTrigger = new TriggerBinding<Vector2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, OnSetPanelPositionTrigger);
             AddBinding(setPanelPositionTrigger);
         }
 
@@ -42,30 +42,31 @@ namespace CityStats.Systems {
         private void OnTogglePanelAction(ProxyAction action, InputActionPhase phase) {
             if (phase != InputActionPhase.Performed) return;
 
-            SetPanelVisiblity(!panelVisibleBinding.value);
-            Mod.Log.Debug($"[{togglePanelBindingAction.name}] Toggled panel via keybinding");
+            SetPanelVisibility(!panelVisibleBinding.value);
         }
 
 
-        private void OnTogglePanelVisibilityTrigger() {
-            SetPanelVisiblity(!panelVisibleBinding.value);
-            Mod.Log.Debug($"[OnTogglePanelTrigger] Toggled panel via trigger");
-        }
-
-
-        private void OnSetPanelVisibilityTrigger(bool open) {
-            SetPanelVisiblity(open);
-            Mod.Log.Debug($"[OnTogglePanelTrigger] Toggled panel via trigger");
-        }
-
-
-        private void SetPanelPositionTrigger(Vector2 position) {
+        private void OnSetPanelPositionTrigger(Vector2 position) {
             panelPositionBinding.Update(position);
         }
 
 
-        private void SetPanelVisiblity(bool open) {
+        public void TogglePanelVisibility() {
+            panelVisibleBinding.Update(!panelVisibleBinding.value);
+        }
+
+
+        public void SetPanelVisibility(bool open) {
             panelVisibleBinding.Update(open);
+        }
+
+
+        /// <summary>
+        /// Reset stats panel position (if inaccessible, etc)
+        /// </summary>
+        public void ResetPanelPosition() {
+            panelPositionBinding.Update(Vector2.zero);
+            Mod.Log.Info("Reset panel position");
         }
     }
 }
