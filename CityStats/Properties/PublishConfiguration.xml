@@ -9,6 +9,10 @@
 	<LongDescription>
 A mod for Cities Skylines 2 that allows viewing overall statistics of the city at a glance.
 
+## Usage
+
+The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
+
 ## Statistics
 
 - Electricity / Water / Sewage availability
@@ -23,10 +27,9 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 - Display additional statistics
   - Mail processing status (comparison between production and processing rates)
   - Average citizen health
-- Implement settings
+- Implement additional settings
   - Manage which statistics are displayed
-  - Toggle statistics panel via key binding
-  - Persist panel position and open states
+- Persist panel visibility/location _in save file_ (optional)
 - Localization
 - Minor details
   - Animate panel opening/closing
@@ -38,6 +41,7 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
+- For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
@@ -51,14 +55,19 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.2" />
+	<ModVersion Value="0.3" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Fix out-of-date recommended game version
+- Implement C# state management to keep visibility/position within game session
+- Add keybinding for toggling panel
+- Add settings button to reset position (if inaccessible, etc)
+- Position panel at top-center by default
+- Hide panel/button during photoview
+- Improve and cleanup C# template code
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

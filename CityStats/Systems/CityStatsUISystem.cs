@@ -17,6 +17,8 @@ namespace CityStats.Systems {
         protected override void OnCreate() {
             base.OnCreate();
 
+            Mod.Log.Debug($"{nameof(CityStatsUISystem)} created");
+
             // Mod options bindings
             togglePanelBindingAction = Mod.Settings.GetAction(nameof(CityStatsSettings.TogglePanelBinding));
             togglePanelBindingAction.shouldBeEnabled = true;

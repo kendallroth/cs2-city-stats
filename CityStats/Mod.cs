@@ -43,8 +43,9 @@ namespace CityStats {
             updateSystem.UpdateAt<CityStatsUISystem>(SystemUpdatePhase.UIUpdate);
         }
 
+
         public void OnDispose() {
-            Log.Info(nameof(OnDispose));
+            Log.Info($"Mod disposed: {nameof(OnDispose)}");
 
             if (Settings != null) {
                 Settings.UnregisterInOptionsUI();
