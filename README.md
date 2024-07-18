@@ -2,6 +2,10 @@
 
 A mod for Cities Skylines 2 that allows viewing overall statistics of the city at a glance.
 
+## Usage
+
+The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
+
 ## Statistics
 
 - Electricity / Water / Sewage availability
@@ -16,10 +20,9 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 - Display additional statistics
   - Mail processing status (comparison between production and processing rates)
   - Average citizen health
-- Implement settings
+- Implement additional settings
   - Manage which statistics are displayed
-  - Toggle statistics panel via key binding
-  - Persist panel position and open states
+- Persist panel visibility/location _in save file_ (optional)
 - Localization
 - Minor details
   - Animate panel opening/closing
@@ -33,3 +36,4 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
+- For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥

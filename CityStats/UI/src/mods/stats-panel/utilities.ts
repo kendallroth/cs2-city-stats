@@ -20,7 +20,7 @@ export interface StatsPanelColorScaleStep {
  */
 export const getIconColor = (
   colorScale: StatsPanelColorScaleStep[] | undefined,
-  value: number | undefined
+  value: number | undefined,
 ): string => {
   if (!colorScale || (!value && value !== 0)) {
     return iconColors.normal;

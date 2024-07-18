@@ -42,7 +42,7 @@ export const getPercentFromValue = (
 
 /**
  * Get a percent based on a game indicator (contains current value and corresponding range)
- * 
+ *
  * @param percentFormat - Whether output percent should be an int (`0-100`) or a float (`0-1`)
  */
 export const getPercentFromIndicatorValue = (

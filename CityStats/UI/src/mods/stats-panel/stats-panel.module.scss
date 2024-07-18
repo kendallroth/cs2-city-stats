@@ -1,10 +1,13 @@
 .panel {
   // Must remove panel from local positioning (to avoid affecting other mod buttons)
   position: absolute;
-  top: 50rem;
+  top: 10rem;
   left: 50%;
+  // NOTE: Using 'transform' requires an additional parent wrapper when using with 'Draggable',
+  //         as otherwise any transform will be overwritten!
+  transform: translateX(-50%);
 
-  // TODO: Support opacity as a persisted mod setting
+  // TODO: Consider supporting opacity as a persisted mod setting?
   // opacity: 0.95;
   transition: opacity ease-in-out 0.075s;
 
@@ -15,6 +18,11 @@
 
 .panelVisible {
   opacity: 1;
+}
+
+.panelStatsRow {
+  display: flex;
+  flex-direction: row;
 }
 
 .dragButton {
@@ -30,11 +38,7 @@
   height: 20rem;
 }
 
-.panelStatsRow {
-  display: flex;
-  flex-direction: row;
-}
-
+// Education icons have a letter displayed inside to indicate which type
 .statIconEducationText {
   position: absolute;
   color: var(--tooltipColor);

@@ -1,15 +1,18 @@
-import { useValue } from "cs2/api";
+import { bindValue, trigger, useValue } from "cs2/api";
 import { infoview } from "cs2/bindings";
 import { Panel, PanelSection } from "cs2/ui";
 import type { CSSProperties, ReactNode } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
+import { MOD_NAME, TriggerBindings, ValueBindings } from "constants";
 import cemeteryIcon from "assets/icons/cemetery.svg";
 import dragIcon from "assets/icons/drag-horizontal.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
 import StatIcon from "components/stat-icon/stat-icon";
+import { usePhotoMode } from "hooks/use-photo-mode";
+import type { Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import panelStyles from "./stats-panel.module.scss";
@@ -31,21 +34,20 @@ interface StatsPanelItem {
   value: number;
 }
 
-interface StatsPanelProps {
-  position:
-    | {
-        x: number;
-        y: number;
-      }
-    | undefined;
-  onPositionChange: (position: StatsPanelProps["position"]) => void;
-}
+const panelPosition$ = bindValue<Vector2>(MOD_NAME, ValueBindings.panelPosition, { x: 10, y: 10 });
+const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, false);
 
-const StatsPanel = (props: StatsPanelProps) => {
-  const { position: panelPosition, onPositionChange } = props;
+// TODO: Improve performance by only subscribing to stats and rerendering when panel is visible, which
+//         will require a wrapper component since hooks must be executed before returning 'null'!
+
+const StatsPanel = () => {
+  const panelPosition = useValue(panelPosition$);
+  const panelVisible = useValue(panelVisible$);
+
+  const photoMode = usePhotoMode();
 
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
-    onPositionChange({ x: data.x, y: data.y });
+    trigger(MOD_NAME, TriggerBindings.setPanelPosition, { x: data.x, y: data.y } satisfies Vector2);
   };
 
   // Utilities
@@ -56,6 +58,7 @@ const StatsPanel = (props: StatsPanelProps) => {
   );
   const waterAvailability = useValue(infoview.waterAvailability$);
   const waterAvailabilityPercent = getPercentFromIndicatorValue(waterAvailability, "float");
+
   const sewageAvailability = useValue(infoview.sewageAvailability$);
   const sewageAvailabilityPercent = getPercentFromIndicatorValue(sewageAvailability, "float");
 
@@ -188,7 +191,7 @@ const StatsPanel = (props: StatsPanelProps) => {
       colorScale: [
         { color: iconColors.good, start: 0 },
         { color: iconColors.goodLight, start: 0.33 },
-        { color: iconColors.badLight, start: 0.50 },
+        { color: iconColors.badLight, start: 0.5 },
         { color: iconColors.bad, start: 0.66 },
       ],
       icon: "Media/Game/Icons/FireSafety.svg",
@@ -239,7 +242,7 @@ const StatsPanel = (props: StatsPanelProps) => {
         { color: iconColors.good, start: 0 },
         { color: iconColors.goodLight, start: 0.05 },
         { color: iconColors.badLight, start: 0.12 },
-        { color: iconColors.bad, start: 0.20 },
+        { color: iconColors.bad, start: 0.2 },
       ],
       icon: unemploymentIcon,
       iconStyle: { padding: "10%" },
@@ -248,46 +251,53 @@ const StatsPanel = (props: StatsPanelProps) => {
     },
   ];
 
-  // TODO: Use Portal to place the panel outside the top-left tools and into the broader game window context (for initial centering)
+  // Hide panel in photo mode (or when hidden otherwise)
+  if (!panelVisible || photoMode.active) {
+    return null;
+  }
+
   return (
     <Draggable
-      bounds="parent"
+      // bounds="parent"
       defaultClassNameDragging={panelStyles.panelVisible}
       handle={`.${panelStyles.dragButton}`}
       grid={[10, 10]}
       position={panelPosition}
       onStop={handleDragStop}
     >
-      <Panel className={panelStyles.panel} contentClassName="panel-content">
-        <div className={panelStyles.dragButton}>
-          <img alt="drag" className={panelStyles.dragButtonIcon} src={dragIcon} />
-        </div>
-        <PanelSection>
-          <div className={panelStyles.panelStatsRow}>
-            {statsPanelItems.map((item, idx) => {
-              const iconColor = getIconColor(item.colorScale, item.value);
-              return (
-                <StatIcon
-                  key={item.tooltip || item.icon || idx}
-                  color={iconColor}
-                  fill={`${iconColor}${getHexOpacity(0.25)}`}
-                  icon={item.icon}
-                  iconStyle={item.iconStyle}
-                  progress={item.value}
-                  size={40}
-                  style={{
-                    marginLeft: idx > 0 ? "4rem" : undefined,
-                  }}
-                  tooltip={item.tooltip}
-                  // trackColor={`#ffffff${getHexOpacity(0.15)}`}
-                >
-                  {item.children}
-                </StatIcon>
-              );
-            })}
+      {/* Empty parent is required to use 'transform' style on panel to center on screen (would be overridden by 'Draggable') */}
+      <div>
+        <Panel className={panelStyles.panel}>
+          <div className={panelStyles.dragButton}>
+            <img alt="drag" className={panelStyles.dragButtonIcon} src={dragIcon} />
           </div>
-        </PanelSection>
-      </Panel>
+          <PanelSection>
+            <div className={panelStyles.panelStatsRow}>
+              {statsPanelItems.map((item, idx) => {
+                const iconColor = getIconColor(item.colorScale, item.value);
+                return (
+                  <StatIcon
+                    key={item.tooltip || item.icon || idx}
+                    color={iconColor}
+                    fill={`${iconColor}${getHexOpacity(0.25)}`}
+                    icon={item.icon}
+                    iconStyle={item.iconStyle}
+                    progress={item.value}
+                    size={40}
+                    style={{
+                      marginLeft: idx > 0 ? "4rem" : undefined,
+                    }}
+                    tooltip={item.tooltip}
+                    // trackColor={`#ffffff${getHexOpacity(0.15)}`}
+                  >
+                    {item.children}
+                  </StatIcon>
+                );
+              })}
+            </div>
+          </PanelSection>
+        </Panel>
+      </div>
     </Draggable>
   );
 };

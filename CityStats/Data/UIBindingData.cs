@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CityStats.Data {
+    public class UIBindingData {
+        public const string VALUE_PANEL_VISIBLE = "panelVisible";
+        public const string VALUE_PANEL_POSITION = "panelPosition";
+
+        public const string TRIGGER_TOGGLE_PANEL_VISIBLE = "togglePanelVisible";
+        public const string TRIGGER_SET_PANEL_POSITION = "setPanelPosition";
+        public const string TRIGGER_SET_PANEL_VISIBLE = "setPanelVisible";
+    }
+}
