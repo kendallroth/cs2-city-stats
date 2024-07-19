@@ -39,6 +39,7 @@ interface StatIconProps {
   trackColor?: string;
   /** Progress track width */
   trackWidth?: number;
+  onClick?: () => void;
 }
 
 const StatIcon = (props: StatIconProps) => {
@@ -57,6 +58,7 @@ const StatIcon = (props: StatIconProps) => {
     tooltip,
     trackColor,
     trackWidth = 3,
+    onClick,
   } = props;
 
   let progressPercent = getPercentFromValue(progress, progressMin, progressMax, "float");
@@ -91,7 +93,7 @@ const StatIcon = (props: StatIconProps) => {
 
   return (
     <Tooltip direction="down" tooltip={tooltip}>
-      <div className={iconStyles.statIconRoot} style={style}>
+      <div className={iconStyles.statIconRoot} style={style} onClick={onClick}>
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: Not necessary in game */}
         <svg style={svgStyle} viewBox={`0 0 ${size} ${size}`}>
           <circle

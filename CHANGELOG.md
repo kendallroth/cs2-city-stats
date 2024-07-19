@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.4` - 2024-07-19]
+
+- Add setting to show/hide stats panel when loading a game
+- Add setting for panel orientation (resets position when changing!)
+
 ### [`0.3` - 2024-07-18]
 
 - Implement C# state management to keep visibility/position within game session

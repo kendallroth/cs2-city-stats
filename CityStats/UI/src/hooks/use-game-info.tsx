@@ -1,12 +1,14 @@
 import { useValue } from "cs2/api";
-import { game } from "cs2/bindings";
+import { game, tool } from "cs2/bindings";
 
-/** Multiple UI elements may react to photo mode in different ways */
-export const usePhotoMode = () => {
+/** High-level game information */
+export const useGameInfo = () => {
   // Source: https://github.com/JadHajjar/FindIt-CSII/blob/main/FindIt/UI/src/mods/MainContainer/MainContainer.tsx
   const inPhotoMode = useValue(game.activeGamePanel$)?.__Type === game.GamePanelType.PhotoMode;
+  const inEditor = useValue(tool.isEditor$);
 
   return {
-    active: inPhotoMode,
+    inEditor,
+    inPhotoMode,
   };
 };

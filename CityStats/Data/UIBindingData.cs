@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace CityStats.Data {
     public class UIBindingData {
-        public const string VALUE_PANEL_VISIBLE = "panelVisible";
+        public const string VALUE_PANEL_OPEN_ON_LOAD = "panelOpenOnLoad";
+        public const string VALUE_PANEL_ORIENTATION = "panelOrientation";
         public const string VALUE_PANEL_POSITION = "panelPosition";
+        public const string VALUE_PANEL_VISIBLE = "panelVisible";
 
         public const string TRIGGER_TOGGLE_PANEL_VISIBLE = "togglePanelVisible";
         public const string TRIGGER_SET_PANEL_POSITION = "setPanelPosition";
