@@ -6,6 +6,7 @@ using Game;
 using Game.Input;
 using Game.Modding;
 using Game.SceneFlow;
+using Game.Settings;
 using Unity.Entities;
 using UnityEngine;
 
@@ -16,41 +17,62 @@ namespace CityStats {
         /// <summary>
         /// Mod logger
         /// </summary>
-        public static ILog Log { get; } = LogManager.GetLogger(Mod.NAME).SetShowsErrorsInUI(false);
+        public static ILog Log { get; } = LogManager.GetLogger(NAME).SetShowsErrorsInUI(false);
 
         /// <summary>
         /// Mod settings (persisted)
         /// </summary>
-        public static CityStatsSettings Settings { get; private set; }
+        public static ModSettings Settings { get; private set; }
 
+        /// <summary>
+        /// Whether game is running in "game" mode (vs menu, editor, etc)
+        /// </summary>
+        public static bool InGameMode => (GameManager.instance.gameMode & GameMode.Game) == 0;
+
+
+        #region Lifecycle
         public void OnLoad(UpdateSystem updateSystem) {
-            Log.Info($"Mod loaded: {nameof(OnLoad)}");
+            Log.Info($"[{nameof(Mod)}] OnLoad");
 
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset)) {
-                Log.Info($"Current mod asset at {asset.path}");
+                Log.Info($"Current mod asset at '{asset.path}'");
             }
 
             // Initialize/register settings and load persisted values
-            Settings = new CityStatsSettings(this);
+            Settings = new ModSettings(this);
             Settings.RegisterInOptionsUI();
             Settings.RegisterKeyBindings();
-            AssetDatabase.global.LoadSettings(Mod.NAME, Settings, new CityStatsSettings(this));
+
+            AssetDatabase.global.LoadSettings(NAME, Settings, new ModSettings(this));
+            Settings.onSettingsApplied += OnModSettingsApplied;
+
+            Log.Info($"[{nameof(Mod)}] SettingsLoaded: {Settings.ToString()}");
 
             // TODO: Implement/improve localization (ideally would not require individual classes)
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
 
-            // Register mod systems with ECS
-            updateSystem.UpdateAt<CityStatsUISystem>(SystemUpdatePhase.UIUpdate);
+            // Register mod systems with ECS (with appropriate update phases)
+            updateSystem.UpdateAt<ModUISystem>(SystemUpdatePhase.UIUpdate);
         }
 
 
         public void OnDispose() {
-            Log.Info($"Mod disposed: {nameof(OnDispose)}");
+            Log.Info("Mod disposed");
 
             if (Settings != null) {
+                Settings.onSettingsApplied -= OnModSettingsApplied;
                 Settings.UnregisterInOptionsUI();
                 Settings = null;
             }
+        }
+        #endregion
+
+
+        private void OnModSettingsApplied(Setting baseSettings) {
+            ModSettings settings = baseSettings as ModSettings;
+            if (settings == null) return;
+
+            Log.Debug($"[{nameof(Mod)}] Settings applied: {settings.ToString()}");
         }
     }
 }

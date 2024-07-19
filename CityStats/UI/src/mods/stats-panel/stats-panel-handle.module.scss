@@ -1,0 +1,21 @@
+.handle {
+  position: absolute;
+  padding: 5rem;
+}
+
+.handleHorizontal {
+  left: 50%;
+  transform: translateX(-50%);
+  // NOTE: 'top'/'bottom' are applied via dynamic styles (since there may be two horizontal icons)
+}
+
+.handleVertical {
+  top: 50%;
+  transform: translateY(-50%);
+  // NOTE: 'left'/'right' are applied via dynamic styles (since there are two vertical icons)
+}
+
+.handleIcon {
+  width: 20rem;
+  height: 20rem;
+}

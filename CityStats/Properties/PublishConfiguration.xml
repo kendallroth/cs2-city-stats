@@ -13,6 +13,12 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 
 The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
 
+### Settings
+
+- Toggle whether panel is open upon load
+- Change panel orientation (resets position!)
+- Keybinding for toggling panel visibility
+
 ## Statistics
 
 - Electricity / Water / Sewage availability
@@ -25,18 +31,18 @@ The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with 
 ## Roadmap
 
 - Display additional statistics
-  - Mail processing status (comparison between production and processing rates)
-  - Average citizen health
+	- Mail processing status (comparison between production and processing rates)
+	- Average citizen health
 - Implement additional settings
-  - Manage which statistics are displayed
-- Persist panel visibility/location _in save file_ (optional)
+	- Manage which statistics are displayed
+	- Persist panel visibility/location _in save file_ (optional)
 - Localization
 - Minor details
-  - Animate panel opening/closing
-  - Show statistic value in tooltip (or under icon)
-  - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
-  - Improve police statistics (crime rate may not be useful)
-- Calculate homeless percentage
+	- Animate panel opening/closing
+	- Show statistic value in tooltip (or under icon)
+	- Disable icons until "unlocked" (ie. health/death care, garbage, etc)
+	- Improve police statistics (crime rate may not be useful)
+	- Calculate homeless percentage
 
 ## Credits
 
@@ -50,24 +56,21 @@ The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with 
 	<Screenshot Value="Properties/Screenshots/screenshot_2_in_game_info.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_3_in_game_info_2.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_4_closeup.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_5_settings.png" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.3" />
+	<ModVersion Value="0.4" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Implement C# state management to keep visibility/position within game session
-- Add keybinding for toggling panel
-- Add settings button to reset position (if inaccessible, etc)
-- Position panel at top-center by default
-- Hide panel/button during photoview
-- Improve and cleanup C# template code
+- Add setting to show/hide stats panel when loading a game
+- Add setting for panel orientation (resets position when changing!)
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

@@ -1,11 +1,6 @@
 .panel {
   // Must remove panel from local positioning (to avoid affecting other mod buttons)
   position: absolute;
-  top: 10rem;
-  left: 50%;
-  // NOTE: Using 'transform' requires an additional parent wrapper when using with 'Draggable',
-  //         as otherwise any transform will be overwritten!
-  transform: translateX(-50%);
 
   // TODO: Consider supporting opacity as a persisted mod setting?
   // opacity: 0.95;
@@ -16,26 +11,30 @@
   }
 }
 
+.panelHorizontal {
+  top: 10rem;
+  left: 50%;
+  // NOTE: Using 'transform' requires an additional parent wrapper when using with 'Draggable',
+  //         as otherwise any transform will be overwritten!
+  transform: translateX(-50%);
+}
+
+.panelVertical {
+  left: 10rem;
+  // TODO: Figure out why "50%" is not working...
+  top: 500rem;
+  // NOTE: Using 'transform' requires an additional parent wrapper when using with 'Draggable',
+  //         as otherwise any transform will be overwritten!
+  transform: translateY(-50%);
+}
+
 .panelVisible {
   opacity: 1;
 }
 
 .panelStatsRow {
   display: flex;
-  flex-direction: row;
-}
-
-.dragButton {
-  position: absolute;
-  left: 50%;
-  top: -10rem;
-  transform: translateX(-50%);
-  padding: 5rem;
-}
-
-.dragButtonIcon {
-  width: 20rem;
-  height: 20rem;
+  // NOTE: 'flex-direction' is applied via dynamic styles
 }
 
 // Education icons have a letter displayed inside to indicate which type

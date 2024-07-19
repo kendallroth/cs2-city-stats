@@ -3,21 +3,21 @@ import { Button } from "cs2/ui";
 import { MOD_NAME, TriggerBindings } from "constants";
 import menuIcon from "assets/logo.svg";
 import { trigger } from "cs2/api";
-import { usePhotoMode } from "hooks/use-photo-mode";
+import { useGameInfo } from "hooks/use-game-info";
 import VanillaComponents from "vanilla/component-bindings";
 import menuButtonStyles from "./stats-menu-button.module.scss";
 
 const { DescriptionTooltip } = VanillaComponents.components;
 
 const StatsMenuButton = () => {
-  const photoMode = usePhotoMode();
+  const gameInfo = useGameInfo();
 
   const onClick = () => {
     trigger(MOD_NAME, TriggerBindings.togglePanelVisible);
   };
 
-  // Hide menu button in photo mode
-  if (photoMode.active) {
+  // Hide menu button in photo mode or editor
+  if (gameInfo.inPhotoMode || gameInfo.inEditor) {
     return null;
   }
 

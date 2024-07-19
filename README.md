@@ -6,6 +6,12 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 
 The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
 
+### Settings
+
+- Toggle whether panel is open upon load
+- Change panel orientation (resets position!)
+- Keybinding for toggling panel visibility
+
 ## Statistics
 
 - Electricity / Water / Sewage availability
