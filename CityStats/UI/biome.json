@@ -1,29 +1,29 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-	"files": {
-		"ignore": ["types/**", "tools/**"]
-	},
-	"formatter": {
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineWidth": 100
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"a11y": {
-				"useKeyWithClickEvents": "off"
-			},
-			"style": {
-				"useNodejsImportProtocol": "off"
-			}
-		}
-	},
-	"vcs": {
-		"useIgnoreFile": true
-	}
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "ignore": ["types/**", "tools/**"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "useKeyWithClickEvents": "off"
+      },
+      "style": {
+        "useNodejsImportProtocol": "off"
+      }
+    }
+  },
+  "vcs": {
+    "useIgnoreFile": true
+  }
 }

@@ -20,8 +20,6 @@ namespace CityStats.Systems {
         // TODO: See if this can be changed to a 'GetterValueBinding' (previously crashed with writing failure!)
         private ValueBinding<StatsPanelOrientation> panelOrientationBinding;
 
-        private ValueBinding<bool> panelOpenOnLoad;
-
 
         #region Lifecycle
         protected override void OnCreate() {
@@ -36,12 +34,11 @@ namespace CityStats.Systems {
             // Action Phases: Performed, Started, Cancelled, Waiting, Disabled
 
             // Value bindings
-            panelOpenOnLoad = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_OPEN_ON_LOAD, false);
-            AddBinding(panelOpenOnLoad);
             panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
             AddBinding(panelVisibleBinding);
             panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
             AddBinding(panelPositionBinding);
+            // NOTE: Could also use 'AddUpdateBinding(new GetterValueBinding(...))', except that panel position is also reset on orientation change
             panelOrientationBinding = new ValueBinding<StatsPanelOrientation>(
                 Mod.NAME,
                 UIBindingData.VALUE_PANEL_ORIENTATION,
@@ -99,7 +96,7 @@ namespace CityStats.Systems {
         private void OnTogglePanelAction(ProxyAction action, InputActionPhase phase) {
             if (phase != InputActionPhase.Performed) return;
 
-            SetPanelVisibility(!panelVisibleBinding.value);
+            TogglePanelVisibility();
         }
 
 
