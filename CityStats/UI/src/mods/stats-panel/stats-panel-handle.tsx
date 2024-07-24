@@ -9,10 +9,16 @@ interface StatsPanelHandleProps {
   className?: string;
   mode: `${StatsPanelOrientation}`;
   style?: CSSProperties;
+  visible?: boolean;
 }
 
 const StatsPanelHandle = (props: StatsPanelHandleProps) => {
-  const { className, mode, style } = props;
+  const { className, mode, style: _style, visible } = props;
+
+  const style: CSSProperties = {
+    ..._style,
+    display: visible ? undefined : "none",
+  };
 
   return (
     <div

@@ -31,14 +31,19 @@ const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, f
 // TODO: Improve performance by only subscribing to stats and rerendering when panel is visible, which
 //         will require a wrapper component since hooks must be executed before returning 'null'!
 
+// TODO: Show number of hidden stats near the settings button (maybe in badge?)
+
 const StatsPanel = () => {
   const panelOrientation = useValue(panelOrientation$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
 
-  const inHorizontalMode = panelOrientation === StatsPanelOrientation.Horizontal;
-
   const [editing, setEditing] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [dragging, setDragging] = useState(false);
+
+  const areHandlesVisible = dragging || hovering || editing;
+  const inHorizontalMode = panelOrientation === StatsPanelOrientation.Horizontal;
 
   // TODO: Potentially refactor to use Set
   const [hiddenStats, setHiddenStats] = useState<StatId[]>(["landfillAvailability"]);
@@ -59,8 +64,13 @@ const StatsPanel = () => {
 
   const gameInfo = useGameInfo();
 
+  const handleDragStart = () => {
+    setDragging(true);
+  };
+
   /** Update panel position after drag finishes */
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
+    setDragging(false);
     trigger(MOD_NAME, TriggerBindings.setPanelPosition, { x: data.x, y: data.y } satisfies Vector2);
   };
 
@@ -100,6 +110,7 @@ const StatsPanel = () => {
       handle={`.${handleStyles.handle}`}
       grid={[10, 10]}
       position={panelPosition}
+      onStart={handleDragStart}
       onStop={handleDragStop}
     >
       {/* Empty parent is required to use 'transform' style on panel to center on screen (would be overridden by 'Draggable') */}
@@ -111,15 +122,25 @@ const StatsPanel = () => {
             { [panelStyles.panelEditing]: editing },
           ])}
           style={panelStyle}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
         >
           {inHorizontalMode ? (
             <>
-              <StatsPanelHandle mode="Horizontal" style={{ top: 0 }} />
+              <StatsPanelHandle mode="Horizontal" style={{ top: 0 }} visible={areHandlesVisible} />
             </>
           ) : (
             <>
-              <StatsPanelHandle mode="Vertical" style={{ right: "-4rem" }} />
-              <StatsPanelHandle mode="Vertical" style={{ left: "-4rem" }} />
+              <StatsPanelHandle
+                mode="Vertical"
+                style={{ right: "-4rem" }}
+                visible={areHandlesVisible}
+              />
+              <StatsPanelHandle
+                mode="Vertical"
+                style={{ left: "-4rem" }}
+                visible={areHandlesVisible}
+              />
             </>
           )}
           <PanelSection>
@@ -149,6 +170,7 @@ const StatsPanel = () => {
                     </StatIcon>
                   );
                 })}
+                {/* NOTE: It never should be possible to hide all stats! */}
                 {allStatsHidden && !editing && (
                   <div className={panelStyles.panelStatsAllHidden}>All stats hidden</div>
                 )}
