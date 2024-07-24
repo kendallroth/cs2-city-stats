@@ -46,12 +46,28 @@
   // NOTE: 'flex-direction' is applied via dynamic styles
 }
 
+// Appended content in stats panel
+.panelStatsAppend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // Flex direction and margin are applied via dynamic styles
+}
+
 // Message when all panel stats are hidden (should not be possible)
 .panelStatsAllHidden {
   padding-top: 5rem;
   padding-bottom: 5rem;
   padding-left: 15rem;
   padding-right: 15rem;
+}
+
+// Count of hidden panel stats
+.panelStatsHiddenCount {
+  display: flex;
+  color: var(--warningColor);
+  font-size: 14rem;
+  // NOTE: Margin is applied via dynamic styles
 }
 
 // Education icons have a letter displayed inside to indicate which type

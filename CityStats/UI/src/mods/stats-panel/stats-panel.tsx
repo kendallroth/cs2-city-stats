@@ -199,26 +199,49 @@ const StatsPanel = () => {
                 )}
               </div>
 
-              <Tooltip
-                direction={inHorizontalMode ? "down" : "right"}
-                tooltip="Toggle stat visibility"
+              <div
+                className={panelStyles.panelStatsAppend}
+                style={{
+                  flexDirection: inHorizontalMode ? "row" : "column",
+                  marginLeft: inHorizontalMode ? "4rem" : undefined,
+                  marginTop: !inHorizontalMode ? "2rem" : undefined,
+                }}
               >
-                <Button
-                  className={panelStyles.settingsButton}
-                  style={{
-                    marginLeft: inHorizontalMode ? "8rem" : undefined,
-                    marginTop: !inHorizontalMode ? "8rem" : undefined,
-                  }}
-                  variant="round"
-                  onClick={handleSettingsToggle}
+                {!!hiddenStats.size && (
+                  <Tooltip
+                    direction={inHorizontalMode ? "down" : "right"}
+                    tooltip={`${hiddenStats.size} additional stats`}
+                  >
+                    <div
+                      className={panelStyles.panelStatsHiddenCount}
+                      style={{
+                        marginRight: inHorizontalMode ? "4rem" : undefined,
+                        marginBottom: !inHorizontalMode ? "2rem" : undefined,
+                      }}
+                    >
+                      {/* Equivalent to '&hairsp;' which rendered as text... */}
+                      +&#8202;{hiddenStats.size}
+                    </div>
+                  </Tooltip>
+                )}
+                <Tooltip
+                  direction={inHorizontalMode ? "down" : "right"}
+                  tooltip="Toggle stat visibility"
                 >
-                  <img
-                    alt="Settings"
-                    className={panelStyles.settingsButtonIcon}
-                    src={editing ? settingsOffIcon : settingsIcon}
-                  />
-                </Button>
-              </Tooltip>
+                  <Button
+                    className={panelStyles.settingsButton}
+                    style={{}}
+                    variant="round"
+                    onClick={handleSettingsToggle}
+                  >
+                    <img
+                      alt="Settings"
+                      className={panelStyles.settingsButtonIcon}
+                      src={editing ? settingsOffIcon : settingsIcon}
+                    />
+                  </Button>
+                </Tooltip>
+              </div>
             </div>
           </PanelSection>
         </Panel>
