@@ -1,11 +1,11 @@
 import { bindValue, trigger, useValue } from "cs2/api";
 import { Panel, PanelSection } from "cs2/ui";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
-import { MOD_NAME, TriggerBindings, ValueBindings } from "constants";
 import clsx from "clsx";
 import StatIcon from "components/stat-icon/stat-icon";
+import { MOD_NAME, TriggerBindings, ValueBindings } from "constants";
 import { useGameInfo } from "hooks/use-game-info";
 import { StatsPanelOrientation } from "types/settings.types";
 import type { Vector2 } from "types/unity.types";
@@ -67,12 +67,12 @@ const StatsPanel = () => {
         <Panel className={clsx([panelStyles.panel, panelOrientationClass])}>
           {inHorizontalMode ? (
             <>
-              <StatsPanelHandle mode="Horizontal" style={{ top: "-10rem" }} />
+              <StatsPanelHandle mode="Horizontal" style={{ top: 0 }} />
             </>
           ) : (
             <>
-              <StatsPanelHandle mode="Vertical" style={{ right: "-10rem" }} />
-              <StatsPanelHandle mode="Vertical" style={{ left: "-10rem" }} />
+              <StatsPanelHandle mode="Vertical" style={{ right: "-4rem" }} />
+              <StatsPanelHandle mode="Vertical" style={{ left: "-4rem" }} />
             </>
           )}
           <PanelSection>
