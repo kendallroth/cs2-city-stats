@@ -36,6 +36,10 @@ namespace CityStats.Localization {
                 { settings.GetOptionWarningLocaleID(nameof(ModSettings.ResetPanelPosition)), "Are you sure you want to reset the panel position?" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetPanelPosition)), $"Reset panel position (ie. if inaccessible, etc)" },
 
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetHiddenStats)), "Reset hidden stats" },
+                { settings.GetOptionWarningLocaleID(nameof(ModSettings.ResetHiddenStats)), "Are you sure you want to reset the panel position?" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetHiddenStats)), $"Reset hidden stats and display all stats again." },
+
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.TogglePanelBinding)), "Toggle panel" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.TogglePanelBinding)), $"Hotkey to toggle panel display" },
 

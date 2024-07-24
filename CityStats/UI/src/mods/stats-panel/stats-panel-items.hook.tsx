@@ -22,7 +22,7 @@ import {
   iconColors,
 } from "./utilities";
 
-interface StatsPanelItem {
+export interface StatsPanelItem {
   children?: ReactNode;
   color?: string;
   colorScale?: StatsPanelColorScaleStep[];

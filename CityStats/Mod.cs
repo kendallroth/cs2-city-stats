@@ -27,7 +27,10 @@ namespace CityStats {
         /// <summary>
         /// Whether game is running in "game" mode (vs menu, editor, etc)
         /// </summary>
-        public static bool InGameMode => (GameManager.instance.gameMode & GameMode.Game) == 0;
+        public static bool InGameMode() {
+            // NOTE: Must be a function (not a getter) to properly execute immediately upon load (vs after first reference)
+            return GameManager.instance.gameMode == GameMode.Game;
+        }
 
 
         #region Lifecycle
@@ -57,7 +60,7 @@ namespace CityStats {
 
 
         public void OnDispose() {
-            Log.Info("Mod disposed");
+            Log.Info($"[{nameof(Mod)}] Mod disposed");
 
             if (Settings != null) {
                 Settings.onSettingsApplied -= OnModSettingsApplied;

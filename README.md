@@ -6,15 +6,14 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 
 The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
 
-The display can be switched between vertical/horizontal modes (in Settings). Additionally, individual statistics can be toggled/hidden via the "settings" icon on the panel (_not yet saved to game_).
+The display can be switched between vertical/horizontal modes (in Settings). Additionally, individual statistics can be toggled/hidden via the "settings" icon on the panel (stored per save).
 
-### Settings
+## Features
 
-- Toggle whether panel is open upon load
-- Change panel orientation (resets position!)
-- Keybinding for toggling panel visibility
+- Toggleable statistics panel (with keybinding)
+- Toggleable individual stats (stored per save)
 
-## Statistics
+### Statistics
 
 - Electricity / Water / Sewage availability
 - Garbage processing, Landfill availability
@@ -23,9 +22,14 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 - Elementary / Highschool / College / University availability
 - Unemployment, Mail availability, Parking availability
 
+### Settings (global)
+
+- Toggle whether panel is open upon load
+- Change panel orientation (resets position!)
+- Keybinding for toggling panel visibility
+
 ## Roadmap
 
-- Persist hidden stats _in save file_ (optional)
 - Localization
 - Minor details
   - Animate panel opening/closing
@@ -33,6 +37,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
   - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
   - Improve police statistics (crime rate may not be useful)
 - Calculate homeless percentage
+  - Inspiration: [ByeByeHomeless Mod](https://github.com/wxdao/CS2-ByeByeHomelessMod/blob/main/ByeByeHomelessMod/Mod.cs)
 
 ![screenshot](./CityStats/Properties/Screenshots/screenshot_4_closeup.png)
 

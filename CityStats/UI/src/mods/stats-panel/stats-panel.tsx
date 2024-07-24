@@ -16,7 +16,7 @@ import type { Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
 import StatsPanelHandle from "./stats-panel-handle";
 import handleStyles from "./stats-panel-handle.module.scss";
-import { useStatsPanelItems } from "./stats-panel-items.hook";
+import { type StatsPanelItem, useStatsPanelItems } from "./stats-panel-items.hook";
 import panelStyles from "./stats-panel.module.scss";
 import { getIconColor } from "./utilities";
 
@@ -101,6 +101,13 @@ const StatsPanel = () => {
 
   const statsPanelItems = useStatsPanelItems({ hiddenStats: hiddenStats });
 
+  const handleStatClick = (stat: StatsPanelItem) => {
+    if (!editing) return;
+
+    // TODO: Figure out how to play sound (likely use 'Button' component?)
+    toggleStat(stat.id);
+  };
+
   const panelOrientationClass = inHorizontalMode
     ? panelStyles.panelHorizontal
     : panelStyles.panelVertical;
@@ -180,7 +187,7 @@ const StatsPanel = () => {
                         marginTop: !inHorizontalMode && idx > 0 ? "4rem" : undefined,
                       }}
                       tooltip={item.tooltip}
-                      onClick={editing ? () => toggleStat(item.id) : undefined}
+                      onClick={() => handleStatClick(item)}
                     >
                       {item.children}
                     </StatIcon>
