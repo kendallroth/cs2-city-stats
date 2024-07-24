@@ -25,16 +25,13 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 - Electricity / Water / Sewage availability
 - Garbage processing, Landfill availability
-- Healthcare availability, Cemetery availability
-- Fire hazard, Crime rate
+- Healthcare availability, Cemetery availability, Crematorium availability
+- Fire hazard, Crime rate, Shelter availability
 - Elementary / Highschool / College / University availability
-- Unemployment
+- Unemployment, Parking availability, Mail availability
 
 ## Roadmap
 
-- Display additional statistics
-	- Mail processing status (comparison between production and processing rates)
-	- Average citizen health
 - Persist hidden stats _in save file_ (optional)
 - Localization
 - Minor details
@@ -71,6 +68,8 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 	<ChangeLog>
 - Ability to hide stats icons within a game
   - _**NOTE:** Not saved with game yet!_
+- Add additional stats (crematory / shelter / parking / mail availability)
+- Improve some icons
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

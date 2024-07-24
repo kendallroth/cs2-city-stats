@@ -3,6 +3,10 @@ import { infoview } from "cs2/bindings";
 import type { CSSProperties, ReactNode } from "react";
 
 import cemeteryIcon from "assets/icons/cemetery.svg";
+import cremationIcon from "assets/icons/cremation.svg";
+import emergencyIcon from "assets/icons/emergency-control.svg";
+import mailIcon from "assets/icons/mail.svg";
+import parkingIcon from "assets/icons/parking.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
@@ -10,7 +14,13 @@ import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
 import panelStyles from "./stats-panel.module.scss";
-import { type StatsPanelColorScaleStep, colorScaleDefault, iconColors } from "./utilities";
+import {
+  type StatsPanelColorScaleStep,
+  colorScaleDefault,
+  colorScaleGradual,
+  getAvailabilityFromProductionAndProcessing,
+  iconColors,
+} from "./utilities";
 
 interface StatsPanelItem {
   children?: ReactNode;
@@ -45,23 +55,14 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   const sewageAvailability = useValue(infoview.sewageAvailability$);
   const sewageAvailabilityPercent = getPercentFromIndicatorValue(sewageAvailability, "float");
 
-  // Calculating garbage processing rate is more complicated (no existing calculation). Instead, the
-  //   production and processing rates are compared, and used to determine a percentage. If either value
-  //   is more than double the other, it is capped at double (for better display).
   const garbageDifferenceMultiplierCap = 2;
-  const calculateGarbageRate = (productionRate: number, processingRate: number) => {
-    // Cap output when processing or production rate are more than double the other
-    if (processingRate < productionRate / garbageDifferenceMultiplierCap) return -1;
-    if (processingRate > garbageDifferenceMultiplierCap * productionRate) return 1;
-
-    // Ensure division-by-zero is handled via defaulting values to smallest possible float
-    return processingRate < productionRate
-      ? processingRate / (productionRate || Number.EPSILON) - 1
-      : 1 - productionRate / (processingRate || Number.EPSILON);
-  };
-  const garbageProductionRate = useValue(infoview.garbageProductionRate$);
-  const garbageProcessingRate = useValue(infoview.garbageProcessingRate$);
-  const garbageAvailability = calculateGarbageRate(garbageProductionRate, garbageProcessingRate);
+  const garbageProductionMonthly = useValue(infoview.garbageProductionRate$);
+  const garbageProcessingMonthly = useValue(infoview.garbageProcessingRate$);
+  const garbageAvailability = getAvailabilityFromProductionAndProcessing(
+    garbageProductionMonthly,
+    garbageProcessingMonthly,
+    garbageDifferenceMultiplierCap,
+  );
   // NOTE: Until garbage processing has been unlocked
   const garbageProcessingPercent = getPercentFromValue(
     garbageAvailability,
@@ -71,13 +72,15 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   );
   const landfillAvailability = useValue(infoview.landfillAvailability$);
   const landfillAvailabilityPercent = getPercentFromIndicatorValue(landfillAvailability, "float");
-  const garbageDisabled = garbageProductionRate === 0;
+  const garbageDisabled = garbageProductionMonthly === 0;
 
   // Administration
   const fireHazard = useValue(infoview.averageFireHazard$);
   const fireHazardPercent = getPercentFromIndicatorValue(fireHazard, "float");
   const crimeRate = useValue(infoview.averageCrimeProbability$);
   const crimeRatePercent = getPercentFromIndicatorValue(crimeRate, "float");
+  const shelterAvailability = useValue(infoview.shelterAvailability$);
+  const shelterAvailabilityPercent = getPercentFromIndicatorValue(shelterAvailability, "float");
 
   // Healthcare
   const healthcareAvailability = useValue(infoview.healthcareAvailability$);
@@ -87,6 +90,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   );
   const cemeteryAvailability = useValue(infoview.cemeteryAvailability$);
   const cemeteryAvailabilityPercent = getPercentFromIndicatorValue(cemeteryAvailability, "float");
+  const cremationAvailability = useValue(infoview.deathcareAvailability$);
+  const cremationAvailabilityPercent = getPercentFromIndicatorValue(cremationAvailability, "float");
 
   // Education
   const educationElementaryAvailability = useValue(infoview.elementaryAvailability$);
@@ -110,9 +115,28 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     "float",
   );
 
-  // Work
+  // Miscellaneous
+  const parkingAvailability = useValue(infoview.parkingAvailability$);
+  const parkingAvailabilityPercent = getPercentFromIndicatorValue(parkingAvailability);
   const unemployment = useValue(infoview.unemployment$);
   const unemploymentPercent = unemployment > 0 ? unemployment / 100 : 0;
+
+  const mailProductionMonthly = useValue(infoview.mailProductionRate$);
+  const mailCollected = useValue(infoview.collectedMail$);
+  const mailDelivered = useValue(infoview.deliveredMail$);
+  const mailProcessingMonthly = mailCollected + mailDelivered;
+  const mailDifferenceMultiplierCap = 2;
+  const mailAvailability = getAvailabilityFromProductionAndProcessing(
+    mailProductionMonthly,
+    mailProcessingMonthly,
+    mailDifferenceMultiplierCap,
+  );
+  const mailAvailabilityPercent = getPercentFromValue(
+    mailAvailability,
+    -1 / mailDifferenceMultiplierCap,
+    1 / mailDifferenceMultiplierCap,
+    "float",
+  );
 
   let statsPanelItems: StatsPanelItem[] = [
     {
@@ -134,7 +158,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     {
       colorScale: colorScaleDefault,
       icon: sewageIcon,
-      iconStyle: { padding: "5%" },
+      iconStyle: { padding: "10%" },
       id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
@@ -171,18 +195,22 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       tooltip: "Healthcare Availability",
     },
     {
-      colorScale: [
-        { color: iconColors.bad, start: 0 },
-        { color: iconColors.badLight, start: 0.25 },
-        { color: iconColors.goodLight, start: 0.5 },
-        { color: iconColors.good, start: 0.75 },
-      ],
+      colorScale: colorScaleGradual,
       icon: cemeteryIcon,
       iconStyle: { padding: "10%" },
       id: "cemeteryAvailability",
       infoviewId: "Healthcare",
       value: cemeteryAvailabilityPercent,
       tooltip: "Cemetery Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: cremationIcon,
+      iconStyle: { padding: "2%" },
+      id: "cremationAvailability",
+      infoviewId: "Healthcare",
+      value: cremationAvailabilityPercent,
+      tooltip: "Crematory Availability",
     },
     {
       colorScale: [
@@ -209,6 +237,15 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       infoviewId: "Police",
       value: crimeRatePercent,
       tooltip: "Crime Rate",
+    },
+    {
+      colorScale: colorScaleGradual,
+      icon: emergencyIcon,
+      iconStyle: { padding: "8%" },
+      id: "shelterAvailability",
+      infoviewId: "DisasterControl",
+      value: shelterAvailabilityPercent,
+      tooltip: "Shelter Availability",
     },
     {
       children: <div className={panelStyles.statIconEducationText}>E</div>,
@@ -245,6 +282,24 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       infoviewId: "Education",
       value: educationUniversityAvailabilityPercent,
       tooltip: "University Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: mailIcon,
+      iconStyle: { padding: "10%" },
+      id: "mailAvailability",
+      infoviewId: "PostService",
+      value: mailAvailabilityPercent,
+      tooltip: "Mail Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: parkingIcon,
+      iconStyle: { padding: "10%" },
+      id: "parkingAvailability",
+      infoviewId: "Roads",
+      value: parkingAvailabilityPercent,
+      tooltip: "Parking Availability",
     },
     {
       colorScale: [

@@ -18,16 +18,13 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 - Electricity / Water / Sewage availability
 - Garbage processing, Landfill availability
-- Healthcare availability, Cemetery availability
-- Fire hazard, Crime rate
+- Healthcare availability, Cemetery availability, Crematorium availabilty
+- Fire hazard, Crime rate, Shelter availability
 - Elementary / Highschool / College / University availability
-- Unemployment
+- Unemployment, Mail availability, Parking availability
 
 ## Roadmap
 
-- Display additional statistics
-  - Mail processing status (comparison between production and processing rates)
-  - Average citizen health
 - Persist hidden stats _in save file_ (optional)
 - Localization
 - Minor details

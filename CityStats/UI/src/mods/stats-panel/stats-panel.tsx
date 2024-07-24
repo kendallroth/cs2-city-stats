@@ -180,7 +180,7 @@ const StatsPanel = () => {
                         marginTop: !inHorizontalMode && idx > 0 ? "4rem" : undefined,
                       }}
                       tooltip={item.tooltip}
-                      onClick={() => toggleStat(item.id)}
+                      onClick={editing ? () => toggleStat(item.id) : undefined}
                     >
                       {item.children}
                     </StatIcon>

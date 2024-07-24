@@ -29,12 +29,16 @@ export const statIds = [
   "landfillAvailability",
   "healthcareAvailability",
   "cemeteryAvailability",
+  "cremationAvailability",
   "fireHazard",
   "crimeRate",
+  "shelterAvailability",
   "educationElementaryAvailability",
   "educationHighschoolAvailability",
   "educationCollegeAvailability",
   "educationUniversityAvailability",
+  "mailAvailability",
+  "parkingAvailability",
   "unemployment",
 ] as const;
 

@@ -36,6 +36,9 @@ export const getPercentFromValue = (
 ): number => {
   // biome-ignore lint/style/noParameterAssign: Must clamp value between min/max to avoid invalid percentages!
   value = clamp(value, min, max);
+  // Prevent division by zero (as well as other unnecessary operations)
+  if (value === min) return 0;
+
   const multiplier = percentFormat === "float" ? 1 : 100;
   return ((value - min) / (max - min)) * multiplier;
 };
