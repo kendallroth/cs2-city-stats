@@ -6,6 +6,7 @@ import cemeteryIcon from "assets/icons/cemetery.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
+import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
 import panelStyles from "./stats-panel.module.scss";
@@ -15,6 +16,8 @@ interface StatsPanelItem {
   children?: ReactNode;
   color?: string;
   colorScale?: StatsPanelColorScaleStep[];
+  hidden?: boolean;
+  id: StatId;
   icon: string;
   infoviewId: InfoviewID;
   iconStyle?: CSSProperties;
@@ -23,7 +26,17 @@ interface StatsPanelItem {
   value: number;
 }
 
-export const useStatsPanelItems = () => {
+interface StatsPanelItemsOptions {
+  hiddenStats?: string[];
+}
+
+export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
+  const { hiddenStats } = options;
+
+  const checkIfHidden = (statId: StatId): boolean => {
+    return hiddenStats?.length ? hiddenStats.includes(statId) : false;
+  };
+
   // Utilities
   const electricityAvailability = useValue(infoview.electricityAvailability$);
   const electricityAvailabilityPercent = getPercentFromIndicatorValue(
@@ -105,10 +118,11 @@ export const useStatsPanelItems = () => {
   const unemployment = useValue(infoview.unemployment$);
   const unemploymentPercent = unemployment > 0 ? unemployment / 100 : 0;
 
-  const statsPanelItems: StatsPanelItem[] = [
+  let statsPanelItems: StatsPanelItem[] = [
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Electricity.svg",
+      id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
       tooltip: "Electricity Availability",
@@ -116,6 +130,7 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Water.svg",
+      id: "waterAvailability",
       infoviewId: "WaterPipes",
       value: waterAvailabilityPercent,
       tooltip: "Water Availability",
@@ -124,6 +139,7 @@ export const useStatsPanelItems = () => {
       colorScale: colorScaleDefault,
       icon: sewageIcon,
       iconStyle: { padding: "5%" },
+      id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
       tooltip: "Sewage Treatment",
@@ -131,6 +147,7 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Garbage.svg",
+      id: "garbageAvailability",
       infoviewId: "Garbage",
       value: garbageProcessingPercent,
       tooltip: "Garbage Processing",
@@ -144,6 +161,7 @@ export const useStatsPanelItems = () => {
       ],
       icon: trashIcon,
       iconStyle: { padding: "5%" },
+      id: "landfillAvailability",
       infoviewId: "Garbage",
       value: landfillAvailabilityPercent,
       tooltip: "Landfill Availability",
@@ -151,6 +169,7 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Healthcare.svg",
+      id: "healthcareAvailability",
       infoviewId: "Healthcare",
       value: healthcareAvailabilityPercent,
       tooltip: "Healthcare Availability",
@@ -164,6 +183,7 @@ export const useStatsPanelItems = () => {
       ],
       icon: cemeteryIcon,
       iconStyle: { padding: "10%" },
+      id: "cemeteryAvailability",
       infoviewId: "Healthcare",
       value: cemeteryAvailabilityPercent,
       tooltip: "Cemetery Availability",
@@ -176,6 +196,7 @@ export const useStatsPanelItems = () => {
         { color: iconColors.bad, start: 0.66 },
       ],
       icon: "Media/Game/Icons/FireSafety.svg",
+      id: "fireHazard",
       infoviewId: "FireRescue",
       value: fireHazardPercent,
       tooltip: "Fire Hazard",
@@ -188,6 +209,7 @@ export const useStatsPanelItems = () => {
         { color: iconColors.bad, start: 0.66 },
       ],
       icon: "Media/Game/Icons/Police.svg",
+      id: "crimeRate",
       infoviewId: "Police",
       value: crimeRatePercent,
       tooltip: "Crime Rate",
@@ -196,6 +218,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>E</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationElementaryAvailability",
       infoviewId: "Education",
       value: educationElementaryAvailabilityPercent,
       tooltip: "Elementary Availability",
@@ -204,6 +227,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>H</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationHighschoolAvailability",
       infoviewId: "Education",
       value: educationHighSchoolAvailabilityPercent,
       tooltip: "Highschool Availability",
@@ -212,6 +236,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>C</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationCollegeAvailability",
       infoviewId: "Education",
       value: educationCollegeAvailabilityPercent,
       tooltip: "College Availability",
@@ -220,6 +245,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>U</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationUniversityAvailability",
       infoviewId: "Education",
       value: educationUniversityAvailabilityPercent,
       tooltip: "University Availability",
@@ -233,11 +259,17 @@ export const useStatsPanelItems = () => {
       ],
       icon: unemploymentIcon,
       iconStyle: { padding: "10%" },
+      id: "unemployment",
       infoviewId: "Workplaces",
       value: unemploymentPercent,
       tooltip: "Unemployment",
     },
   ];
+
+  statsPanelItems = statsPanelItems.map((s) => ({
+    ...s,
+    hidden: checkIfHidden(s.id),
+  }));
 
   return statsPanelItems;
 };
