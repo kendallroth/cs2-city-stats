@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { bindValue, trigger, useValue } from "cs2/api";
-import { Button, Panel, PanelSection, Tooltip } from "cs2/ui";
+import { Button, Panel, PanelSection, Tooltip, UISound } from "cs2/ui";
 import { type CSSProperties, useEffect, useState } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
@@ -31,8 +31,6 @@ const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, f
 
 // TODO: Improve performance by only subscribing to stats and rerendering when panel is visible, which
 //         will require a wrapper component since hooks must be executed before returning 'null'!
-
-// TODO: Show number of hidden stats near the settings button (maybe in badge?)
 
 const StatsPanel = () => {
   const hiddenStatsString = useValue(hiddenStats$);
@@ -104,7 +102,7 @@ const StatsPanel = () => {
   const handleStatClick = (stat: StatsPanelItem) => {
     if (!editing) return;
 
-    // TODO: Figure out how to play sound (likely use 'Button' component?)
+    trigger("audio", "playSound", UISound.selectItem, 1);
     toggleStat(stat.id);
   };
 
