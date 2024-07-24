@@ -72,10 +72,10 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Ability to hide stats icons within a game (stored per save)
+- Ability to toggle/hide stats icons within a game (stored per save)
 - Add additional stats (crematory / shelter / parking / mail availability)
-- Improve some icons
+- Improve some icons and screenshots
 	</ChangeLog>
-	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
+	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
 </Publish>

@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
-### [`0.5` - ???]
+### [`0.5` - 2024-07-24]
 
-- Ability to hide stats icons within a game (stored per save)
+- Ability to toggle/hide stats icons within a game (stored per save)
 - Add additional stats (crematory / shelter / parking / mail availability)
-- Improve some icons
+- Improve some icons and screenshots
 
 ### [`0.4` - 2024-07-19]
 

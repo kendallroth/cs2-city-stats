@@ -48,7 +48,7 @@ namespace CityStats {
         /// Whether stats panel should display upon loading a save
         /// </summary>
         [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
-        public bool PanelOpenOnLoad { get; set; } = false;
+        public bool PanelOpenOnLoad { get; set; } = true;
 
         [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
