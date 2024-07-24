@@ -27,15 +27,11 @@ interface StatsPanelItem {
 }
 
 interface StatsPanelItemsOptions {
-  hiddenStats?: string[];
+  hiddenStats?: Set<string>;
 }
 
 export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   const { hiddenStats } = options;
-
-  const checkIfHidden = (statId: StatId): boolean => {
-    return hiddenStats?.length ? hiddenStats.includes(statId) : false;
-  };
 
   // Utilities
   const electricityAvailability = useValue(infoview.electricityAvailability$);
@@ -268,7 +264,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
 
   statsPanelItems = statsPanelItems.map((s) => ({
     ...s,
-    hidden: checkIfHidden(s.id),
+    hidden: hiddenStats?.has(s.id) ?? false,
   }));
 
   return statsPanelItems;

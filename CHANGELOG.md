@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.5` - 2024-07-24]
+
+- Ability to hide stats icons within a game
+  - _**NOTE:** Not saved with game yet!_
+
 ### [`0.4` - 2024-07-19]
 
 - Add setting to show/hide stats panel when loading a game

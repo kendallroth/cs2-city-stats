@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { bindValue, trigger, useValue } from "cs2/api";
 import { Button, Panel, PanelSection, Tooltip } from "cs2/ui";
-import { type CSSProperties, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
 import settingsOffIcon from "assets/icons/gear-off.svg";
@@ -20,6 +20,7 @@ import { useStatsPanelItems } from "./stats-panel-items.hook";
 import panelStyles from "./stats-panel.module.scss";
 import { getIconColor } from "./utilities";
 
+const hiddenStats$ = bindValue<string>(MOD_NAME, ValueBindings.hiddenStats, "");
 const panelOrientation$ = bindValue<StatsPanelOrientation>(
   MOD_NAME,
   ValueBindings.panelOrientation,
@@ -34,35 +35,50 @@ const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, f
 // TODO: Show number of hidden stats near the settings button (maybe in badge?)
 
 const StatsPanel = () => {
+  const hiddenStatsString = useValue(hiddenStats$);
   const panelOrientation = useValue(panelOrientation$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
+
+  const gameInfo = useGameInfo();
 
   const [editing, setEditing] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-  const areHandlesVisible = dragging || hovering || editing;
+  const handlesVisible = dragging || hovering || editing;
   const inHorizontalMode = panelOrientation === StatsPanelOrientation.Horizontal;
 
-  // TODO: Potentially refactor to use Set
-  const [hiddenStats, setHiddenStats] = useState<StatId[]>(["landfillAvailability"]);
-  const allStatsHidden = hiddenStats.length === statIds.length;
+  // C# state tracks the hidden stats as a raw comma-separated string, while JS uses a Set for performance.
+  const [hiddenStats, setHiddenStats] = useState(new Set<StatId>());
+  const allStatsHidden = hiddenStats.size === statIds.length;
+
+  useEffect(() => {
+    const statsRaw = hiddenStatsString.split(",") as StatId[];
+    // Ensure only valid stats are parsed
+    const stats = statsRaw.filter((s) => statIds.includes(s));
+    setHiddenStats(new Set(stats));
+
+    logger.debug("Updating hidden stats", stats);
+  }, [hiddenStatsString]);
 
   /** Toggle whether a stat is hidden (via editing mode) */
   const toggleStat = (stat: StatId) => {
-    logger.log("Toggling stat", stat, hiddenStats, hiddenStats.includes(stat));
+    logger.debug("Toggling stat visibility", stat);
 
-    if (hiddenStats.includes(stat)) {
-      const newStats = hiddenStats.filter((s) => s !== stat);
-      setHiddenStats(newStats);
+    let newHiddenStatsString = "";
+    const hiddenStatsArray = Array.from(hiddenStats.values());
+
+    if (hiddenStats.has(stat)) {
+      const newStats = hiddenStatsArray.filter((s) => s !== stat);
+      newHiddenStatsString = newStats.join(",");
     } else {
-      const newStats = [...hiddenStats, stat];
-      setHiddenStats(newStats);
+      const newStats = [...hiddenStatsArray, stat];
+      newHiddenStatsString = newStats.join(",");
     }
-  };
 
-  const gameInfo = useGameInfo();
+    trigger(MOD_NAME, TriggerBindings.setHiddenStats, newHiddenStatsString);
+  };
 
   const handleDragStart = () => {
     setDragging(true);
@@ -83,7 +99,7 @@ const StatsPanel = () => {
     setEditing(!editing);
   };
 
-  const statsPanelItems = useStatsPanelItems({ hiddenStats });
+  const statsPanelItems = useStatsPanelItems({ hiddenStats: hiddenStats });
 
   const panelOrientationClass = inHorizontalMode
     ? panelStyles.panelHorizontal
@@ -127,19 +143,19 @@ const StatsPanel = () => {
         >
           {inHorizontalMode ? (
             <>
-              <StatsPanelHandle mode="Horizontal" style={{ top: 0 }} visible={areHandlesVisible} />
+              <StatsPanelHandle mode="Horizontal" style={{ top: 0 }} visible={handlesVisible} />
             </>
           ) : (
             <>
               <StatsPanelHandle
                 mode="Vertical"
                 style={{ right: "-4rem" }}
-                visible={areHandlesVisible}
+                visible={handlesVisible}
               />
               <StatsPanelHandle
                 mode="Vertical"
                 style={{ left: "-4rem" }}
-                visible={areHandlesVisible}
+                visible={handlesVisible}
               />
             </>
           )}

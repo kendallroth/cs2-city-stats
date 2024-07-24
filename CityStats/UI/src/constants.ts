@@ -2,6 +2,8 @@ export const MOD_NAME = "CityStats";
 
 /** C# value binding names */
 export enum ValueBindings {
+  /** List of hidden stats (comma-separated list) */
+  hiddenStats = "hiddenStats",
   /** Whether panel should open on game load */
   panelOpenOnLoad = "panelOpenOnLoad",
   panelOrientation = "panelOrientation",
@@ -12,7 +14,9 @@ export enum ValueBindings {
 
 /** C# trigger binding names */
 export enum TriggerBindings {
+  setHiddenStats = "setHiddenStats",
   setPanelPosition = "setPanelPosition",
+  setPanelVisibility = "setPanelVisibility",
   togglePanelVisible = "togglePanelVisible",
 }
 

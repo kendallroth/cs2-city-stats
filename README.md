@@ -6,6 +6,8 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 
 The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
 
+The display can be switched between vertical/horizontal modes (in Settings). Additionally, individual statistics can be toggled/hidden via the "settings" icon on the panel (_not yet saved to game_).
+
 ### Settings
 
 - Toggle whether panel is open upon load
@@ -26,9 +28,7 @@ The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with 
 - Display additional statistics
   - Mail processing status (comparison between production and processing rates)
   - Average citizen health
-- Implement additional settings
-  - Manage which statistics are displayed
-- Persist panel visibility/location _in save file_ (optional)
+- Persist hidden stats _in save file_ (optional)
 - Localization
 - Minor details
   - Animate panel opening/closing

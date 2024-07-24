@@ -111,7 +111,7 @@ const StatIcon = (props: StatIconProps) => {
   const rootStyle: CSSProperties = {
     ...style,
     display: !editing && hidden ? "none" : undefined,
-    opacity: editing && hidden ? 0.6 : undefined,
+    opacity: editing && hidden ? 0.5 : undefined,
   };
 
   return (

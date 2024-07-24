@@ -13,6 +13,8 @@ A mod for Cities Skylines 2 that allows viewing overall statistics of the city a
 
 The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with the top-left menu button (bar chart icon). Statistics will change between green (good) to red (bad) depending on their value. For the most part this aligns with the Infoview charts where possible; however, some statistics are represented differently for visual purposes.
 
+The display can be switched between vertical/horizontal modes (in Settings). Additionally, individual statistics can be toggled/hidden via the "settings" icon on the panel (_not yet saved to game_).
+
 ### Settings
 
 - Toggle whether panel is open upon load
@@ -33,9 +35,7 @@ The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with 
 - Display additional statistics
 	- Mail processing status (comparison between production and processing rates)
 	- Average citizen health
-- Implement additional settings
-	- Manage which statistics are displayed
-	- Persist panel visibility/location _in save file_ (optional)
+- Persist hidden stats _in save file_ (optional)
 - Localization
 - Minor details
 	- Animate panel opening/closing
@@ -62,15 +62,15 @@ The statistics panel can be opened with `ctrl + shift + s` (rebindable) or with 
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.4" />
+	<ModVersion Value="0.5" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Add setting to show/hide stats panel when loading a game
-- Add setting for panel orientation (resets position when changing!)
+- Ability to hide stats icons within a game
+  - _**NOTE:** Not saved with game yet!_
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

@@ -15,6 +15,7 @@ namespace CityStats.Systems {
     internal partial class ModUISystem : UISystemBase {
         private ProxyAction togglePanelBindingAction;
 
+        private ValueBinding<string> hiddenStatsBinding;
         private ValueBinding<Vector2> panelPositionBinding;
         private ValueBinding<bool> panelVisibleBinding;
         // TODO: See if this can be changed to a 'GetterValueBinding' (previously crashed with writing failure!)
@@ -34,6 +35,8 @@ namespace CityStats.Systems {
             // Action Phases: Performed, Started, Cancelled, Waiting, Disabled
 
             // Value bindings
+            hiddenStatsBinding = new ValueBinding<string>(Mod.NAME, UIBindingData.VALUE_HIDDEN_STATS, "");
+            AddBinding(hiddenStatsBinding);
             panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
             AddBinding(panelVisibleBinding);
             panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
@@ -50,6 +53,8 @@ namespace CityStats.Systems {
             // Trigger bindings
             var togglePanelVisibleTrigger = new TriggerBinding(Mod.NAME, UIBindingData.TRIGGER_TOGGLE_PANEL_VISIBLE, TogglePanelVisibility);
             AddBinding(togglePanelVisibleTrigger);
+            var setHiddenStatsTrigger = new TriggerBinding<string>(Mod.NAME, UIBindingData.TRIGGER_SET_HIDDEN_STATS, SetHiddenStats);
+            AddBinding(setHiddenStatsTrigger);
             var setPanelVisibleTrigger = new TriggerBinding<bool>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_VISIBLE, SetPanelVisibility);
             AddBinding(setPanelVisibleTrigger);
             var setPanelPositionTrigger = new TriggerBinding<Vector2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, OnSetPanelPositionTrigger);
@@ -125,6 +130,18 @@ namespace CityStats.Systems {
         /// </summary>
         public void TogglePanelVisibility() {
             panelVisibleBinding.Update(!panelVisibleBinding.value);
+        }
+
+        /// <summary>
+        /// Update which stats are hidden
+        /// </summary>
+        /// <param name="stats">Comma-separated string of hidden stats</param>
+        /// <remarks>
+        /// Uses a comma-separated string to simplify future serialization within save game (via ECS Entity)
+        /// </remarks>
+        public void SetHiddenStats(string stats) {
+            Mod.Log.Debug($"Updating hidden stats ({stats})");
+            hiddenStatsBinding.Update(stats);
         }
 
 
