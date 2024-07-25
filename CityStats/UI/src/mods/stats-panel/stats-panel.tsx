@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { bindValue, trigger, useValue } from "cs2/api";
-import { Button, Panel, PanelSection, Tooltip, UISound } from "cs2/ui";
+import { Button, Panel, PanelSection, Tooltip } from "cs2/ui";
 import { type CSSProperties, useEffect, useState } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
@@ -102,8 +102,8 @@ const StatsPanel = () => {
   const handleStatClick = (stat: StatsPanelItem) => {
     if (!editing) return;
 
-    trigger("audio", "playSound", UISound.selectItem, 1);
     toggleStat(stat.id);
+    trigger("audio", "playSound", "select-item", 1);
   };
 
   const panelOrientationClass = inHorizontalMode
