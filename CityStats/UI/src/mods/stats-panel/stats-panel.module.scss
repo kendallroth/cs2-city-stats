@@ -6,6 +6,9 @@
   // opacity: 0.95;
   transition: opacity ease-in-out 0.075s;
 
+  // Always apply border to avoid popping in edit mode
+  border: 2px solid transparent;
+
   &:hover,&:focus-within {
     opacity: 1;
   }
@@ -32,9 +35,39 @@
   opacity: 1;
 }
 
+.panelContent {
+  display: flex;
+  align-items: center;
+  // NOTE: 'flex-direction' is applied via dynamic styles
+}
+
 .panelStatsRow {
   display: flex;
   // NOTE: 'flex-direction' is applied via dynamic styles
+}
+
+// Appended content in stats panel
+.panelStatsAppend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // Flex direction and margin are applied via dynamic styles
+}
+
+// Message when all panel stats are hidden (should not be possible)
+.panelStatsAllHidden {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-left: 15rem;
+  padding-right: 15rem;
+}
+
+// Count of hidden panel stats
+.panelStatsHiddenCount {
+  display: flex;
+  color: var(--warningColor);
+  font-size: 14rem;
+  // NOTE: Margin is applied via dynamic styles
 }
 
 // Education icons have a letter displayed inside to indicate which type
@@ -42,4 +75,12 @@
   position: absolute;
   color: var(--tooltipColor);
   font-size: 12rem;
+}
+
+.settingsButton {}
+
+.settingsButtonIcon {
+  width: 24rem;
+  height: 24rem;
+  padding: 2rem;
 }

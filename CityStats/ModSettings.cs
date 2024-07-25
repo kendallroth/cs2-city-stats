@@ -48,7 +48,7 @@ namespace CityStats {
         /// Whether stats panel should display upon loading a save
         /// </summary>
         [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
-        public bool PanelOpenOnLoad { get; set; } = false;
+        public bool PanelOpenOnLoad { get; set; } = true;
 
         [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
@@ -56,11 +56,22 @@ namespace CityStats {
         [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
-        [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsResetPositionHidden))]
-        [SettingsUIHideByCondition(typeof(ModSettings), nameof(IsResetPositionHidden))]
+        [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
+        [SettingsUIHideByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
         public bool ResetPanelPosition {
             set {
                 World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ModUISystem>().ResetPanelPosition();
+            }
+        }
+
+        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUIButton]
+        [SettingsUIConfirmation]
+        [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
+        [SettingsUIHideByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
+        public bool ResetHiddenStats {
+            set {
+                World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ModUISystem>().ResetHiddenStats();
             }
         }
         #endregion
@@ -85,14 +96,15 @@ namespace CityStats {
                 ResetKeyBindings();
             }
         }
+        #endregion
+
 
         /// <summary>
-        /// Only show "Reset Position" button while in-game (not in main menu)
+        /// Various settings are disabled while not in game mode (ie. editor, main menu, etc)
         /// </summary>
-        public bool IsResetPositionHidden() {
-            return Mod.InGameMode;
+        public bool IsNotInGameMode() {
+            return !Mod.InGameMode();
         }
-        #endregion
 
 
         #region Methods

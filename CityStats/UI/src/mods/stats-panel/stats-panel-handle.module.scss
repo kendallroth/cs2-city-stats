@@ -1,6 +1,8 @@
 .handle {
   position: absolute;
-  padding: 5rem;
+  overflow: hidden;
+  // Raise handle above stat icons (for click events)
+  z-index: 1;
 }
 
 .handleHorizontal {
@@ -11,11 +13,14 @@
 
 .handleVertical {
   top: 50%;
-  transform: translateY(-50%);
+  // Rotate handle to avoid having to specify individual handle icon margin "cropping" per orientation
+  transform: translateY(-50%) rotate(90deg);
   // NOTE: 'left'/'right' are applied via dynamic styles (since there are two vertical icons)
 }
 
 .handleIcon {
   width: 20rem;
   height: 20rem;
+  margin-top: -5rem;
+  margin-bottom: -5rem;
 }

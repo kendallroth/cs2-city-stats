@@ -42,3 +42,31 @@ export const colorScaleDefault: StatsPanelColorScaleStep[] = [
   { color: iconColors.goodLight, start: 0.5 },
   { color: iconColors.good, start: 0.6 },
 ];
+
+export const colorScaleGradual: StatsPanelColorScaleStep[] = [
+  { color: iconColors.bad, start: 0 },
+  { color: iconColors.badLight, start: 0.25 },
+  { color: iconColors.goodLight, start: 0.5 },
+  { color: iconColors.good, start: 0.75 },
+];
+
+/**
+ * Convert monthly production and processing values to an availability percent.
+ *
+ * Availability is calculated as the percent of production satisfied by processing, with a
+ *   multiplier cap implemented to provide 0/100% values once one value offsets the other by a given amount
+ */
+export const getAvailabilityFromProductionAndProcessing = (
+  productionRate: number,
+  processingRate: number,
+  multiplierCap = 2,
+) => {
+  // Cap output when processing or production rate are more than double the other
+  if (processingRate < productionRate / multiplierCap) return -1;
+  if (processingRate > multiplierCap * productionRate) return 1;
+
+  // Ensure division-by-zero is handled via defaulting values to smallest possible float
+  return processingRate < productionRate
+    ? processingRate / (productionRate || Number.EPSILON) - 1
+    : 1 - productionRate / (processingRate || Number.EPSILON);
+};

@@ -2,4 +2,5 @@
 node_modules/
 
 # Extracted Colossal Order assets (for dev only)
-extracted/
+extracted/*
+!extracted/co-binding-function-approximations.ts

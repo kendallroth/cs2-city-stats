@@ -2,7 +2,6 @@ import clsx from "clsx";
 import type { CSSProperties } from "react";
 
 import dragIconHorizontal from "assets/icons/drag-horizontal.svg";
-import dragIconVertical from "assets/icons/drag-vertical.svg";
 import type { StatsPanelOrientation } from "types/settings.types";
 import handleStyles from "./stats-panel-handle.module.scss";
 
@@ -10,10 +9,16 @@ interface StatsPanelHandleProps {
   className?: string;
   mode: `${StatsPanelOrientation}`;
   style?: CSSProperties;
+  visible?: boolean;
 }
 
 const StatsPanelHandle = (props: StatsPanelHandleProps) => {
-  const { className, mode, style } = props;
+  const { className, mode, style: _style, visible } = props;
+
+  const style: CSSProperties = {
+    ..._style,
+    display: visible ? undefined : "none",
+  };
 
   return (
     <div
@@ -24,11 +29,7 @@ const StatsPanelHandle = (props: StatsPanelHandleProps) => {
       ])}
       style={style}
     >
-      <img
-        alt="drag-handle"
-        className={handleStyles.handleIcon}
-        src={mode === "Horizontal" ? dragIconHorizontal : dragIconVertical}
-      />
+      <img alt="drag-handle" className={handleStyles.handleIcon} src={dragIconHorizontal} />
     </div>
   );
 };

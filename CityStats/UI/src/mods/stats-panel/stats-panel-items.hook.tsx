@@ -3,18 +3,31 @@ import { infoview } from "cs2/bindings";
 import type { CSSProperties, ReactNode } from "react";
 
 import cemeteryIcon from "assets/icons/cemetery.svg";
+import cremationIcon from "assets/icons/cremation.svg";
+import emergencyIcon from "assets/icons/emergency-control.svg";
+import mailIcon from "assets/icons/mail.svg";
+import parkingIcon from "assets/icons/parking.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
+import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
 import panelStyles from "./stats-panel.module.scss";
-import { type StatsPanelColorScaleStep, colorScaleDefault, iconColors } from "./utilities";
+import {
+  type StatsPanelColorScaleStep,
+  colorScaleDefault,
+  colorScaleGradual,
+  getAvailabilityFromProductionAndProcessing,
+  iconColors,
+} from "./utilities";
 
-interface StatsPanelItem {
+export interface StatsPanelItem {
   children?: ReactNode;
   color?: string;
   colorScale?: StatsPanelColorScaleStep[];
+  hidden?: boolean;
+  id: StatId;
   icon: string;
   infoviewId: InfoviewID;
   iconStyle?: CSSProperties;
@@ -23,7 +36,13 @@ interface StatsPanelItem {
   value: number;
 }
 
-export const useStatsPanelItems = () => {
+interface StatsPanelItemsOptions {
+  hiddenStats?: Set<string>;
+}
+
+export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
+  const { hiddenStats } = options;
+
   // Utilities
   const electricityAvailability = useValue(infoview.electricityAvailability$);
   const electricityAvailabilityPercent = getPercentFromIndicatorValue(
@@ -36,23 +55,14 @@ export const useStatsPanelItems = () => {
   const sewageAvailability = useValue(infoview.sewageAvailability$);
   const sewageAvailabilityPercent = getPercentFromIndicatorValue(sewageAvailability, "float");
 
-  // Calculating garbage processing rate is more complicated (no existing calculation). Instead, the
-  //   production and processing rates are compared, and used to determine a percentage. If either value
-  //   is more than double the other, it is capped at double (for better display).
   const garbageDifferenceMultiplierCap = 2;
-  const calculateGarbageRate = (productionRate: number, processingRate: number) => {
-    // Cap output when processing or production rate are more than double the other
-    if (processingRate < productionRate / garbageDifferenceMultiplierCap) return -1;
-    if (processingRate > garbageDifferenceMultiplierCap * productionRate) return 1;
-
-    // Ensure division-by-zero is handled via defaulting values to smallest possible float
-    return processingRate < productionRate
-      ? processingRate / (productionRate || Number.EPSILON) - 1
-      : 1 - productionRate / (processingRate || Number.EPSILON);
-  };
-  const garbageProductionRate = useValue(infoview.garbageProductionRate$);
-  const garbageProcessingRate = useValue(infoview.garbageProcessingRate$);
-  const garbageAvailability = calculateGarbageRate(garbageProductionRate, garbageProcessingRate);
+  const garbageProductionMonthly = useValue(infoview.garbageProductionRate$);
+  const garbageProcessingMonthly = useValue(infoview.garbageProcessingRate$);
+  const garbageAvailability = getAvailabilityFromProductionAndProcessing(
+    garbageProductionMonthly,
+    garbageProcessingMonthly,
+    garbageDifferenceMultiplierCap,
+  );
   // NOTE: Until garbage processing has been unlocked
   const garbageProcessingPercent = getPercentFromValue(
     garbageAvailability,
@@ -62,13 +72,15 @@ export const useStatsPanelItems = () => {
   );
   const landfillAvailability = useValue(infoview.landfillAvailability$);
   const landfillAvailabilityPercent = getPercentFromIndicatorValue(landfillAvailability, "float");
-  const garbageDisabled = garbageProductionRate === 0;
+  const garbageDisabled = garbageProductionMonthly === 0;
 
   // Administration
   const fireHazard = useValue(infoview.averageFireHazard$);
   const fireHazardPercent = getPercentFromIndicatorValue(fireHazard, "float");
   const crimeRate = useValue(infoview.averageCrimeProbability$);
   const crimeRatePercent = getPercentFromIndicatorValue(crimeRate, "float");
+  const shelterAvailability = useValue(infoview.shelterAvailability$);
+  const shelterAvailabilityPercent = getPercentFromIndicatorValue(shelterAvailability, "float");
 
   // Healthcare
   const healthcareAvailability = useValue(infoview.healthcareAvailability$);
@@ -78,6 +90,8 @@ export const useStatsPanelItems = () => {
   );
   const cemeteryAvailability = useValue(infoview.cemeteryAvailability$);
   const cemeteryAvailabilityPercent = getPercentFromIndicatorValue(cemeteryAvailability, "float");
+  const cremationAvailability = useValue(infoview.deathcareAvailability$);
+  const cremationAvailabilityPercent = getPercentFromIndicatorValue(cremationAvailability, "float");
 
   // Education
   const educationElementaryAvailability = useValue(infoview.elementaryAvailability$);
@@ -101,14 +115,34 @@ export const useStatsPanelItems = () => {
     "float",
   );
 
-  // Work
+  // Miscellaneous
+  const parkingAvailability = useValue(infoview.parkingAvailability$);
+  const parkingAvailabilityPercent = getPercentFromIndicatorValue(parkingAvailability);
   const unemployment = useValue(infoview.unemployment$);
   const unemploymentPercent = unemployment > 0 ? unemployment / 100 : 0;
 
-  const statsPanelItems: StatsPanelItem[] = [
+  const mailProductionMonthly = useValue(infoview.mailProductionRate$);
+  const mailCollected = useValue(infoview.collectedMail$);
+  const mailDelivered = useValue(infoview.deliveredMail$);
+  const mailProcessingMonthly = mailCollected + mailDelivered;
+  const mailDifferenceMultiplierCap = 2;
+  const mailAvailability = getAvailabilityFromProductionAndProcessing(
+    mailProductionMonthly,
+    mailProcessingMonthly,
+    mailDifferenceMultiplierCap,
+  );
+  const mailAvailabilityPercent = getPercentFromValue(
+    mailAvailability,
+    -1 / mailDifferenceMultiplierCap,
+    1 / mailDifferenceMultiplierCap,
+    "float",
+  );
+
+  let statsPanelItems: StatsPanelItem[] = [
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Electricity.svg",
+      id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
       tooltip: "Electricity Availability",
@@ -116,6 +150,7 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Water.svg",
+      id: "waterAvailability",
       infoviewId: "WaterPipes",
       value: waterAvailabilityPercent,
       tooltip: "Water Availability",
@@ -123,7 +158,8 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: sewageIcon,
-      iconStyle: { padding: "5%" },
+      iconStyle: { padding: "10%" },
+      id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
       tooltip: "Sewage Treatment",
@@ -131,6 +167,7 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Garbage.svg",
+      id: "garbageAvailability",
       infoviewId: "Garbage",
       value: garbageProcessingPercent,
       tooltip: "Garbage Processing",
@@ -144,6 +181,7 @@ export const useStatsPanelItems = () => {
       ],
       icon: trashIcon,
       iconStyle: { padding: "5%" },
+      id: "landfillAvailability",
       infoviewId: "Garbage",
       value: landfillAvailabilityPercent,
       tooltip: "Landfill Availability",
@@ -151,22 +189,28 @@ export const useStatsPanelItems = () => {
     {
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Healthcare.svg",
+      id: "healthcareAvailability",
       infoviewId: "Healthcare",
       value: healthcareAvailabilityPercent,
       tooltip: "Healthcare Availability",
     },
     {
-      colorScale: [
-        { color: iconColors.bad, start: 0 },
-        { color: iconColors.badLight, start: 0.25 },
-        { color: iconColors.goodLight, start: 0.5 },
-        { color: iconColors.good, start: 0.75 },
-      ],
+      colorScale: colorScaleGradual,
       icon: cemeteryIcon,
       iconStyle: { padding: "10%" },
+      id: "cemeteryAvailability",
       infoviewId: "Healthcare",
       value: cemeteryAvailabilityPercent,
       tooltip: "Cemetery Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: cremationIcon,
+      iconStyle: { padding: "2%" },
+      id: "cremationAvailability",
+      infoviewId: "Healthcare",
+      value: cremationAvailabilityPercent,
+      tooltip: "Crematory Availability",
     },
     {
       colorScale: [
@@ -176,6 +220,7 @@ export const useStatsPanelItems = () => {
         { color: iconColors.bad, start: 0.66 },
       ],
       icon: "Media/Game/Icons/FireSafety.svg",
+      id: "fireHazard",
       infoviewId: "FireRescue",
       value: fireHazardPercent,
       tooltip: "Fire Hazard",
@@ -188,14 +233,25 @@ export const useStatsPanelItems = () => {
         { color: iconColors.bad, start: 0.66 },
       ],
       icon: "Media/Game/Icons/Police.svg",
+      id: "crimeRate",
       infoviewId: "Police",
       value: crimeRatePercent,
       tooltip: "Crime Rate",
     },
     {
+      colorScale: colorScaleGradual,
+      icon: emergencyIcon,
+      iconStyle: { padding: "8%" },
+      id: "shelterAvailability",
+      infoviewId: "DisasterControl",
+      value: shelterAvailabilityPercent,
+      tooltip: "Shelter Availability",
+    },
+    {
       children: <div className={panelStyles.statIconEducationText}>E</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationElementaryAvailability",
       infoviewId: "Education",
       value: educationElementaryAvailabilityPercent,
       tooltip: "Elementary Availability",
@@ -204,6 +260,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>H</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationHighschoolAvailability",
       infoviewId: "Education",
       value: educationHighSchoolAvailabilityPercent,
       tooltip: "Highschool Availability",
@@ -212,6 +269,7 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>C</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationCollegeAvailability",
       infoviewId: "Education",
       value: educationCollegeAvailabilityPercent,
       tooltip: "College Availability",
@@ -220,9 +278,28 @@ export const useStatsPanelItems = () => {
       children: <div className={panelStyles.statIconEducationText}>U</div>,
       colorScale: colorScaleDefault,
       icon: "Media/Game/Icons/Education.svg",
+      id: "educationUniversityAvailability",
       infoviewId: "Education",
       value: educationUniversityAvailabilityPercent,
       tooltip: "University Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: mailIcon,
+      iconStyle: { padding: "10%" },
+      id: "mailAvailability",
+      infoviewId: "PostService",
+      value: mailAvailabilityPercent,
+      tooltip: "Mail Availability",
+    },
+    {
+      colorScale: colorScaleDefault,
+      icon: parkingIcon,
+      iconStyle: { padding: "10%" },
+      id: "parkingAvailability",
+      infoviewId: "Roads",
+      value: parkingAvailabilityPercent,
+      tooltip: "Parking Availability",
     },
     {
       colorScale: [
@@ -233,11 +310,17 @@ export const useStatsPanelItems = () => {
       ],
       icon: unemploymentIcon,
       iconStyle: { padding: "10%" },
+      id: "unemployment",
       infoviewId: "Workplaces",
       value: unemploymentPercent,
       tooltip: "Unemployment",
     },
   ];
+
+  statsPanelItems = statsPanelItems.map((s) => ({
+    ...s,
+    hidden: hiddenStats?.has(s.id) ?? false,
+  }));
 
   return statsPanelItems;
 };

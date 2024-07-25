@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import type { CSSProperties, ReactNode } from "react";
 
+import { panelEditingColor } from "constants";
 import { Tooltip } from "cs2/ui";
+import { getHexOpacity } from "utilities/color.util";
 import { clamp, getPercentFromValue } from "utilities/number.util";
 import iconStyles from "./stat-icon.module.scss";
 import { calculateArc } from "./utilities";
@@ -19,8 +21,12 @@ interface StatIconProps {
   children?: ReactNode;
   /** Progress circle line color */
   color?: string;
+  /** Whether stat icon is in edit mode (ie. when toggling hidden icons) */
+  editing?: boolean;
   /** Progress circle background color */
   fill?: string;
+  /** Whether stat icon is hidden (by user) */
+  hidden?: boolean;
   icon?: string;
   iconStyle?: CSSProperties;
   /** Progress value value (usually decimal percentage) */
@@ -45,8 +51,10 @@ interface StatIconProps {
 const StatIcon = (props: StatIconProps) => {
   const {
     children,
-    color,
-    fill = "none",
+    color: _color,
+    editing,
+    fill: _fill = "none",
+    hidden,
     icon,
     iconStyle,
     size = 40,
@@ -55,11 +63,13 @@ const StatIcon = (props: StatIconProps) => {
     progressMin = 0,
     startAngle: startAngleRaw = "top",
     style,
-    tooltip,
-    trackColor,
+    tooltip: _tooltip,
+    trackColor: _trackColor,
     trackWidth = 3,
     onClick,
   } = props;
+
+  const tooltip = !hidden ? _tooltip : `${_tooltip} (hidden)`;
 
   let progressPercent = getPercentFromValue(progress, progressMin, progressMax, "float");
   const minMaxProgressOffset = 0.005;
@@ -86,14 +96,27 @@ const StatIcon = (props: StatIconProps) => {
     (startAngle + 360) * progressPercent,
   );
 
-  const svgStyle = {
+  let fill = _fill;
+  let color = _color;
+  const trackColor = _trackColor;
+  if (editing) {
+    fill = !hidden ? `${panelEditingColor}${getHexOpacity(0.25)}` : `#ffffff${getHexOpacity(0.25)}`;
+    color = !hidden ? panelEditingColor : "gray";
+  }
+
+  const svgStyle: CSSProperties = {
     width: `${size}rem`,
     height: `${size}rem`,
+  };
+  const rootStyle: CSSProperties = {
+    ...style,
+    display: !editing && hidden ? "none" : undefined,
+    opacity: editing && hidden ? 0.5 : undefined,
   };
 
   return (
     <Tooltip direction="down" tooltip={tooltip}>
-      <div className={iconStyles.statIconRoot} style={style} onClick={onClick}>
+      <div className={iconStyles.statIconRoot} style={rootStyle} onClick={onClick}>
         {/* biome-ignore lint/a11y/noSvgWithoutTitle: Not necessary in game */}
         <svg style={svgStyle} viewBox={`0 0 ${size} ${size}`}>
           <circle
@@ -108,8 +131,8 @@ const StatIcon = (props: StatIconProps) => {
             fill="none"
             d={arcString}
             stroke={color}
-            stroke-linecap="round"
-            stroke-width={trackWidth}
+            strokeLinecap="round"
+            strokeWidth={trackWidth}
           />
         </svg>
         {icon && (
