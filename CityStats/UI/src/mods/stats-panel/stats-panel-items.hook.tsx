@@ -10,6 +10,7 @@ import parkingIcon from "assets/icons/parking.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
+import { useLocalization } from "cs2/l10n";
 import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
@@ -42,6 +43,7 @@ interface StatsPanelItemsOptions {
 
 export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   const { hiddenStats } = options;
+  const localization = useLocalization();
 
   // Utilities
   const electricityAvailability = useValue(infoview.electricityAvailability$);
@@ -145,7 +147,11 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
-      tooltip: "Electricity Availability",
+      tooltip:
+        localization.translate(
+          "CS2-City-Stats.Electricity Availability",
+          "Electricity Availability",
+        ) ?? "",
     },
     {
       colorScale: colorScaleDefault,
@@ -153,7 +159,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "waterAvailability",
       infoviewId: "WaterPipes",
       value: waterAvailabilityPercent,
-      tooltip: "Water Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Water Availability", "Water Availability") ?? "",
     },
     {
       colorScale: colorScaleDefault,
@@ -162,7 +169,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
-      tooltip: "Sewage Treatment",
+      tooltip: localization.translate("CS2-City-Stats.Sewage Treatment", "Sewage Treatment") ?? "",
     },
     {
       colorScale: colorScaleDefault,
@@ -170,7 +177,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "garbageAvailability",
       infoviewId: "Garbage",
       value: garbageProcessingPercent,
-      tooltip: "Garbage Processing",
+      tooltip:
+        localization.translate("CS2-City-Stats.Garbage Processing", "Garbage Processing") ?? "",
     },
     {
       colorScale: [
@@ -184,7 +192,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "landfillAvailability",
       infoviewId: "Garbage",
       value: landfillAvailabilityPercent,
-      tooltip: "Landfill Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Landfill Availability", "Landfill Availability") ??
+        "",
     },
     {
       colorScale: colorScaleDefault,
@@ -192,7 +202,11 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "healthcareAvailability",
       infoviewId: "Healthcare",
       value: healthcareAvailabilityPercent,
-      tooltip: "Healthcare Availability",
+      tooltip:
+        localization.translate(
+          "CS2-City-Stats.Healthcare Availability",
+          "Healthcare Availability",
+        ) ?? "",
     },
     {
       colorScale: colorScaleGradual,
@@ -201,7 +215,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "cemeteryAvailability",
       infoviewId: "Healthcare",
       value: cemeteryAvailabilityPercent,
-      tooltip: "Cemetery Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Cemetery Availability", "Cemetery Availability") ??
+        "",
     },
     {
       colorScale: colorScaleDefault,
@@ -210,7 +226,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "cremationAvailability",
       infoviewId: "Healthcare",
       value: cremationAvailabilityPercent,
-      tooltip: "Crematory Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Crematory Availability", "Crematory Availability") ??
+        "",
     },
     {
       colorScale: [
@@ -223,7 +241,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "fireHazard",
       infoviewId: "FireRescue",
       value: fireHazardPercent,
-      tooltip: "Fire Hazard",
+      tooltip: localization.translate("CS2-City-Stats.Fire Hazard", "Fire Hazard") ?? "",
     },
     {
       colorScale: [
@@ -236,7 +254,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "crimeRate",
       infoviewId: "Police",
       value: crimeRatePercent,
-      tooltip: "Crime Rate",
+      tooltip: localization.translate("CS2-City-Stats.Crime Rate", "Crime Rate") ?? "",
     },
     {
       colorScale: colorScaleGradual,
@@ -245,7 +263,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "shelterAvailability",
       infoviewId: "DisasterControl",
       value: shelterAvailabilityPercent,
-      tooltip: "Shelter Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Shelter Availability", "Shelter Availability") ?? "",
     },
     {
       children: <div className={panelStyles.statIconEducationText}>E</div>,
@@ -254,7 +273,11 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationElementaryAvailability",
       infoviewId: "Education",
       value: educationElementaryAvailabilityPercent,
-      tooltip: "Elementary Availability",
+      tooltip:
+        localization.translate(
+          "CS2-City-Stats.Elementary Availability",
+          "Elementary Availability",
+        ) ?? "",
     },
     {
       children: <div className={panelStyles.statIconEducationText}>H</div>,
@@ -263,7 +286,11 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationHighschoolAvailability",
       infoviewId: "Education",
       value: educationHighSchoolAvailabilityPercent,
-      tooltip: "Highschool Availability",
+      tooltip:
+        localization.translate(
+          "CS2-City-Stats.Highschool Availability",
+          "Highschool Availability",
+        ) ?? "",
     },
     {
       children: <div className={panelStyles.statIconEducationText}>C</div>,
@@ -272,7 +299,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationCollegeAvailability",
       infoviewId: "Education",
       value: educationCollegeAvailabilityPercent,
-      tooltip: "College Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.College Availability", "College Availability") ?? "",
     },
     {
       children: <div className={panelStyles.statIconEducationText}>U</div>,
@@ -281,7 +309,11 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationUniversityAvailability",
       infoviewId: "Education",
       value: educationUniversityAvailabilityPercent,
-      tooltip: "University Availability",
+      tooltip:
+        localization.translate(
+          "CS2-City-Stats.University Availability",
+          "University Availability",
+        ) ?? "",
     },
     {
       colorScale: colorScaleDefault,
@@ -290,7 +322,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "mailAvailability",
       infoviewId: "PostService",
       value: mailAvailabilityPercent,
-      tooltip: "Mail Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Mail Availability", "Mail Availability") ?? "",
     },
     {
       colorScale: colorScaleDefault,
@@ -299,7 +332,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "parkingAvailability",
       infoviewId: "Roads",
       value: parkingAvailabilityPercent,
-      tooltip: "Parking Availability",
+      tooltip:
+        localization.translate("CS2-City-Stats.Parking Availability", "Parking Availability") ?? "",
     },
     {
       colorScale: [
@@ -313,7 +347,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "unemployment",
       infoviewId: "Workplaces",
       value: unemploymentPercent,
-      tooltip: "Unemployment",
+      tooltip: localization.translate("CS2-City-Stats.Unemployment", "Unemployment") ?? "",
     },
   ];
 

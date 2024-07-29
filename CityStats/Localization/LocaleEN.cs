@@ -1,4 +1,6 @@
 ﻿using Colossal;
+using Colossal.IO.AssetDatabase.Internal;
+
 using Game.Settings;
 using System;
 using System.Collections.Generic;
@@ -47,6 +49,27 @@ namespace CityStats.Localization {
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetBindings)), $"Reset all key bindings of the mod" },
 
                 { settings.GetBindingMapLocaleID(), "Mod settings sample" },
+                { "CS2-City-Stats.Electricity Availability", "Electricity Availability" },
+                { "CS2-City-Stats.Water Availability", "Water Availability" },
+                { "CS2-City-Stats.Sewage Treatment", "Sewage Treatment" },
+                { "CS2-City-Stats.Garbage Processing", "Garbage Processing" },
+                { "CS2-City-Stats.Landfill Availability", "Landfill Availability" },
+                { "CS2-City-Stats.Healthcare Availability", "Healthcare Availability" },
+                { "CS2-City-Stats.Cemetery Availability", "Cemetery Availability" },
+                { "CS2-City-Stats.Crematory Availability", "Crematory Availability" },
+                { "CS2-City-Stats.Fire Hazard", "Fire Hazard" },
+                { "CS2-City-Stats.Crime Rate", "Crime Rate" },
+                { "CS2-City-Stats.Shelter Availability", "Shelter Availability" },
+                { "CS2-City-Stats.Elementary Availability", "Elementary Availability" },
+                { "CS2-City-Stats.Highschool Availability", "Highschool Availability" },
+                { "CS2-City-Stats.College Availability", "College Availability" },
+                { "CS2-City-Stats.University Availability", "University Availability" },
+                { "CS2-City-Stats.Mail Availability", "Mail Availability" },
+                { "CS2-City-Stats.Parking Availability", "Parking Availability" },
+                { "CS2-City-Stats.Unemployment", "Unemployment" },
+                { "CS2-City-Stats.Toogle Stats", "Toggle stat visibility" },
+                { "CS2-City-Stats.City Stats", "City Stats" },
+                { "CS2-City-Stats.City Stats.desc", "View important city statistics at a glance" }
             };
         }
 
