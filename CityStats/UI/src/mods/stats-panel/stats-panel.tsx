@@ -8,6 +8,7 @@ import settingsOffIcon from "assets/icons/gear-off.svg";
 import settingsIcon from "assets/icons/gear.svg";
 import StatIcon from "components/stat-icon/stat-icon";
 import { MOD_NAME, TriggerBindings, ValueBindings, panelEditingColor, statIds } from "constants";
+import { useLocalization } from "cs2/l10n";
 import { useGameInfo } from "hooks/use-game-info";
 import { logger } from "logger";
 import { StatsPanelOrientation } from "types/settings.types";
@@ -37,7 +38,7 @@ const StatsPanel = () => {
   const panelOrientation = useValue(panelOrientation$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
-
+  const localization = useLocalization();
   const gameInfo = useGameInfo();
 
   const [editing, setEditing] = useState(false);
@@ -85,7 +86,10 @@ const StatsPanel = () => {
   /** Update panel position after drag finishes */
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     setDragging(false);
-    trigger(MOD_NAME, TriggerBindings.setPanelPosition, { x: data.x, y: data.y } satisfies Vector2);
+    trigger(MOD_NAME, TriggerBindings.setPanelPosition, {
+      x: data.x,
+      y: data.y,
+    } satisfies Vector2);
   };
 
   const handleSettingsToggle = () => {
@@ -119,8 +123,8 @@ const StatsPanel = () => {
     borderColor: editing ? panelEditingColor : undefined,
   };
 
-  // Hide panel in photo mode or editor (or when hidden otherwise)
   if (!panelVisible || gameInfo.inPhotoMode || gameInfo.inEditor) {
+    // Hide panel in photo mode or editor (or when hidden otherwise)
     return null;
   }
 
@@ -224,7 +228,10 @@ const StatsPanel = () => {
                 )}
                 <Tooltip
                   direction={inHorizontalMode ? "down" : "right"}
-                  tooltip="Toggle stat visibility"
+                  tooltip={localization.translate(
+                    "CS2-City-Stats.Toogle Stats",
+                    "Toggle stat visibility",
+                  )}
                 >
                   <Button
                     className={panelStyles.settingsButton}
