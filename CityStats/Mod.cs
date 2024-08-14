@@ -7,6 +7,8 @@ using Game.Input;
 using Game.Modding;
 using Game.SceneFlow;
 using Game.Settings;
+using System.IO;
+using System.Linq;
 using Unity.Entities;
 using UnityEngine;
 
@@ -50,6 +52,18 @@ namespace CityStats {
             Settings.onSettingsApplied += OnModSettingsApplied;
 
             Log.Info($"[{nameof(Mod)}] SettingsLoaded: {Settings.ToString()}");
+
+            // DEBUG: Output localization key/value dictionary to take inspiration from Vanilla keys
+            // https://cs2.paradoxwikis.com/Localize_your_mod
+            bool outputLocaleDictionary = false;
+            if (outputLocaleDictionary) {
+                var strings = GameManager.instance.localizationManager.activeDictionary.entries
+                    .OrderBy(kv => kv.Key)
+                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+                var json = Colossal.Json.JSON.Dump(strings);
+                var filePath = Path.Combine(Application.persistentDataPath, "locale-dictionary.json");
+                File.WriteAllText(filePath, json);
+            }
 
             // TODO: Implement/improve localization (ideally would not require individual classes)
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
