@@ -9,12 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CityStats.Localization {
+    /// <summary>
+    /// Default localization file (English)
+    ///
+    /// NOTE: Uses the "default" CS2 localization dictionary to benefit from C# typings 🤷‍...
+    ///
+    /// All other locales are handled via bundled JSON resource files (in 'Locales/*.json'). To facility generating/updating
+    ///   bundled JSON files, this locale dictionary is dumped to 'ModsData/CityStats' upon startup.
+    /// </summary>
     public class LocaleEN : IDictionarySource {
         private readonly ModSettings settings;
+
 
         public LocaleEN(ModSettings settings) {
             this.settings = settings;
         }
+
 
         public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts) {
             // Built-in CS2 options use the following "mod ID" format in all "Options" keys (cannot be changed!)
@@ -90,6 +100,7 @@ namespace CityStats.Localization {
                 { "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]", "hidden" },
             };
         }
+
 
         public void Unload() { }
     }

@@ -27,6 +27,10 @@ All UI changes should be formatted, linted, and type checked before review!
 - Code linting (`npm run code:lint`
 - TS type checking (`npm run code:type`)
 
+## Localization
+
+Currently the primary English localization uses the default CO `LocaleEN` C# class, rather than a separate JSON object. However, all other locale files are stored under `Locales/` as JSON. This can make generating localization objects more complex, as there is no easy way to copy the base JSON file. To help with this, the mod automatically dumps the current `LocaleEN` dictionary into a JSON file within `ModsData` upon startup.
+
 ## Testing Forks
 
 Forked changes can be tested by adding a new Git `remote` to the forked repository, then checking out a local branch from the forked remote.

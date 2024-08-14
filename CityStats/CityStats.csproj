@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
+		<LangVersion>8</LangVersion>
 		<TargetFramework>net472</TargetFramework>
 		<Configurations>Debug;Release</Configurations>
 		
@@ -18,6 +19,11 @@
 	</Target>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Localization\Locales\*.json" />
+		<None Remove="Localization\Locales\*.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Reference Include="Game">
 			<Private>false</Private>
 		</Reference>
@@ -28,6 +34,9 @@
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Colossal.IO.AssetDatabase">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.PSI.Common">
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Colossal.UI">

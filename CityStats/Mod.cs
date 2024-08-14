@@ -1,16 +1,21 @@
 ﻿using CityStats.Localization;
+using Colossal.PSI.Environment;
 using CityStats.Systems;
+using Colossal;
 using Colossal.IO.AssetDatabase;
+using Colossal.Json;
 using Colossal.Logging;
 using Game;
 using Game.Input;
 using Game.Modding;
 using Game.SceneFlow;
 using Game.Settings;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unity.Entities;
 using UnityEngine;
+using CityStats.Utilities;
 
 namespace CityStats {
     public class Mod : IMod {
@@ -53,20 +58,30 @@ namespace CityStats {
 
             Log.Info($"[{nameof(Mod)}] SettingsLoaded: {Settings.ToString()}");
 
-            // DEBUG: Output localization key/value dictionary to take inspiration from Vanilla keys
+            // DEBUG: Dump vanilla localization key/value dictionary to take inspiration from Vanilla keys
             // https://cs2.paradoxwikis.com/Localize_your_mod
-            bool outputLocaleDictionary = false;
-            if (outputLocaleDictionary) {
+            bool dumpVanillaLocaleDictionary = false;
+            if (dumpVanillaLocaleDictionary) {
                 var strings = GameManager.instance.localizationManager.activeDictionary.entries
                     .OrderBy(kv => kv.Key)
                     .ToDictionary(kv => kv.Key, kv => kv.Value);
-                var json = Colossal.Json.JSON.Dump(strings);
-                var filePath = Path.Combine(Application.persistentDataPath, "locale-dictionary.json");
+                string json = JSON.Dump(strings);
+                string filePath = Path.Combine(Application.persistentDataPath, "vanilla-locale-dictionary.json");
                 File.WriteAllText(filePath, json);
             }
 
-            // TODO: Implement/improve localization (ideally would not require individual classes)
-            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
+            var localeEn = new LocaleEN(Settings);
+            GameManager.instance.localizationManager.AddSource("en-US", localeEn);
+
+            // DEBUG: Dump mod localization key/value dictionary to 'ModsData' (for creating other localizations)
+            LocaleLoader.DumpDictionary(localeEn, "en-US.locale.json");
+
+            // Load other JSON localization files (from "Locales/*.json")
+            foreach (var item in new LocaleLoader("Locales").GetAvailableLocales()) {
+                Log.Info($"[{nameof(Mod)}] Loaded localization ({item.LocaleKey})");
+
+                GameManager.instance.localizationManager.AddSource(item.LocaleKey, item);
+            }
 
             // Register mod systems with ECS (with appropriate update phases)
             updateSystem.UpdateAt<ModUISystem>(SystemUpdatePhase.UIUpdate);

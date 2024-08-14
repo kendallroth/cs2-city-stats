@@ -150,7 +150,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
-      tooltip: getLocalizedTooltip("ElectricityAvailability_WRONG", "Electricity Availability"),
+      tooltip: getLocalizedTooltip("ElectricityAvailability", "Electricity Availability"),
     },
     {
       colorScale: colorScaleDefault,
