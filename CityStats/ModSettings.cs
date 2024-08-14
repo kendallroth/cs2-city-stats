@@ -32,8 +32,8 @@ namespace CityStats {
     [FileLocation("ModsSettings/" + Mod.NAME + "/" + Mod.NAME)]
     [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING)]
     [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING)]
-    public class ModSettings : ModSetting {
-        public const string SECTION_MAIN = "Main";
+    public partial class ModSettings : ModSetting {
+        public const string TAB_MAIN = "Main";
         public const string GROUP_GENERAL = "General";
         public const string GROUP_KEYBINDING = "KeyBinding";
 
@@ -47,13 +47,13 @@ namespace CityStats {
         /// <summary>
         /// Whether stats panel should display upon loading a save
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool PanelOpenOnLoad { get; set; } = true;
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -64,7 +64,7 @@ namespace CityStats {
             }
         }
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -81,7 +81,7 @@ namespace CityStats {
         /// <summary>
         /// Key binding to toggle panel visibility
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
+        [SettingsUISection(TAB_MAIN, GROUP_KEYBINDING)]
         [SettingsUIKeyboardBinding(BindingKeyboard.S, nameof(TogglePanelBinding), ctrl: true, shift: true)]
         public ProxyBinding TogglePanelBinding { get; set; }
 
@@ -89,7 +89,7 @@ namespace CityStats {
         /// <summary>
         /// Reset all key bindings to defaults
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
+        [SettingsUISection(TAB_MAIN, GROUP_KEYBINDING)]
         public bool ResetBindings {
             set {
                 Mod.Log.Debug("ResetBindings click");

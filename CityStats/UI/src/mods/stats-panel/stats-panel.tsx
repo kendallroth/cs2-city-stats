@@ -38,7 +38,7 @@ const StatsPanel = () => {
   const panelOrientation = useValue(panelOrientation$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
-  const localization = useLocalization();
+  const { translate: t } = useLocalization();
   const gameInfo = useGameInfo();
 
   const [editing, setEditing] = useState(false);
@@ -123,8 +123,8 @@ const StatsPanel = () => {
     borderColor: editing ? panelEditingColor : undefined,
   };
 
+  // Hide panel in photo mode or editor (or when hidden otherwise)
   if (!panelVisible || gameInfo.inPhotoMode || gameInfo.inEditor) {
-    // Hide panel in photo mode or editor (or when hidden otherwise)
     return null;
   }
 
@@ -228,14 +228,10 @@ const StatsPanel = () => {
                 )}
                 <Tooltip
                   direction={inHorizontalMode ? "down" : "right"}
-                  tooltip={localization.translate(
-                    "CS2-City-Stats.Toogle Stats",
-                    "Toggle stat visibility",
-                  )}
+                  tooltip={t("CityStats.StatsPanel.Actions[ToggleStats]", "Toggle stat visibility")}
                 >
                   <Button
                     className={panelStyles.settingsButton}
-                    style={{}}
                     variant="round"
                     onClick={handleSettingsToggle}
                   >

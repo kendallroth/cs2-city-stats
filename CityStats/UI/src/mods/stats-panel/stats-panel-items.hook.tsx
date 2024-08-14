@@ -1,5 +1,6 @@
 import { useValue } from "cs2/api";
 import { infoview } from "cs2/bindings";
+import { useLocalization } from "cs2/l10n";
 import type { CSSProperties, ReactNode } from "react";
 
 import cemeteryIcon from "assets/icons/cemetery.svg";
@@ -10,7 +11,6 @@ import parkingIcon from "assets/icons/parking.svg";
 import sewageIcon from "assets/icons/sewage.svg";
 import trashIcon from "assets/icons/trash.svg";
 import unemploymentIcon from "assets/icons/unemployment.svg";
-import { useLocalization } from "cs2/l10n";
 import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
@@ -43,7 +43,7 @@ interface StatsPanelItemsOptions {
 
 export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   const { hiddenStats } = options;
-  const localization = useLocalization();
+  const { translate: t } = useLocalization();
 
   // Utilities
   const electricityAvailability = useValue(infoview.electricityAvailability$);
@@ -74,7 +74,6 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   );
   const landfillAvailability = useValue(infoview.landfillAvailability$);
   const landfillAvailabilityPercent = getPercentFromIndicatorValue(landfillAvailability, "float");
-  const garbageDisabled = garbageProductionMonthly === 0;
 
   // Administration
   const fireHazard = useValue(infoview.averageFireHazard$);
@@ -140,6 +139,10 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     "float",
   );
 
+  const getLocalizedTooltip = (item: string, fallback: string) => {
+    return t(`CityStats.Stats[${item}]`, fallback) ?? "No localization!";
+  };
+
   let statsPanelItems: StatsPanelItem[] = [
     {
       colorScale: colorScaleDefault,
@@ -147,11 +150,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
-      tooltip:
-        localization.translate(
-          "CS2-City-Stats.Electricity Availability",
-          "Electricity Availability",
-        ) ?? "",
+      tooltip: getLocalizedTooltip("ElectricityAvailability_WRONG", "Electricity Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -159,8 +158,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "waterAvailability",
       infoviewId: "WaterPipes",
       value: waterAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Water Availability", "Water Availability") ?? "",
+      tooltip: getLocalizedTooltip("WaterAvailability", "Water Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -169,7 +167,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
-      tooltip: localization.translate("CS2-City-Stats.Sewage Treatment", "Sewage Treatment") ?? "",
+      tooltip: getLocalizedTooltip("SewageTreatment", "Sewage Treatment"),
     },
     {
       colorScale: colorScaleDefault,
@@ -177,8 +175,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "garbageAvailability",
       infoviewId: "Garbage",
       value: garbageProcessingPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Garbage Processing", "Garbage Processing") ?? "",
+      tooltip: getLocalizedTooltip("GarbageProcessing", "Garbage Processing"),
     },
     {
       colorScale: [
@@ -192,9 +189,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "landfillAvailability",
       infoviewId: "Garbage",
       value: landfillAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Landfill Availability", "Landfill Availability") ??
-        "",
+      tooltip: getLocalizedTooltip("LandfillAvailability", "Landfill Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -202,11 +197,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "healthcareAvailability",
       infoviewId: "Healthcare",
       value: healthcareAvailabilityPercent,
-      tooltip:
-        localization.translate(
-          "CS2-City-Stats.Healthcare Availability",
-          "Healthcare Availability",
-        ) ?? "",
+      tooltip: getLocalizedTooltip("HealthcareAvailability", "Healthcare Availability"),
     },
     {
       colorScale: colorScaleGradual,
@@ -215,9 +206,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "cemeteryAvailability",
       infoviewId: "Healthcare",
       value: cemeteryAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Cemetery Availability", "Cemetery Availability") ??
-        "",
+      tooltip: getLocalizedTooltip("CemeteryAvailability", "Cemetery Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -226,9 +215,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "cremationAvailability",
       infoviewId: "Healthcare",
       value: cremationAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Crematory Availability", "Crematory Availability") ??
-        "",
+      tooltip: getLocalizedTooltip("CrematoryAvailability", "Crematory Availability"),
     },
     {
       colorScale: [
@@ -241,7 +228,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "fireHazard",
       infoviewId: "FireRescue",
       value: fireHazardPercent,
-      tooltip: localization.translate("CS2-City-Stats.Fire Hazard", "Fire Hazard") ?? "",
+      tooltip: getLocalizedTooltip("FireHazard", "Fire Hazard"),
     },
     {
       colorScale: [
@@ -254,7 +241,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "crimeRate",
       infoviewId: "Police",
       value: crimeRatePercent,
-      tooltip: localization.translate("CS2-City-Stats.Crime Rate", "Crime Rate") ?? "",
+      tooltip: getLocalizedTooltip("CrimeRate", "Crime Rate"),
     },
     {
       colorScale: colorScaleGradual,
@@ -263,8 +250,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "shelterAvailability",
       infoviewId: "DisasterControl",
       value: shelterAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Shelter Availability", "Shelter Availability") ?? "",
+      tooltip: getLocalizedTooltip("ShelterAvailability", "Shelter Availability"),
     },
     {
       children: <div className={panelStyles.statIconEducationText}>E</div>,
@@ -273,11 +259,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationElementaryAvailability",
       infoviewId: "Education",
       value: educationElementaryAvailabilityPercent,
-      tooltip:
-        localization.translate(
-          "CS2-City-Stats.Elementary Availability",
-          "Elementary Availability",
-        ) ?? "",
+      tooltip: getLocalizedTooltip("ElementaryAvailability", "Elementary Availability"),
     },
     {
       children: <div className={panelStyles.statIconEducationText}>H</div>,
@@ -286,11 +268,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationHighschoolAvailability",
       infoviewId: "Education",
       value: educationHighSchoolAvailabilityPercent,
-      tooltip:
-        localization.translate(
-          "CS2-City-Stats.Highschool Availability",
-          "Highschool Availability",
-        ) ?? "",
+      tooltip: getLocalizedTooltip("HighschoolAvailability", "Highschool Availability"),
     },
     {
       children: <div className={panelStyles.statIconEducationText}>C</div>,
@@ -299,8 +277,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationCollegeAvailability",
       infoviewId: "Education",
       value: educationCollegeAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.College Availability", "College Availability") ?? "",
+      tooltip: getLocalizedTooltip("CollegeAvailability", "College Availability"),
     },
     {
       children: <div className={panelStyles.statIconEducationText}>U</div>,
@@ -309,11 +286,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "educationUniversityAvailability",
       infoviewId: "Education",
       value: educationUniversityAvailabilityPercent,
-      tooltip:
-        localization.translate(
-          "CS2-City-Stats.University Availability",
-          "University Availability",
-        ) ?? "",
+      tooltip: getLocalizedTooltip("UniversityAvailability", "University Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -322,8 +295,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "mailAvailability",
       infoviewId: "PostService",
       value: mailAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Mail Availability", "Mail Availability") ?? "",
+      tooltip: getLocalizedTooltip("MailAvailability", "Mail Availability"),
     },
     {
       colorScale: colorScaleDefault,
@@ -332,8 +304,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "parkingAvailability",
       infoviewId: "Roads",
       value: parkingAvailabilityPercent,
-      tooltip:
-        localization.translate("CS2-City-Stats.Parking Availability", "Parking Availability") ?? "",
+      tooltip: getLocalizedTooltip("ParkingAvailability", "Parking Availability"),
     },
     {
       colorScale: [
@@ -347,7 +318,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       id: "unemployment",
       infoviewId: "Workplaces",
       value: unemploymentPercent,
-      tooltip: localization.translate("CS2-City-Stats.Unemployment", "Unemployment") ?? "",
+      tooltip: getLocalizedTooltip("Unemployment", "Unemployment"),
     },
   ];
 

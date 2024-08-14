@@ -30,7 +30,6 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Roadmap
 
-- Localization
 - Minor details
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
@@ -45,3 +44,4 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
 - For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
+- For their contributions to localization: Baka-gourd

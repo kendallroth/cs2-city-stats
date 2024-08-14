@@ -12,7 +12,7 @@ const { DescriptionTooltip } = VanillaComponents.components;
 
 const StatsMenuButton = () => {
   const gameInfo = useGameInfo();
-  const localization = useLocalization();
+  const { translate: t } = useLocalization();
 
   const onClick = () => {
     trigger(MOD_NAME, TriggerBindings.togglePanelVisible);
@@ -25,11 +25,11 @@ const StatsMenuButton = () => {
 
   return (
     <DescriptionTooltip
-      description={localization.translate(
-        "CS2-City-Stats.City Stats.desc",
+      description={t(
+        "CityStats.ToolbarActions[TogglePanel].TooltipDescription",
         "View important city statistics at a glance",
       )}
-      title={localization.translate("CS2-City-Stats.City Stats", "City Stats")}
+      title={t("CityStats.ToolbarActions[TogglePanel].TooltipTitle", "City Stats")}
     >
       <Button style={{ position: "relative" }} variant="floating" onClick={onClick}>
         <img alt="logo" src={menuIcon} className={menuButtonStyles.menuButtonIcon} />

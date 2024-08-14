@@ -17,11 +17,24 @@ namespace CityStats.Localization {
         }
 
         public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts) {
+            // Built-in CS2 options use the following "mod ID" format in all "Options" keys (cannot be changed!)
+            //   modId = $"{type.Assembly.GetName().Name}.{type.Namespace}.{type.Name}"
+            //   ex. "CityStats.CityStats.Mod"
+            // List of some built-in localization keys:
+            //   - GetSettingsLocaleId: $"Options.SECTION[{modId}]"
+            //   - GetOptionTabLocaleID: $"Options.TAB[{modId}.{tabName}]"
+            //   - GetOptionGroupLocaleID: $"Options.GROUP[{modId}.{groupName}]"
+            //   - GetOptionLabelLocaleId: $"Options.OPTION[{modId}.{name}.{optionName}]"
+            //   - GetOptionDescLocaleId: $"Options.OPTION_DESCRIPTION[{id}.{name}.{optionName}]"
+            //   - GetEnumValueLocaleId: $"Options.{modId}.{typeof(T).Name.ToUpper()}[{value}]"
+            //   - GetOptionWarningLocaleID: $"Options.WARNING[{modId}.{name}.{optionName}]"
+            //   - GetBindingMapLocaleId: $"Options.INPUT_MAP[{modId}]"
+
             return new Dictionary<string, string>
             {
-                // Settings Menu
+                // Settings Menu localization
                 { settings.GetSettingsLocaleID(), "City Stats" },
-                { settings.GetOptionTabLocaleID(ModSettings.SECTION_MAIN), "Main" },
+                { settings.GetOptionTabLocaleID(ModSettings.TAB_MAIN), "Main" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_KEYBINDING), "Keybindings" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_GENERAL), "General" },
 
@@ -36,45 +49,48 @@ namespace CityStats.Localization {
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetPanelPosition)), "Reset panel position" },
                 { settings.GetOptionWarningLocaleID(nameof(ModSettings.ResetPanelPosition)), "Are you sure you want to reset the panel position?" },
-                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetPanelPosition)), $"Reset panel position (ie. if inaccessible, etc)" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetPanelPosition)), "Reset panel position (ie. if inaccessible, etc)" },
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetHiddenStats)), "Clear hidden stats" },
                 { settings.GetOptionWarningLocaleID(nameof(ModSettings.ResetHiddenStats)), "Are you sure you want to show all stats again?" },
-                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetHiddenStats)), $"Clear hidden stats and display all stats again." },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetHiddenStats)), "Clear hidden stats and display all stats again." },
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.TogglePanelBinding)), "Toggle panel" },
-                { settings.GetOptionDescLocaleID(nameof(ModSettings.TogglePanelBinding)), $"Hotkey to toggle panel display" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.TogglePanelBinding)), "Hotkey to toggle panel display" },
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetBindings)), "Reset key bindings" },
-                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetBindings)), $"Reset all key bindings of the mod" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetBindings)), "Reset all key bindings of the mod" },
 
-                { settings.GetBindingMapLocaleID(), "Mod settings sample" },
-                { "CS2-City-Stats.Electricity Availability", "Electricity Availability" },
-                { "CS2-City-Stats.Water Availability", "Water Availability" },
-                { "CS2-City-Stats.Sewage Treatment", "Sewage Treatment" },
-                { "CS2-City-Stats.Garbage Processing", "Garbage Processing" },
-                { "CS2-City-Stats.Landfill Availability", "Landfill Availability" },
-                { "CS2-City-Stats.Healthcare Availability", "Healthcare Availability" },
-                { "CS2-City-Stats.Cemetery Availability", "Cemetery Availability" },
-                { "CS2-City-Stats.Crematory Availability", "Crematory Availability" },
-                { "CS2-City-Stats.Fire Hazard", "Fire Hazard" },
-                { "CS2-City-Stats.Crime Rate", "Crime Rate" },
-                { "CS2-City-Stats.Shelter Availability", "Shelter Availability" },
-                { "CS2-City-Stats.Elementary Availability", "Elementary Availability" },
-                { "CS2-City-Stats.Highschool Availability", "Highschool Availability" },
-                { "CS2-City-Stats.College Availability", "College Availability" },
-                { "CS2-City-Stats.University Availability", "University Availability" },
-                { "CS2-City-Stats.Mail Availability", "Mail Availability" },
-                { "CS2-City-Stats.Parking Availability", "Parking Availability" },
-                { "CS2-City-Stats.Unemployment", "Unemployment" },
-                { "CS2-City-Stats.Toogle Stats", "Toggle stat visibility" },
-                { "CS2-City-Stats.City Stats", "City Stats" },
-                { "CS2-City-Stats.City Stats.desc", "View important city statistics at a glance" }
+                // Toolbar localization
+                { "CityStats.ToolbarActions[TogglePanel].TooltipTitle", "City Stats" },
+                { "CityStats.ToolbarActions[TogglePanel].TooltipDescription", "View important city statistics at a glance" },
+
+                // Stats (common) localization
+                { "CityStats.Stats[ElectricityAvailability]", "Electricity Availability" },
+                { "CityStats.Stats[WaterAvailability]", "Water Availability" },
+                { "CityStats.Stats[SewageTreatment]", "Sewage Treatment" },
+                { "CityStats.Stats[GarbageProcessing]", "Garbage Processing" },
+                { "CityStats.Stats[LandfillAvailability]", "Landfill Availability" },
+                { "CityStats.Stats[HealthcareAvailability]", "Healthcare Availability" },
+                { "CityStats.Stats[CemeteryAvailability]", "Cemetery Availability" },
+                { "CityStats.Stats[CrematoryAvailability]", "Crematory Availability" },
+                { "CityStats.Stats[FireHazard]", "Fire Hazard" },
+                { "CityStats.Stats[CrimeRate]", "Crime Rate" },
+                { "CityStats.Stats[ShelterAvailability]", "Shelter Availability" },
+                { "CityStats.Stats[ElementaryAvailability]", "Elementary Availability" },
+                { "CityStats.Stats[HighschoolAvailability]", "Highschool Availability" },
+                { "CityStats.Stats[CollegeAvailability]", "College Availability" },
+                { "CityStats.Stats[UniversityAvailability]", "University Availability" },
+                { "CityStats.Stats[MailAvailability]", "Mail Availability" },
+                { "CityStats.Stats[ParkingAvailability]", "Parking Availability" },
+                { "CityStats.Stats[Unemployment]", "Unemployment" },
+
+                // Panel localization
+                { "CityStats.StatsPanel.Actions[ToggleStats]", "Toggle stat visibility" },
+                { "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]", "hidden" },
             };
         }
 
-        public void Unload() {
-
-        }
+        public void Unload() { }
     }
 }

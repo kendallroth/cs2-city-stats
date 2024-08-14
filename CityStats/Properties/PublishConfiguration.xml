@@ -37,7 +37,6 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Roadmap
 
-- Localization
 - Minor details
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
@@ -51,6 +50,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
 - For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
+- For their contributions to localization: Baka-gourd
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
@@ -59,22 +59,21 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 	<Screenshot Value="Properties/Screenshots/screenshot_2_in_game_info.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_3_in_game_info_2.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_4_closeup.png" />
-	<Screenshot Value="Properties/Screenshots/screenshot_5_settings.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_5_editing.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_6_settings.png" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.5" />
+	<ModVersion Value="0.6" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Ability to toggle/hide stats icons within a game (stored per save)
-- Add additional stats (crematory / shelter / parking / mail availability)
-- Improve some icons and screenshots
+- Implement localization (with beta locales)
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
