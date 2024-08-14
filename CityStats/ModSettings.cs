@@ -30,12 +30,13 @@ namespace CityStats {
     /// </remarks>
     // TODO: Figure out how to use interpolate C# string (allegedly requires upgrade to C#10)
     [FileLocation("ModsSettings/" + Mod.NAME + "/" + Mod.NAME)]
-    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING)]
-    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING)]
+    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
+    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
     public partial class ModSettings : ModSetting {
         public const string TAB_MAIN = "Main";
         public const string GROUP_GENERAL = "General";
         public const string GROUP_KEYBINDING = "KeyBinding";
+        public const string GROUP_LOCALIZATION = "Localization";
 
 
         #region Lifecycle
@@ -96,6 +97,12 @@ namespace CityStats {
                 ResetKeyBindings();
             }
         }
+        #endregion
+
+
+        #region Main / Localization
+        [SettingsUISection(TAB_MAIN, GROUP_LOCALIZATION)]
+        public string LocalizationBetaAlert => string.Empty;
         #endregion
 
 

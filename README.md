@@ -40,6 +40,14 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ![screenshot](./CityStats/Properties/Screenshots/screenshot_4_closeup.png)
 
+## Localization
+
+Localization is a work-in-progress, but is accepting contributions at [CrowdIn](https://crowdin.com/project/cs2-city-stats)!
+
+- English (native)
+- Spanish (machine translated)
+- _more to come?_
+
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!

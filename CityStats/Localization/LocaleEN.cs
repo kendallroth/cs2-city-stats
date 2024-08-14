@@ -47,6 +47,7 @@ namespace CityStats.Localization {
                 { settings.GetOptionTabLocaleID(ModSettings.TAB_MAIN), "Main" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_KEYBINDING), "Keybindings" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_GENERAL), "General" },
+                { settings.GetOptionGroupLocaleID(ModSettings.GROUP_LOCALIZATION), "Localization" },
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelOpenOnLoad)), "Open on load" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.PanelOpenOnLoad)), "Whether panel should open automatically when loading a save." },
@@ -70,6 +71,9 @@ namespace CityStats.Localization {
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetBindings)), "Reset key bindings" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetBindings)), "Reset all key bindings of the mod" },
+
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.LocalizationBetaAlert)), "Localization in Beta!" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.LocalizationBetaAlert)), "Localization for some languages may still be in a beta state; please consider contributing on CrowdIn!" },
 
                 // Toolbar localization
                 { "CityStats.ToolbarActions[TogglePanel].TooltipTitle", "City Stats" },

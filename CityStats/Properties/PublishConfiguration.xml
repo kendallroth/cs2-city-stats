@@ -46,6 +46,11 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ![screenshot](./CityStats/Properties/Screenshots/screenshot_4_closeup.png)
 
+## Localization
+
+Localization is a work-in-progress, but is accepting contributions at [CrowdIn](https://crowdin.com/project/cs2-city-stats)!
+
+
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
@@ -73,8 +78,9 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Implement localization (with beta locales)
+- Implement localization (with beta Spanish locale)
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
+	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/cs2-city-stats" />
 </Publish>
