@@ -56,6 +56,7 @@ namespace CityStats {
 
             // Register mod systems with ECS (with appropriate update phases)
             updateSystem.UpdateAt<ModUISystem>(SystemUpdatePhase.UIUpdate);
+            // updateSystem.UpdateAt<HomelessCalculatorSystem>(SystemUpdatePhase.GameSimulation);
         }
 
 

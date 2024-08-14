@@ -59,7 +59,8 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 	<Screenshot Value="Properties/Screenshots/screenshot_2_in_game_info.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_3_in_game_info_2.png" />
 	<Screenshot Value="Properties/Screenshots/screenshot_4_closeup.png" />
-	<Screenshot Value="Properties/Screenshots/screenshot_5_settings.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_5_editing.png" />
+	<Screenshot Value="Properties/Screenshots/screenshot_6_settings.png" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
