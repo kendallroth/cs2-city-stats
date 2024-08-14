@@ -26,7 +26,7 @@ namespace CityStats.Localization {
 
             locales = new Dictionary<string, Dictionary<string, string>> { };
 
-            Mod.Log.Debug($"[{nameof(LocaleLoader)}] Loading locales");
+            Mod.Log.Info($"[{nameof(LocaleLoader)}] Loading locales");
 
             foreach (string resourceName in assembly.GetManifestResourceNames()) {
                 // Ignore any bundles resources not containing the locale file path filter

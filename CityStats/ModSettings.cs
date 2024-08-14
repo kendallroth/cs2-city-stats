@@ -7,10 +7,12 @@ using Game.SceneFlow;
 using Game.Settings;
 using Game.UI;
 using Game.UI.Widgets;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Unity.Entities;
+using UnityEngine.Device;
 
 // TODO: Decide between referencing settings actions by constant variable OR by 'nameof' (might mainly matter for localization?)
 
@@ -40,7 +42,7 @@ namespace CityStats {
 
 
         #region Lifecycle
-        public ModSettings(IMod mod) : base(mod) {}
+        public ModSettings(IMod mod) : base(mod) { }
         #endregion
 
 
@@ -102,7 +104,20 @@ namespace CityStats {
 
         #region Main / Localization
         [SettingsUISection(TAB_MAIN, GROUP_LOCALIZATION)]
+        [SettingsUIMultilineText("Media/Misc/Warning.svg")]
         public string LocalizationBetaAlert => string.Empty;
+
+        [SettingsUISection(TAB_MAIN, GROUP_LOCALIZATION)]
+        public bool OpenCrowdIn {
+            set {
+                try {
+                    Application.OpenURL("https://crowdin.com/project/cs2-city-stats/");
+                }
+                catch (Exception e) {
+                    Mod.Log.Error($"[{nameof(name)}] Failed to open CrowdIn ({e.Message})");
+                }
+            }
+        }
         #endregion
 
 

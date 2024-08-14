@@ -72,8 +72,9 @@ namespace CityStats.Localization {
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.ResetBindings)), "Reset key bindings" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.ResetBindings)), "Reset all key bindings of the mod" },
 
-                { settings.GetOptionLabelLocaleID(nameof(ModSettings.LocalizationBetaAlert)), "Localization in Beta!" },
-                { settings.GetOptionDescLocaleID(nameof(ModSettings.LocalizationBetaAlert)), "Localization for some languages may still be in a beta state; please consider contributing on CrowdIn!" },
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.LocalizationBetaAlert)), "Localization for some languages may still be in a beta state; please consider contributing on CrowdIn!" },
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.OpenCrowdIn)), "Show on CrowdIn" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.OpenCrowdIn)), "Open CrowdIn project for localization contributions." },
 
                 // Toolbar localization
                 { "CityStats.ToolbarActions[TogglePanel].TooltipTitle", "City Stats" },
