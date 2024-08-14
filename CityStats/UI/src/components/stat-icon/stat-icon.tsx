@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useLocalization } from "cs2/l10n";
 import type { CSSProperties, ReactNode } from "react";
 
 import { panelEditingColor } from "constants";
@@ -69,7 +70,11 @@ const StatIcon = (props: StatIconProps) => {
     onClick,
   } = props;
 
-  const tooltip = !hidden ? _tooltip : `${_tooltip} (hidden)`;
+  const { translate: t } = useLocalization();
+
+  const tooltip = !hidden
+    ? _tooltip
+    : `${_tooltip} (${t("CityStats.StatsPanel.StatTooltip.Modifier[Hidden]", "hidden")})`;
 
   let progressPercent = getPercentFromValue(progress, progressMin, progressMax, "float");
   const minMaxProgressOffset = 0.005;

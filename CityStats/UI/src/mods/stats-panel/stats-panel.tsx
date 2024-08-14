@@ -8,6 +8,7 @@ import settingsOffIcon from "assets/icons/gear-off.svg";
 import settingsIcon from "assets/icons/gear.svg";
 import StatIcon from "components/stat-icon/stat-icon";
 import { MOD_NAME, TriggerBindings, ValueBindings, panelEditingColor, statIds } from "constants";
+import { useLocalization } from "cs2/l10n";
 import { useGameInfo } from "hooks/use-game-info";
 import { logger } from "logger";
 import { StatsPanelOrientation } from "types/settings.types";
@@ -37,7 +38,7 @@ const StatsPanel = () => {
   const panelOrientation = useValue(panelOrientation$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
-
+  const { translate: t } = useLocalization();
   const gameInfo = useGameInfo();
 
   const [editing, setEditing] = useState(false);
@@ -85,7 +86,10 @@ const StatsPanel = () => {
   /** Update panel position after drag finishes */
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     setDragging(false);
-    trigger(MOD_NAME, TriggerBindings.setPanelPosition, { x: data.x, y: data.y } satisfies Vector2);
+    trigger(MOD_NAME, TriggerBindings.setPanelPosition, {
+      x: data.x,
+      y: data.y,
+    } satisfies Vector2);
   };
 
   const handleSettingsToggle = () => {
@@ -224,11 +228,10 @@ const StatsPanel = () => {
                 )}
                 <Tooltip
                   direction={inHorizontalMode ? "down" : "right"}
-                  tooltip="Toggle stat visibility"
+                  tooltip={t("CityStats.StatsPanel.Actions[ToggleStats]", "Toggle stat visibility")}
                 >
                   <Button
                     className={panelStyles.settingsButton}
-                    style={{}}
                     variant="round"
                     onClick={handleSettingsToggle}
                   >
