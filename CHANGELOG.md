@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.7` - 2024-08-20]
+
+- Update in-game menu icon and mod thumbnail
+
+### [`0.6` - 2024-08-14]
+
+- Localization support (beta Spanish)
+
 ### [`0.5` - 2024-07-24]
 
 - Ability to toggle/hide stats icons within a game (stored per save)
