@@ -7,10 +7,12 @@ using Game.SceneFlow;
 using Game.Settings;
 using Game.UI;
 using Game.UI.Widgets;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Unity.Entities;
+using UnityEngine.Device;
 
 // TODO: Decide between referencing settings actions by constant variable OR by 'nameof' (might mainly matter for localization?)
 
@@ -30,16 +32,17 @@ namespace CityStats {
     /// </remarks>
     // TODO: Figure out how to use interpolate C# string (allegedly requires upgrade to C#10)
     [FileLocation("ModsSettings/" + Mod.NAME + "/" + Mod.NAME)]
-    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING)]
-    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING)]
-    public class ModSettings : ModSetting {
-        public const string SECTION_MAIN = "Main";
+    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
+    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
+    public partial class ModSettings : ModSetting {
+        public const string TAB_MAIN = "Main";
         public const string GROUP_GENERAL = "General";
         public const string GROUP_KEYBINDING = "KeyBinding";
+        public const string GROUP_LOCALIZATION = "Localization";
 
 
         #region Lifecycle
-        public ModSettings(IMod mod) : base(mod) {}
+        public ModSettings(IMod mod) : base(mod) { }
         #endregion
 
 
@@ -47,13 +50,13 @@ namespace CityStats {
         /// <summary>
         /// Whether stats panel should display upon loading a save
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool PanelOpenOnLoad { get; set; } = true;
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -64,7 +67,7 @@ namespace CityStats {
             }
         }
 
-        [SettingsUISection(SECTION_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -81,7 +84,7 @@ namespace CityStats {
         /// <summary>
         /// Key binding to toggle panel visibility
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
+        [SettingsUISection(TAB_MAIN, GROUP_KEYBINDING)]
         [SettingsUIKeyboardBinding(BindingKeyboard.S, nameof(TogglePanelBinding), ctrl: true, shift: true)]
         public ProxyBinding TogglePanelBinding { get; set; }
 
@@ -89,11 +92,30 @@ namespace CityStats {
         /// <summary>
         /// Reset all key bindings to defaults
         /// </summary>
-        [SettingsUISection(SECTION_MAIN, GROUP_KEYBINDING)]
+        [SettingsUISection(TAB_MAIN, GROUP_KEYBINDING)]
         public bool ResetBindings {
             set {
                 Mod.Log.Debug("ResetBindings click");
                 ResetKeyBindings();
+            }
+        }
+        #endregion
+
+
+        #region Main / Localization
+        [SettingsUISection(TAB_MAIN, GROUP_LOCALIZATION)]
+        [SettingsUIMultilineText("Media/Misc/Warning.svg")]
+        public string LocalizationBetaAlert => string.Empty;
+
+        [SettingsUISection(TAB_MAIN, GROUP_LOCALIZATION)]
+        public bool OpenCrowdIn {
+            set {
+                try {
+                    Application.OpenURL("https://crowdin.com/project/cs2-city-stats/");
+                }
+                catch (Exception e) {
+                    Mod.Log.Error($"[{nameof(name)}] Failed to open CrowdIn ({e.Message})");
+                }
             }
         }
         #endregion
