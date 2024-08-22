@@ -30,6 +30,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Roadmap
 
+- Display city warning icons
 - Minor details
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
@@ -42,10 +43,13 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Localization
 
+[![Crowdin](https://badges.crowdin.net/cs2-city-stats/localized.svg)](https://crowdin.com/project/cs2-city-stats)
+
 Localization is a work-in-progress, but is accepting contributions at [CrowdIn](https://crowdin.com/project/cs2-city-stats)!
 
-- English (native)
-- Spanish (machine translated)
+- English (native, 100%)
+- Spanish (volunteer, 66%)
+- Korean (volunteer, 100%)
 - _more to come?_
 
 ## Credits
@@ -53,3 +57,4 @@ Localization is a work-in-progress, but is accepting contributions at [CrowdIn](
 - All the lovely people who worked on similar mods for Cities Skylines 1!
 - For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
 - For their contributions to localization: Baka-gourd
+- For all those who have helped with localization!

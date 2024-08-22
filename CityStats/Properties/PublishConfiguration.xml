@@ -37,6 +37,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Roadmap
 
+- Display city warning icons
 - Minor details
   - Animate panel opening/closing
   - Show statistic value in tooltip (or under icon)
@@ -48,14 +49,21 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 
 ## Localization
 
+[![Crowdin](https://badges.crowdin.net/cs2-city-stats/localized.svg)](https://crowdin.com/project/cs2-city-stats)
+
 Localization is a work-in-progress, but is accepting contributions at [CrowdIn](https://crowdin.com/project/cs2-city-stats)!
 
+- English (native, 100%)
+- Spanish (volunteer, 66%)
+- Korean (volunteer, 100%)
+- _more to come?_
 
 ## Credits
 
 - All the lovely people who worked on similar mods for Cities Skylines 1!
-- For all their help with questions about modding/ECS: Krzychu1245, T. D. W. ♥
-- For their contributions to localization: Baka-gourd
+- For all their help with (many) questions about modding/ECS: Krzychu1245, T. D. W. ♥
+- For their help in implementing localization: Baka-gourd
+- For all those who have helped with localization!
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
@@ -71,14 +79,14 @@ Localization is a work-in-progress, but is accepting contributions at [CrowdIn](
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.7" />
+	<ModVersion Value="0.8" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Update game icon and mod thumbnail
+- Add verified Korean, Spanish translations
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
