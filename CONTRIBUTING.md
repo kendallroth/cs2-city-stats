@@ -27,6 +27,16 @@ All UI changes should be formatted, linted, and type checked before review!
 - Code linting (`npm run code:lint`
 - TS type checking (`npm run code:type`)
 
+## Game Assets
+
+### Decomplilation
+
+To access decompiled results, use a tool like ILSpy to open the `Game.dll` file (found in Steam installation). Then "Save" the project after decompiling to output a C# project for searching/learning.
+
+### Media
+
+Game media can be found at `steamapps\common\Cities Skylines II\Cities2_Data\StreamingAssets\~UI~\GameUI\Media`.
+
 ## Localization
 
 Currently the primary English localization uses the default CO `LocaleEN` C# class, rather than a separate JSON object. However, all other locale files are stored under `Locales/` as JSON. This can make generating localization objects more complex, as there is no easy way to copy the base JSON file. To help with this, the mod automatically dumps the current `LocaleEN` dictionary into a JSON file within `ModsData` upon startup.
