@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.9` - 2024-12-11]
+
+- Update for game version `1.2`
+- Add Chinese (Simplified)
+
+### [`0.8` - 2024-08-22]
+
+- Added Korean, Spanish translations
+
 ### [`0.7` - 2024-08-20]
 
 - Update in-game menu icon and mod thumbnail
