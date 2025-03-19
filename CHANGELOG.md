@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.10` - 2025-03-19]
+
+- Update for game version `1.2.5f1`
+- Add homelessness stat
+- Overhaul icons (use custom icons vs 3D in-game icons)
+
 ### [`0.9` - 2024-12-11]
 
 - Update for game version `1.2`
