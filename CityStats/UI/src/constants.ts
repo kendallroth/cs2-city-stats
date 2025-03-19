@@ -28,6 +28,7 @@ export const statIds = [
   "garbageAvailability",
   "landfillAvailability",
   "healthcareAvailability",
+  "homelessness",
   "cemeteryAvailability",
   "cremationAvailability",
   "fireHazard",

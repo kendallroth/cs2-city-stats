@@ -14,6 +14,7 @@ import cemeteryIcon from "assets/icons/material/cemetery-availability.svg";
 import cremationIcon from "assets/icons/material/crematory-availability.svg";
 import crimeRateIcon from "assets/icons/material/crime-rate.svg";
 import fireHazardIcon from "assets/icons/material/fire-hazard.svg";
+import homelessnessIcon from "assets/icons/material/homlessness.svg";
 import trashIcon from "assets/icons/material/landfill-availability.svg";
 import emergencyIcon from "assets/icons/material/shelter-availability.svg";
 import unemploymentIcon from "assets/icons/material/unemployment.svg";
@@ -42,6 +43,12 @@ export interface StatsPanelItem {
   label?: string;
   tooltip?: string;
   value: number;
+  /**
+   * Apply exponential stretching/compressing (low vs high) for display purposes only
+   *
+   * Exponent should be between `0-1`, where smaller values result in more stretching/compressing.
+   */
+  valueExponent?: number;
 }
 
 interface StatsPanelItemsOptions {
@@ -124,6 +131,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   );
 
   // Miscellaneous
+  const homelessness = useValue(infoview.homelessness$);
+  const homelessnessPercent = homelessness > 0 ? homelessness / 100 : 0;
   const parkingAvailability = useValue(infoview.parkingAvailability$);
   const parkingAvailabilityPercent = getPercentFromIndicatorValue(parkingAvailability);
   const unemployment = useValue(infoview.unemployment$);
@@ -324,6 +333,23 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
       infoviewId: "Roads",
       value: parkingAvailabilityPercent,
       tooltip: getLocalizedTooltip("ParkingAvailability", "Parking Availability"),
+    },
+    {
+      // Homelessness percent values should generally be very small!
+      colorScale: [
+        { color: iconColors.good, start: 0 },
+        { color: iconColors.goodLight, start: 0.005 },
+        { color: iconColors.badLight, start: 0.01 },
+        { color: iconColors.bad, start: 0.025 },
+      ],
+      icon: homelessnessIcon,
+      iconStyle: { padding: "12%" },
+      id: "homelessness",
+      infoviewId: "Residential",
+      value: homelessnessPercent,
+      // Homeless percent is exponentially stretched/compressed (low vs high) for better visual representation
+      valueExponent: 0.6,
+      tooltip: getLocalizedTooltip("Homelessness", "Homelessness"),
     },
     {
       colorScale: [

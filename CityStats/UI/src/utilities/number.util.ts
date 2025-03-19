@@ -44,6 +44,20 @@ export const getPercentFromValue = (
 };
 
 /**
+ * Get a "mapped" percent based on an exponential weight
+ * 
+ * NOTE: Smaller exponents stretch lower values and compress higher values more.
+ *
+ * @param percent  - Percentage (range `0-1`)
+ * @param exponent - Exponential stretching/compressing factor (`0.1` - `1.0`)
+ */
+export const getExponentialPercentMapping = (percent: number, exponent: number): number => {
+  percent = clamp(percent, 0, 1);
+  exponent = clamp(exponent, 0.1, 1);
+  return Math.pow(percent, exponent);
+}
+
+/**
  * Get a percent based on a game indicator (contains current value and corresponding range)
  *
  * @param percentFormat - Whether output percent should be an int (`0-100`) or a float (`0-1`)

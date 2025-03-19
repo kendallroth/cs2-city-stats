@@ -15,6 +15,7 @@ import { StatsPanelOrientation } from "types/settings.types";
 import type { StatId } from "types/stats.types";
 import type { Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
+import { getExponentialPercentMapping } from "utilities/number.util";
 import StatsPanelHandle from "./stats-panel-handle";
 import handleStyles from "./stats-panel-handle.module.scss";
 import { type StatsPanelItem, useStatsPanelItems } from "./stats-panel-items.hook";
@@ -182,7 +183,8 @@ const StatsPanel = () => {
                       hidden={item.hidden}
                       icon={item.icon}
                       iconStyle={item.iconStyle}
-                      progress={item.value}
+                      // Some values are exponentially stretched/compressed (low vs high) for display purposes only
+                      progress={item.valueExponent ? getExponentialPercentMapping(item.value, item.valueExponent) : item.value}
                       size={40}
                       style={{
                         marginLeft: inHorizontalMode && idx > 0 ? "4rem" : undefined,
