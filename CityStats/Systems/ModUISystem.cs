@@ -86,12 +86,14 @@ namespace CityStats.Systems {
 
         protected override void OnGamePreload(Purpose purpose, GameMode mode) {
             base.OnGamePreload(purpose, mode);
+
             Mod.Log.Debug($"[{nameof(ModUISystem)}] OnGamePreload");
         }
 
 
         protected override void OnGameLoaded(Context serializationContext) {
             base.OnGameLoaded(serializationContext);
+
             Mod.Log.Debug($"[{nameof(ModUISystem)}] OnGameLoaded");
 
             SetPanelVisibility(Mod.Settings.PanelOpenOnLoad);
@@ -101,7 +103,13 @@ namespace CityStats.Systems {
         protected override void OnDestroy() {
             base.OnDestroy();
 
-            Mod.Settings.onSettingsApplied -= OnModSettingsApplied;
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] OnDestroy");
+
+            // Must safely check mod settings in case they are already destroyed (causes "crash" warning otherwise)
+            if (Mod.Settings != null) {
+                Mod.Settings.onSettingsApplied -= OnModSettingsApplied;
+            }
+
             togglePanelBindingAction.onInteraction -= OnTogglePanelAction;
         }
         #endregion

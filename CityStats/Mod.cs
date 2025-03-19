@@ -89,7 +89,7 @@ namespace CityStats {
 
 
         public void OnDispose() {
-            Log.Info($"[{nameof(Mod)}] Mod disposed");
+            Log.Debug($"[{nameof(Mod)}] OnDispose");
 
             if (Settings != null) {
                 Settings.onSettingsApplied -= OnModSettingsApplied;
