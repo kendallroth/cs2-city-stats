@@ -3,14 +3,20 @@ import { infoview } from "cs2/bindings";
 import { useLocalization } from "cs2/l10n";
 import type { CSSProperties, ReactNode } from "react";
 
-import cemeteryIcon from "assets/icons/cemetery.svg";
-import cremationIcon from "assets/icons/cremation.svg";
-import emergencyIcon from "assets/icons/emergency-control.svg";
-import mailIcon from "assets/icons/mail.svg";
-import parkingIcon from "assets/icons/parking.svg";
-import sewageIcon from "assets/icons/sewage.svg";
-import trashIcon from "assets/icons/trash.svg";
-import unemploymentIcon from "assets/icons/unemployment.svg";
+import electricityIcon from "assets/icons/font-awesome/electricity.svg";
+import garbageIcon from "assets/icons/font-awesome/garbage.svg";
+import healthcareAvailabilityIcon from "assets/icons/font-awesome/healthcare-availability.svg";
+import mailIcon from "assets/icons/font-awesome/mail.svg";
+import parkingIcon from "assets/icons/font-awesome/parking.svg";
+import sewageIcon from "assets/icons/font-awesome/sewage.svg";
+import waterIcon from "assets/icons/font-awesome/water.svg";
+import cemeteryIcon from "assets/icons/material/cemetery-availability.svg";
+import cremationIcon from "assets/icons/material/crematory-availability.svg";
+import crimeRateIcon from "assets/icons/material/crime-rate.svg";
+import fireHazardIcon from "assets/icons/material/fire-hazard.svg";
+import trashIcon from "assets/icons/material/landfill-availability.svg";
+import emergencyIcon from "assets/icons/material/shelter-availability.svg";
+import unemploymentIcon from "assets/icons/material/unemployment.svg";
 import type { StatId } from "types/stats.types";
 import { getPercentFromIndicatorValue, getPercentFromValue } from "utilities/number.util";
 import type { InfoviewID } from "vanilla/types";
@@ -29,6 +35,7 @@ export interface StatsPanelItem {
   colorScale?: StatsPanelColorScaleStep[];
   hidden?: boolean;
   id: StatId;
+  /** NOTE: Most stats uses custom (ie. not in-game) icons due to game's change to 3D icons... */
   icon: string;
   infoviewId: InfoviewID;
   iconStyle?: CSSProperties;
@@ -65,7 +72,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     garbageProcessingMonthly,
     garbageDifferenceMultiplierCap,
   );
-  // NOTE: Until garbage processing has been unlocked
+  // TODO?: Lock/hide until garbage processing has been unlocked
   const garbageProcessingPercent = getPercentFromValue(
     garbageAvailability,
     -1 / garbageDifferenceMultiplierCap,
@@ -146,7 +153,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   let statsPanelItems: StatsPanelItem[] = [
     {
       colorScale: colorScaleDefault,
-      icon: "Media/Game/Icons/Electricity.svg",
+      // icon: "Media/Game/Icons/Electricity.svg",
+      iconStyle: {padding: "12%"},
+      icon: electricityIcon,
       id: "electricityAvailability",
       infoviewId: "Electricity",
       value: electricityAvailabilityPercent,
@@ -154,7 +163,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     },
     {
       colorScale: colorScaleDefault,
-      icon: "Media/Game/Icons/Water.svg",
+      // icon: "Media/Game/Icons/Water.svg",
+      icon: waterIcon,
+      iconStyle: {padding: "12%"},
       id: "waterAvailability",
       infoviewId: "WaterPipes",
       value: waterAvailabilityPercent,
@@ -163,7 +174,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     {
       colorScale: colorScaleDefault,
       icon: sewageIcon,
-      iconStyle: { padding: "10%" },
+      iconStyle: { padding: "12%" },
       id: "sewageAvailability",
       infoviewId: "WaterPipes",
       value: sewageAvailabilityPercent,
@@ -171,7 +182,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     },
     {
       colorScale: colorScaleDefault,
-      icon: "Media/Game/Icons/Garbage.svg",
+      // icon: "Media/Game/Icons/Garbage.svg",
+      icon: garbageIcon,
+      iconStyle: { padding: "12%" },
       id: "garbageAvailability",
       infoviewId: "Garbage",
       value: garbageProcessingPercent,
@@ -193,7 +206,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     },
     {
       colorScale: colorScaleDefault,
-      icon: "Media/Game/Icons/Healthcare.svg",
+      // icon: "Media/Game/Icons/Healthcare.svg",
+      icon: healthcareAvailabilityIcon,
+      iconStyle: {padding: "12%"},
       id: "healthcareAvailability",
       infoviewId: "Healthcare",
       value: healthcareAvailabilityPercent,
@@ -211,7 +226,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     {
       colorScale: colorScaleDefault,
       icon: cremationIcon,
-      iconStyle: { padding: "2%" },
+      iconStyle: { padding: "4%" },
       id: "cremationAvailability",
       infoviewId: "Healthcare",
       value: cremationAvailabilityPercent,
@@ -224,7 +239,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
         { color: iconColors.badLight, start: 0.5 },
         { color: iconColors.bad, start: 0.66 },
       ],
-      icon: "Media/Game/Icons/FireSafety.svg",
+      // icon: "Media/Game/Icons/FireSafety.svg",
+      icon: fireHazardIcon,
+      iconStyle: {padding: "4%"},
       id: "fireHazard",
       infoviewId: "FireRescue",
       value: fireHazardPercent,
@@ -237,7 +254,9 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
         { color: iconColors.badLight, start: 0.4 },
         { color: iconColors.bad, start: 0.66 },
       ],
-      icon: "Media/Game/Icons/Police.svg",
+      // icon: "Media/Game/Icons/Police.svg",
+      icon: crimeRateIcon,
+      iconStyle: {padding: "6%"},
       id: "crimeRate",
       infoviewId: "Police",
       value: crimeRatePercent,
@@ -291,7 +310,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     {
       colorScale: colorScaleDefault,
       icon: mailIcon,
-      iconStyle: { padding: "10%" },
+      iconStyle: { padding: "12%" },
       id: "mailAvailability",
       infoviewId: "PostService",
       value: mailAvailabilityPercent,
@@ -300,7 +319,7 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
     {
       colorScale: colorScaleDefault,
       icon: parkingIcon,
-      iconStyle: { padding: "10%" },
+      iconStyle: { padding: "12%" },
       id: "parkingAvailability",
       infoviewId: "Roads",
       value: parkingAvailabilityPercent,
