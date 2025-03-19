@@ -27,7 +27,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 - Healthcare availability, Cemetery availability, Crematorium availabilty
 - Fire hazard, Crime rate, Shelter availability
 - Elementary / Highschool / College / University availability
-- Unemployment, Mail availability, Parking availability
+- Unemployment, Homelessness, Mail availability, Parking availability
 
 ### Settings (global)
 
@@ -43,7 +43,6 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
   - Show statistic value in tooltip (or under icon)
   - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
   - Improve police statistics (crime rate may not be useful)
-- Calculate homeless percentage
 
 ![screenshot](./CityStats/Properties/Screenshots/screenshot_4_closeup.png)
 
@@ -79,15 +78,16 @@ Localization is a work-in-progress, but is accepting contributions at [CrowdIn](
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.9" />
+	<ModVersion Value="0.10" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.2.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Updated for game version 1.2
-- Add Chinese (Simplified)
+- Update for game version `1.2.5f1`
+- Add homelessness stat
+- Overhaul icons (use custom icons vs 3D in-game icons)
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

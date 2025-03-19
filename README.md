@@ -20,7 +20,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 - Healthcare availability, Cemetery availability, Crematorium availabilty
 - Fire hazard, Crime rate, Shelter availability
 - Elementary / Highschool / College / University availability
-- Unemployment, Mail availability, Parking availability
+- Unemployment, Homelessness, Mail availability, Parking availability
 
 ### Settings (global)
 
@@ -36,8 +36,6 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
   - Show statistic value in tooltip (or under icon)
   - Disable icons until "unlocked" (ie. health/death care, garbage, etc)
   - Improve police statistics (crime rate may not be useful)
-- Calculate homeless percentage
-  - Inspiration: [ByeByeHomeless Mod](https://github.com/wxdao/CS2-ByeByeHomelessMod/blob/main/ByeByeHomelessMod/Mod.cs)
 
 ![screenshot](./CityStats/Properties/Screenshots/screenshot_4_closeup.png)
 
