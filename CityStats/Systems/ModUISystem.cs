@@ -39,6 +39,7 @@ namespace CityStats.Systems {
         private ValueBinding<string> hiddenStatsBinding;
         private ValueBinding<Vector2> panelPositionBinding;
         private ValueBinding<bool> panelVisibleBinding;
+        private ValueBinding<bool> panelShowDividersBinding;
         private ValueBinding<StatsPanelOrientation> panelOrientationBinding;
 
 
@@ -61,6 +62,12 @@ namespace CityStats.Systems {
             AddBinding(panelVisibleBinding);
             panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
             AddBinding(panelPositionBinding);
+            panelShowDividersBinding = new ValueBinding<bool>(
+                Mod.NAME,
+                UIBindingData.VALUE_PANEL_SHOW_SECTION_DIVIDERS,
+                Mod.Settings.PanelShowSectionDividers
+            );
+            AddBinding(panelShowDividersBinding);
             // NOTE: Could also use 'AddUpdateBinding(new GetterValueBinding(...))', except that panel position is also reset on orientation change
             panelOrientationBinding = new ValueBinding<StatsPanelOrientation>(
                 Mod.NAME,
@@ -124,6 +131,7 @@ namespace CityStats.Systems {
             if (settings == null) return;
 
             SetPanelOrientation(settings.PanelOrientation);
+            SetPanelSectionDividerVisibility(settings.PanelShowSectionDividers);
         }
 
 
@@ -154,6 +162,20 @@ namespace CityStats.Systems {
                 ResetPanelPosition();
             }
             panelOrientationBinding.Update(orientation);
+        }
+
+        /// <summary>
+        /// Update stats panel section divider visibility
+        /// </summary>
+        public void SetPanelSectionDividerVisibility(bool visible) {
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting panel section divider visibility");
+
+            var oldVisibility = panelShowDividersBinding.value;
+	    // Reset divider visibility only when visibility changes
+            if (oldVisibility != visible) {
+                ResetPanelPosition();
+            }
+            panelShowDividersBinding.Update(visible);
         }
 
 

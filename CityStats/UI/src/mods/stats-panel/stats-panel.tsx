@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { bindValue, trigger, useValue } from "cs2/api";
 import { Button, Panel, PanelSection, Tooltip } from "cs2/ui";
-import { type CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, Fragment, useEffect, useState } from "react";
 import Draggable, { type DraggableData, type DraggableEvent } from "react-draggable";
 
 import settingsOffIcon from "assets/icons/gear-off.svg";
@@ -29,6 +29,7 @@ const panelOrientation$ = bindValue<StatsPanelOrientation>(
   StatsPanelOrientation.Horizontal,
 );
 const panelPosition$ = bindValue<Vector2>(MOD_NAME, ValueBindings.panelPosition, { x: 0, y: 0 });
+const panelShowDividers$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelShowSectionDividers, false);
 const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, false);
 
 // TODO: Improve performance by only subscribing to stats and rerendering when panel is visible, which
@@ -37,6 +38,7 @@ const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, f
 const StatsPanel = () => {
   const hiddenStatsString = useValue(hiddenStats$);
   const panelOrientation = useValue(panelOrientation$);
+  const panelShowDividers = useValue(panelShowDividers$);
   const panelPosition = useValue(panelPosition$);
   const panelVisible = useValue(panelVisible$);
   const { translate: t } = useLocalization();
@@ -102,7 +104,7 @@ const StatsPanel = () => {
     setEditing(!editing);
   };
 
-  const statsPanelItems = useStatsPanelItems({ hiddenStats: hiddenStats });
+  const statsPanelSections = useStatsPanelItems({ hiddenStats: hiddenStats });
 
   const handleStatClick = (stat: StatsPanelItem) => {
     if (!editing) return;
@@ -172,29 +174,50 @@ const StatsPanel = () => {
           <PanelSection>
             <div className={panelStyles.panelContent} style={panelContentOrientationStyle}>
               <div className={panelStyles.panelStatsRow} style={panelRowOrientationStyle}>
-                {statsPanelItems.map((item, idx) => {
-                  const iconColor = getIconColor(item.colorScale, item.value);
+                {statsPanelSections.map((section, sectionIdx) => {
+                  const sectionHasVisibleItems = section.items.some((item) => !item.hidden);
+                  const hasDivider = panelShowDividers && sectionIdx < statsPanelSections.length - 1 && (editing ? true : sectionHasVisibleItems);
                   return (
-                    <StatIcon
-                      key={item.tooltip || item.icon || idx}
-                      color={iconColor}
-                      editing={editing}
-                      fill={`${iconColor}${getHexOpacity(0.25)}`}
-                      hidden={item.hidden}
-                      icon={item.icon}
-                      iconStyle={item.iconStyle}
-                      // Some values are exponentially stretched/compressed (low vs high) for display purposes only
-                      progress={item.valueExponent ? getExponentialPercentMapping(item.value, item.valueExponent) : item.value}
-                      size={40}
-                      style={{
-                        marginLeft: inHorizontalMode && idx > 0 ? "4rem" : undefined,
-                        marginTop: !inHorizontalMode && idx > 0 ? "4rem" : undefined,
-                      }}
-                      tooltip={item.tooltip}
-                      onClick={() => handleStatClick(item)}
-                    >
-                      {item.children}
-                    </StatIcon>
+                    <Fragment key={section.label || sectionIdx}>
+                      {section.items.map((item, itemIdx) => {
+                        const iconColor = getIconColor(item.colorScale, item.value);
+                        return (
+                            <StatIcon
+                              key={item.tooltip || item.icon || itemIdx}
+                              color={iconColor}
+                              editing={editing}
+                              fill={`${iconColor}${getHexOpacity(0.25)}`}
+                              hidden={item.hidden}
+                              icon={item.icon}
+                              iconStyle={item.iconStyle}
+                              // Some values are exponentially stretched/compressed (low vs high) for display purposes only
+                              progress={item.valueExponent ? getExponentialPercentMapping(item.value, item.valueExponent) : item.value}
+                              size={40}
+                              style={{
+                                marginLeft: inHorizontalMode && itemIdx > 0 ? "4rem" : undefined,
+                                marginTop: !inHorizontalMode && itemIdx > 0 ? "4rem" : undefined,
+                              }}
+                              tooltip={item.tooltip}
+                              onClick={() => handleStatClick(item)}
+                            >
+                              {item.children}
+                            </StatIcon>
+                        );
+                      })}
+                      {hasDivider && (
+                        <div
+                          className={
+                            clsx([
+                              panelStyles.panelDivider,
+                              inHorizontalMode ? panelStyles.panelDividerVertical : panelStyles.panelDividerHorizontal
+                            ])
+                          }
+                          style={{
+                            margin: inHorizontalMode ? `0 4rem` : `4rem 0`
+                          }}
+                        />
+                      )}
+                    </Fragment>
                   );
                 })}
                 {/* NOTE: It never should be possible to hide all stats! */}

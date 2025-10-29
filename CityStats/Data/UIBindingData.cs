@@ -10,6 +10,7 @@ namespace CityStats.Data {
         public const string VALUE_PANEL_OPEN_ON_LOAD = "panelOpenOnLoad";
         public const string VALUE_PANEL_ORIENTATION = "panelOrientation";
         public const string VALUE_PANEL_POSITION = "panelPosition";
+        public const string VALUE_PANEL_SHOW_SECTION_DIVIDERS = "panelShowSectionDividers";
         public const string VALUE_PANEL_VISIBLE = "panelVisible";
 
         public const string TRIGGER_TOGGLE_PANEL_VISIBLE = "togglePanelVisible";

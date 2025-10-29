@@ -32,11 +32,12 @@ namespace CityStats {
     /// </remarks>
     // TODO: Figure out how to use interpolate C# string (allegedly requires upgrade to C#10)
     [FileLocation("ModsSettings/" + Mod.NAME + "/" + Mod.NAME)]
-    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
-    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
+    [SettingsUIGroupOrder(GROUP_GENERAL, GROUP_DISPLAY, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
+    [SettingsUIShowGroupName(GROUP_GENERAL, GROUP_DISPLAY, GROUP_KEYBINDING, GROUP_LOCALIZATION)]
     public partial class ModSettings : ModSetting {
         public const string TAB_MAIN = "Main";
         public const string GROUP_GENERAL = "General";
+        public const string GROUP_DISPLAY = "Display";
         public const string GROUP_KEYBINDING = "KeyBinding";
         public const string GROUP_LOCALIZATION = "Localization";
 
@@ -53,10 +54,16 @@ namespace CityStats {
         [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool PanelOpenOnLoad { get; set; } = true;
 
-        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
 
-        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
+        /// <summary>
+        /// Whether to show section dividers
+        /// </summary>
+        [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
+        public bool PanelShowSectionDividers { get; set; } = true;
+
+        [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -67,7 +74,7 @@ namespace CityStats {
             }
         }
 
-        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
+        [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
         [SettingsUIDisableByCondition(typeof(ModSettings), nameof(IsNotInGameMode))]
@@ -139,7 +146,7 @@ namespace CityStats {
 
 
         public new string ToString() {
-            return $"PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad}";
+            return $"PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad};PanelShowSectionDividers={PanelShowSectionDividers}";
         }
         #endregion
     }

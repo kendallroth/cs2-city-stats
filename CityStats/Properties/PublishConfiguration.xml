@@ -32,6 +32,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 ### Settings (global)
 
 - Toggle whether panel is open upon load
+- Toggle whether panel section dividers are shown
 - Change panel orientation (resets position!)
 - Keybinding for toggling panel visibility
 
@@ -78,14 +79,15 @@ Localization is a work-in-progress, but is accepting contributions at [CrowdIn](
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.11" />
+	<ModVersion Value="0.12" />
 	<!--Recommended version of the base game to use the mod-->
-	<GameVersion Value="1.2.*" />
+	<GameVersion Value="1.3.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Fix warning log when quitting game
+- Update for game version '1.3.6f1'
+- Add panel section dividers (toggleable)
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />
