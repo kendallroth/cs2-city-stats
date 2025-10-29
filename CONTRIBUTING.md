@@ -19,6 +19,10 @@
 npm run start
 ```
 
+#### Updating CS UI package
+
+The built-in CS UI package can be updated with `npm run update`, and will most notably update the types (bindings, etc).
+
 #### Code Quality
 
 All UI changes should be formatted, linted, and type checked before review!

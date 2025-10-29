@@ -47,6 +47,7 @@ namespace CityStats.Localization {
                 { settings.GetOptionTabLocaleID(ModSettings.TAB_MAIN), "Main" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_KEYBINDING), "Keybindings" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_GENERAL), "General" },
+                { settings.GetOptionGroupLocaleID(ModSettings.GROUP_DISPLAY), "Display" },
                 { settings.GetOptionGroupLocaleID(ModSettings.GROUP_LOCALIZATION), "Localization" },
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelOpenOnLoad)), "Open on load" },
@@ -54,6 +55,9 @@ namespace CityStats.Localization {
 
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelOrientation)), "Panel orientation" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.PanelOrientation)), "Whether panel is oriented vertically or horizontally." },
+
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelShowSectionDividers)), "Show section dividers" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.PanelShowSectionDividers)), "Whether panel section dividers are visible." },
 
                 { settings.GetEnumValueLocaleID(StatsPanelOrientation.Horizontal), "Horizontal" },
                 { settings.GetEnumValueLocaleID(StatsPanelOrientation.Vertical), "Vertical" },
@@ -98,6 +102,7 @@ namespace CityStats.Localization {
                 { "CityStats.Stats[UniversityAvailability]", "University Availability" },
                 { "CityStats.Stats[MailAvailability]", "Mail Availability" },
                 { "CityStats.Stats[ParkingAvailability]", "Parking Availability" },
+                { "CityStats.Stats[Homelessness]", "Homelessness" },
                 { "CityStats.Stats[Unemployment]", "Unemployment" },
 
                 // Panel localization

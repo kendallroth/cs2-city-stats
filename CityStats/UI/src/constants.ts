@@ -9,6 +9,8 @@ export enum ValueBindings {
   panelOrientation = "panelOrientation",
   /** Panel position (stored as offset from orientation's default location) */
   panelPosition = "panelPosition",
+  /** Whether to show panel section dividers */
+  panelShowSectionDividers = "panelShowSectionDividers",
   panelVisible = "panelVisible",
 }
 

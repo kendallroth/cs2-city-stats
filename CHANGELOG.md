@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.12` - 2025-10-29]
+
+- Update for game version `1.3.6f1`
+- Add panel section dividers (toggleable)
+
 ### [`0.11` - 2025-03-19]
 
 - Fix warning log when quitting game

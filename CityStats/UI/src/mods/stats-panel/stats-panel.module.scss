@@ -43,7 +43,24 @@
 
 .panelStatsRow {
   display: flex;
+  align-items: center;
   // NOTE: 'flex-direction' is applied via dynamic styles
+}
+
+.panelDivider {
+  // NOTE: 'height'/'width' are applied via separate clasess (due to vertical/horizontal orientation)
+  background-color: white;
+  opacity: 0.4;
+}
+
+.panelDividerHorizontal {
+  height: 1px;
+  width: 32rem;
+}
+
+.panelDividerVertical {
+  height: 32rem;
+  width: 1px;
 }
 
 // Appended content in stats panel
