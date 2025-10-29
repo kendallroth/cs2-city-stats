@@ -213,8 +213,6 @@ const StatsPanel = () => {
                             ])
                           }
                           style={{
-                            // marginLeft: inHorizontalMode && sectionIdx > 0 ? "4rem" : undefined,
-                            // marginTop: !inHorizontalMode && sectionIdx > 0 ? "4rem" : undefined,
                             margin: inHorizontalMode ? `0 4rem` : `4rem 0`
                           }}
                         />

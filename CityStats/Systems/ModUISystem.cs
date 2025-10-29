@@ -171,7 +171,7 @@ namespace CityStats.Systems {
             Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting panel section divider visibility");
 
             var oldVisibility = panelShowDividersBinding.value;
-            // Reset panel position (only) whenever panel orientation changes
+	    // Reset divider visibility only when visibility changes
             if (oldVisibility != visible) {
                 ResetPanelPosition();
             }
