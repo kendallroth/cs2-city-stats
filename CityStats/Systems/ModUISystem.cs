@@ -37,6 +37,7 @@ namespace CityStats.Systems {
         /// Serialized and deserialized automatically within game save
         /// </remarks>
         private ValueBinding<string> hiddenStatsBinding;
+        private ValueBinding<bool> modButtonVisibleBinding;
         private ValueBinding<Vector2> panelPositionBinding;
         private ValueBinding<bool> panelVisibleBinding;
         private ValueBinding<bool> panelShowDividersBinding;
@@ -58,6 +59,8 @@ namespace CityStats.Systems {
             // Value bindings
             hiddenStatsBinding = new ValueBinding<string>(Mod.NAME, UIBindingData.VALUE_HIDDEN_STATS, defaultHiddenStats);
             AddBinding(hiddenStatsBinding);
+            modButtonVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_MOD_BUTTON_VISIBLE, true);
+            AddBinding(modButtonVisibleBinding);
             panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
             AddBinding(panelVisibleBinding);
             panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
@@ -130,6 +133,7 @@ namespace CityStats.Systems {
             ModSettings settings = baseSettings as ModSettings;
             if (settings == null) return;
 
+            SetModButtonVisibility(settings.ModButtonVisible);
             SetPanelOrientation(settings.PanelOrientation);
             SetPanelSectionDividerVisibility(settings.PanelShowSectionDividers);
         }
@@ -139,6 +143,16 @@ namespace CityStats.Systems {
             if (phase != InputActionPhase.Performed) return;
 
             TogglePanelVisibility();
+        }
+
+
+        /// <summary>
+        /// Update whether mod button is visible
+        /// </summary>
+        public void SetModButtonVisibility(bool visible) {
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting mod button visibility");
+
+            modButtonVisibleBinding.Update(visible);
         }
 
 
@@ -153,6 +167,9 @@ namespace CityStats.Systems {
         /// <summary>
         /// Update stats panel orientation
         /// </summary>
+        /// <remarks>
+        /// Will also reset panel position whenever orientation changes.
+        /// </remarks>
         public void SetPanelOrientation(StatsPanelOrientation orientation) {
             Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting panel orientation");
 
@@ -170,11 +187,6 @@ namespace CityStats.Systems {
         public void SetPanelSectionDividerVisibility(bool visible) {
             Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting panel section divider visibility");
 
-            var oldVisibility = panelShowDividersBinding.value;
-	    // Reset divider visibility only when visibility changes
-            if (oldVisibility != visible) {
-                ResetPanelPosition();
-            }
             panelShowDividersBinding.Update(visible);
         }
 

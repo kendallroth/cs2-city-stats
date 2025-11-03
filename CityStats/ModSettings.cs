@@ -54,6 +54,12 @@ namespace CityStats {
         [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool PanelOpenOnLoad { get; set; } = true;
 
+        /// <summary>
+        /// Whether stats panel toggle button should be displayed
+        /// </summary>
+        [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
+        public bool ModButtonVisible { get; set; } = true;
+
         [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         public StatsPanelOrientation PanelOrientation { get; set; } = StatsPanelOrientation.Horizontal;
 
@@ -146,7 +152,7 @@ namespace CityStats {
 
 
         public new string ToString() {
-            return $"PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad};PanelShowSectionDividers={PanelShowSectionDividers}";
+            return $"ModButtonVisible={ModButtonVisible};PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad};PanelShowSectionDividers={PanelShowSectionDividers}";
         }
         #endregion
     }

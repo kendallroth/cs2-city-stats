@@ -4,6 +4,8 @@ export const MOD_NAME = "CityStats";
 export enum ValueBindings {
   /** List of hidden stats (comma-separated list) */
   hiddenStats = "hiddenStats",
+  /** Whether mod toggle button is visible */
+  modButtonVisible = "modButtonVisible",
   /** Whether panel should open on game load */
   panelOpenOnLoad = "panelOpenOnLoad",
   panelOrientation = "panelOrientation",

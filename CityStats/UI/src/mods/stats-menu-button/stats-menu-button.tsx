@@ -1,8 +1,8 @@
 import { Button } from "cs2/ui";
 
 import menuIcon from "assets/logo.svg";
-import { MOD_NAME, TriggerBindings } from "constants";
-import { trigger } from "cs2/api";
+import { MOD_NAME, TriggerBindings, ValueBindings } from "constants";
+import { bindValue, trigger, useValue } from "cs2/api";
 import { useLocalization } from "cs2/l10n";
 import { useGameInfo } from "hooks/use-game-info";
 import VanillaComponents from "vanilla/component-bindings";
@@ -10,16 +10,19 @@ import menuButtonStyles from "./stats-menu-button.module.scss";
 
 const { DescriptionTooltip } = VanillaComponents.components;
 
+const modButtonVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.modButtonVisible, true);
+
 const StatsMenuButton = () => {
   const gameInfo = useGameInfo();
   const { translate: t } = useLocalization();
+
+  const modButtonVisible = useValue(modButtonVisible$);
 
   const onClick = () => {
     trigger(MOD_NAME, TriggerBindings.togglePanelVisible);
   };
 
-  // Hide menu button in photo mode or editor
-  if (gameInfo.inPhotoMode || gameInfo.inEditor) {
+  if (!modButtonVisible || gameInfo.inPhotoMode || gameInfo.inEditor) {
     return null;
   }
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace CityStats.Data {
     public class UIBindingData {
         public const string VALUE_HIDDEN_STATS = "hiddenStats";
+        public const string VALUE_MOD_BUTTON_VISIBLE = "modButtonVisible";
         public const string VALUE_PANEL_OPEN_ON_LOAD = "panelOpenOnLoad";
         public const string VALUE_PANEL_ORIENTATION = "panelOrientation";
         public const string VALUE_PANEL_POSITION = "panelPosition";

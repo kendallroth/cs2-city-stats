@@ -25,6 +25,8 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 ### Settings (global)
 
 - Toggle whether panel is open upon load
+- Set whether mod panel toggle is visible
+- Set whether panel section dividers are displayed
 - Change panel orientation (resets position!)
 - Keybinding for toggling panel visibility
 

@@ -53,6 +53,9 @@ namespace CityStats.Localization {
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelOpenOnLoad)), "Open on load" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.PanelOpenOnLoad)), "Whether panel should open automatically when loading a save." },
 
+                { settings.GetOptionLabelLocaleID(nameof(ModSettings.ModButtonVisible)), "Show toggle button" },
+                { settings.GetOptionDescLocaleID(nameof(ModSettings.ModButtonVisible)), "Whether panel visibility toggle button should be displayed." },
+
                 { settings.GetOptionLabelLocaleID(nameof(ModSettings.PanelOrientation)), "Panel orientation" },
                 { settings.GetOptionDescLocaleID(nameof(ModSettings.PanelOrientation)), "Whether panel is oriented vertically or horizontally." },
 
