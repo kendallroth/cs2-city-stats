@@ -50,5 +50,8 @@
     "CityStats.Stats[Homelessness]": "Homelessness",
     "CityStats.Stats[Unemployment]": "Unemployment",
     "CityStats.StatsPanel.Actions[ToggleStats]": "Toggle stat visibility",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "hidden"
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "hidden",
+    "CityStats": {
+        "Stats[BikeParkingAvailability]": "Bike Parking Availability"
+    }
 }

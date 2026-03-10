@@ -13,7 +13,7 @@
 - ⚠  Ensure game was started with Steam `--uiDeveloperMode` launch parameter
   - _Allows accessing UI debugger at [http://localhost:9444](http://localhost:9444)_
 - Open `UI` folder in text editor
-- Start development server (`npm run start`)
+- Start development server (`npm run dev`)
 - _Make changes (automatically updates via HMR)_
 
 ```sh

@@ -8,13 +8,13 @@
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "Abrir al cargar",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "Establece si el panel debe abrirse automáticamente al cargar una partida guardada.",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "Mostrar botón de alternar",
-    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "Si el botón de interruptor de visibilidad del panel debe ser mostrado.",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "Establece si el botón de interruptor de visibilidad del panel debe ser mostrado.",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "Orientación del panel",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "Establece si el panel estará orientado de forma vertical u horizontal.",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Horizontal]": "Horizontal",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Vertical]": "Vertical",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "Mostrar separadores de sección",
-    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "Si los separadores de sección del panel son visibles",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "Establece si los separadores de sección del panel son visibles",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "Restablecer posición del panel",
     "Options.WARNING[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "¿Seguro que deseas restablecer la posición del panel?",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "Restablecer posición del panel (por ejemplo, si no se puede acceder, etc.)",
@@ -47,8 +47,11 @@
     "CityStats.Stats[UniversityAvailability]": "Disponibilidad de universidades",
     "CityStats.Stats[MailAvailability]": "Disponibilidad del servicio de correos",
     "CityStats.Stats[ParkingAvailability]": "Disponibilidad de aparcamientos",
-    "CityStats.Stats[Homelessness]": "Personas sin hogar",
+    "CityStats.Stats[Homelessness]": "Sinhogarismo",
     "CityStats.Stats[Unemployment]": "Desempleo",
     "CityStats.StatsPanel.Actions[ToggleStats]": "Alternar visibilidad de estadísticas",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "oculto"
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "oculto",
+    "CityStats": {
+        "Stats[BikeParkingAvailability]": "Disponibilidad de aparcamiento para bicicletas"
+    }
 }

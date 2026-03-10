@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.14` - 2026-03-10]
+
+- Update for game version `1.5.4f1`
+- Display bicycle availability stat
+
 ### [`0.13` - 2025-11-03]
 
 - Allow hiding mod toggle button (via settings)

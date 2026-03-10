@@ -1,15 +1,20 @@
 {
     "Options.SECTION[CityStats.CityStats.Mod]": "城市统计",
     "Options.TAB[CityStats.CityStats.Mod.Main]": "主要",
-    "Options.GROUP[CityStats.CityStats.Mod.KeyBinding]": "快捷键",
+    "Options.GROUP[CityStats.CityStats.Mod.Display]": "显示",
     "Options.GROUP[CityStats.CityStats.Mod.General]": "常规",
+    "Options.GROUP[CityStats.CityStats.Mod.KeyBinding]": "快捷键",
     "Options.GROUP[CityStats.CityStats.Mod.Localization]": "本地化",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "载入时开启",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "决定载入存档时是否自动开启面板",
+    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "显示切换按钮",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "切换面板显示与否的按钮。",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "面板方向",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "决定面板是横向的还是纵向的",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Horizontal]": "横向",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Vertical]": "纵向",
+    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "显示部分分隔符",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "切换分隔符显示与否。",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "重置面板位置",
     "Options.WARNING[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "你确定要重置面板位置吗？",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "重置面板位置（例如在不可点击的时候）",
@@ -42,7 +47,11 @@
     "CityStats.Stats[UniversityAvailability]": "综合性大学可用率",
     "CityStats.Stats[MailAvailability]": "邮件服务可用率",
     "CityStats.Stats[ParkingAvailability]": "停车场可用率",
+    "CityStats.Stats[Homelessness]": "无家可归者",
     "CityStats.Stats[Unemployment]": "失业率",
     "CityStats.StatsPanel.Actions[ToggleStats]": "切换统计可见性",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "隐藏"
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "隐藏",
+    "CityStats": {
+        "Stats[BikeParkingAvailability]": "自行车停车位"
+    }
 }
