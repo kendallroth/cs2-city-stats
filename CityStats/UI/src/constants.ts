@@ -44,6 +44,7 @@ export const statIds = [
   "educationUniversityAvailability",
   "mailAvailability",
   "parkingAvailability",
+  "bikeParkingAvailability",
   "unemployment",
 ] as const;
 

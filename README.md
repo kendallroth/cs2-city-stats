@@ -20,7 +20,7 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 - Healthcare availability, Cemetery availability, Crematorium availabilty
 - Fire hazard, Crime rate, Shelter availability
 - Elementary / Highschool / College / University availability
-- Unemployment, Homelessness, Mail availability, Parking availability
+- Unemployment, Homelessness, Mail availability, Parking (car/bike) availability
 
 ### Settings (global)
 
@@ -48,8 +48,10 @@ The display can be switched between vertical/horizontal modes (in Settings). Add
 Localization is a work-in-progress, but is accepting contributions at [CrowdIn](https://crowdin.com/project/cs2-city-stats)!
 
 - English (native, 100%)
-- Spanish (volunteer, 66%)
-- Korean (volunteer, 100%)
+- Chinese Simplified (volunteer, 86% approved)
+- French (AI, 3% approved)
+- Korean (volunteer, 86% approved)
+- Spanish (volunteer, 57% approved)
 - _more to come?_
 
 ## Credits

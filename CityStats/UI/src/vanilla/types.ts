@@ -12,6 +12,7 @@ export type InfoviewID =
   | "Administration"
   | "Education"
   | "Transport"
+  | "Bicycles"
   | "PostService"
   | "TelecomService"
   | "Leisure"

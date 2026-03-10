@@ -105,6 +105,7 @@ namespace CityStats.Localization {
                 { "CityStats.Stats[UniversityAvailability]", "University Availability" },
                 { "CityStats.Stats[MailAvailability]", "Mail Availability" },
                 { "CityStats.Stats[ParkingAvailability]", "Parking Availability" },
+                { "CityStats.Stats[BikeParkingAvailability]", "Bike Parking Availability" },
                 { "CityStats.Stats[Homelessness]", "Homelessness" },
                 { "CityStats.Stats[Unemployment]", "Unemployment" },
 

@@ -1,15 +1,20 @@
 {
     "Options.SECTION[CityStats.CityStats.Mod]": "도시 현황(City Stats)",
     "Options.TAB[CityStats.CityStats.Mod.Main]": "메인",
-    "Options.GROUP[CityStats.CityStats.Mod.KeyBinding]": "단축키",
+    "Options.GROUP[CityStats.CityStats.Mod.Display]": "Display",
     "Options.GROUP[CityStats.CityStats.Mod.General]": "일반",
+    "Options.GROUP[CityStats.CityStats.Mod.KeyBinding]": "단축키",
     "Options.GROUP[CityStats.CityStats.Mod.Localization]": "언어",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "로딩 후 열기",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOpenOnLoad]": "세이브 파일을 불러 온 후 패널을 자동으로 열지 선택합니다.",
+    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "Show toggle button",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ModButtonVisible]": "Whether panel visibility toggle button should be displayed.",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "패널 방향",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.PanelOrientation]": "패널을 수직이나 수평으로 할지 선택합니다.",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Horizontal]": "수평",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Vertical]": "수직",
+    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "Show section dividers",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "Whether panel section dividers are visible",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "패널 위치 재설정",
     "Options.WARNING[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "정말로 패널 위치를 재설정하겠습니까?",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "패널 위치 재설정 (예 : 접근 불가능한 경우 등등)",
@@ -42,7 +47,11 @@
     "CityStats.Stats[UniversityAvailability]": "대학교 가용성",
     "CityStats.Stats[MailAvailability]": "우편 서비스 가용성",
     "CityStats.Stats[ParkingAvailability]": "주차 시설 가용성",
+    "CityStats.Stats[Homelessness]": "Homelessness",
     "CityStats.Stats[Unemployment]": "실업률",
     "CityStats.StatsPanel.Actions[ToggleStats]": "현황 보기 켜/끄기",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "숨기기"
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "숨기기",
+    "CityStats": {
+        "Stats[BikeParkingAvailability]": "주차공간의 분산"
+    }
 }

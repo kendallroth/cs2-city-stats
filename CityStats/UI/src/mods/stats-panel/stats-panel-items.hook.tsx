@@ -3,6 +3,7 @@ import { infoview } from "cs2/bindings";
 import { useLocalization } from "cs2/l10n";
 import type { CSSProperties, ReactNode } from "react";
 
+import bikeParkingIcon from "assets/icons/font-awesome/bike-parking.svg";
 import electricityIcon from "assets/icons/font-awesome/electricity.svg";
 import garbageIcon from "assets/icons/font-awesome/garbage.svg";
 import healthcareAvailabilityIcon from "assets/icons/font-awesome/healthcare-availability.svg";
@@ -140,6 +141,8 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
   const homelessnessPercent = homelessness > 0 ? homelessness / 100 : 0;
   const parkingAvailability = useValue(infoview.parkingAvailability$);
   const parkingAvailabilityPercent = getPercentFromIndicatorValue(parkingAvailability);
+  const bikeParkingAvailability = useValue(infoview.bikeParkingAvailability$);
+  const bikeParkingAvailabilityPercent = getPercentFromIndicatorValue(bikeParkingAvailability);
   const unemployment = useValue(infoview.unemployment$);
   const unemploymentPercent = unemployment > 0 ? unemployment / 100 : 0;
 
@@ -366,6 +369,15 @@ export const useStatsPanelItems = (options: StatsPanelItemsOptions = {}) => {
           infoviewId: "Roads",
           value: parkingAvailabilityPercent,
           tooltip: getLocalizedTooltip("ParkingAvailability", "Parking Availability"),
+        },
+        {
+          colorScale: colorScaleDefault,
+          icon: bikeParkingIcon,
+          iconStyle: { padding: "12%" },
+          id: "bikeParkingAvailability",
+          infoviewId: "Bicycles",
+          value: bikeParkingAvailabilityPercent,
+          tooltip: getLocalizedTooltip("BikeParkingAvailability", "Bike Parking Availability"),
         },
         {
           // Homelessness percent values should generally be very small!
