@@ -14,7 +14,7 @@
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Horizontal]": "横向",
     "Options.CityStats.CityStats.Mod.STATSPANELORIENTATION[Vertical]": "纵向",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "显示部分分隔符",
-    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "切换分隔符显示与否。",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ShowSectionDividers]": "切换分隔符显示与否",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "重置面板位置",
     "Options.WARNING[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "你确定要重置面板位置吗？",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetPanelPosition]": "重置面板位置（例如在不可点击的时候）",
@@ -47,11 +47,9 @@
     "CityStats.Stats[UniversityAvailability]": "综合性大学可用率",
     "CityStats.Stats[MailAvailability]": "邮件服务可用率",
     "CityStats.Stats[ParkingAvailability]": "停车场可用率",
+    "CityStats.Stats[BikeParkingAvailability]": "自行车停车位",
     "CityStats.Stats[Homelessness]": "无家可归者",
     "CityStats.Stats[Unemployment]": "失业率",
     "CityStats.StatsPanel.Actions[ToggleStats]": "切换统计可见性",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "隐藏",
-    "CityStats": {
-        "Stats[BikeParkingAvailability]": "自行车停车位"
-    }
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "隐藏"
 }

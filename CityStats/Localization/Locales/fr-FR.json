@@ -47,11 +47,9 @@
     "CityStats.Stats[UniversityAvailability]": "Disponibilité des universités",
     "CityStats.Stats[MailAvailability]": "Disponibilité des service postaux",
     "CityStats.Stats[ParkingAvailability]": "Disponibilité du stationnement",
+    "CityStats.Stats[BikeParkingAvailability]": "Disponibilité du stationnement pour vélos",
     "CityStats.Stats[Homelessness]": "Sans-abrisme",
     "CityStats.Stats[Unemployment]": "Chômage",
     "CityStats.StatsPanel.Actions[ToggleStats]": "Activer/désactiver la visibilité des statistiques",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "masqué",
-    "CityStats": {
-        "Stats[BikeParkingAvailability]": "Disponibilité du stationnement pour vélos"
-    }
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "masqué"
 }
