@@ -56,7 +56,7 @@ namespace CityStats {
         public bool PanelOpenOnLoad { get; set; } = true;
 
         /// <summary>
-        /// Whether stats panel toggle button should be displayed
+        /// Whether stats panel toggle button should be displayed (in universal mod menu)
         /// </summary>
         [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool ModButtonVisible { get; set; } = true;
@@ -154,6 +154,12 @@ namespace CityStats {
         /// Reset settings to defaults
         /// </summary>
         public override void SetDefaults() {
+            ModButtonVisible = true;
+            PanelPosition = float2.zero;
+            PanelOpenOnLoad = true;
+            PanelOrientation = StatsPanelOrientation.Horizontal;
+            PanelShowSectionDividers = true;
+
             ResetKeyBindings();
         }
 

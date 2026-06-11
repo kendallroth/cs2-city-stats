@@ -61,6 +61,7 @@ namespace CityStats.Systems {
 
 
         #region Lifecycle
+        // Called when CS2 loads (not when save is loaded!)
         protected override void OnCreate() {
             base.OnCreate();
 
@@ -78,7 +79,7 @@ namespace CityStats.Systems {
             //         Value bindings tied to global settings can be initialized either here or in 'OnGameLoaded' as well.
             hiddenStatsBinding = new ValueBinding<string>(Mod.NAME, UIBindingData.VALUE_HIDDEN_STATS, defaultHiddenStats);
             AddBinding(hiddenStatsBinding);
-            modButtonVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_MOD_BUTTON_VISIBLE, true);
+            modButtonVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_MOD_BUTTON_VISIBLE, Mod.Settings.ModButtonVisible);
             AddBinding(modButtonVisibleBinding);
             panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
             AddBinding(panelVisibleBinding);
@@ -115,6 +116,7 @@ namespace CityStats.Systems {
         }
 
 
+        // Called when game load begins
         protected override void OnGamePreload(Purpose purpose, GameMode mode) {
             base.OnGamePreload(purpose, mode);
 
@@ -122,11 +124,13 @@ namespace CityStats.Systems {
         }
 
 
+        // Called when game load completes
         protected override void OnGameLoaded(Context serializationContext) {
             base.OnGameLoaded(serializationContext);
 
             Mod.Log.Debug($"[{nameof(ModUISystem)}] OnGameLoaded");
 
+            // Ensure panel visibility is applied each save load (not just game startup)
             SetPanelVisibility(Mod.Settings.PanelOpenOnLoad);
         }
 
@@ -153,6 +157,8 @@ namespace CityStats.Systems {
         private void OnModSettingsApplied(Setting baseSettings) {
             ModSettings settings = baseSettings as ModSettings;
             if (settings == null) return;
+
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Mod settings applied");
 
             SetModButtonVisibility(settings.ModButtonVisible);
             SetPanelOrientation(settings.PanelOrientation);
@@ -224,6 +230,8 @@ namespace CityStats.Systems {
         /// Toggle stats panel visibility
         /// </summary>
         public void TogglePanelVisibility() {
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Toggling panel visibility");
+
             panelVisibleBinding.Update(!panelVisibleBinding.value);
         }
 
