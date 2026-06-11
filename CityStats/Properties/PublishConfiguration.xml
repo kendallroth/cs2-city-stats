@@ -81,15 +81,16 @@ Localization is a work-in-progress, but is accepting contributions at [CrowdIn](
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/city-stats-mod.1695474/" />
 	<!--Version of the mod-->
-	<ModVersion Value="0.14" />
+	<ModVersion Value="0.15" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog>
-- Update for game version `1.5.4f1`
-- Display bicycle availability stat
+- Fix translation loading issue
+- Persist panel location in mod settings (global)
+- Move mod toggle button to universal mod menu
 	</ChangeLog>
 	<!--External link (discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab) -->
 	<ExternalLink Type="github" Url="https://github.com/kendallroth/cs2-city-stats" />

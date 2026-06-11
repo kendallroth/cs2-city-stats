@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+### [`0.15` - 2026-06-10]
+
+- Fix translation loading issue
+- Persist panel location in mod settings (global)
+- Move mod toggle button to universal mod menu
+
 ### [`0.14` - 2026-03-10]
 
 - Update for game version `1.5.4f1`
