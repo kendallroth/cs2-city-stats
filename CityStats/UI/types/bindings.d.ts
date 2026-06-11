@@ -446,6 +446,7 @@ declare module "cs2/bindings" {
   	"Notification Panel": Action;
   	"Chirper Panel": Action;
   	"Lifepath Panel": Action;
+  	"Universal Mod Panel": Action;
   	"Event Journal Panel": Action;
   	"Radio Panel": Action;
   	"Photo Mode Panel": Action;
@@ -970,7 +971,8 @@ declare module "cs2/bindings" {
   	PhotoMode = "Game.UI.InGame.PhotoModePanel",
   	CinematicCamera = "Game.UI.InGame.CinematicCameraPanel",
   	Notifications = "Game.UI.InGame.NotificationsPanel",
-  	Glossary = "Game.UI.InGame.GlossaryPanel"
+  	Glossary = "Game.UI.InGame.GlossaryPanel",
+  	ModsMenu = "Game.UI.InGame.ModsMenuPanel"
   }
   export interface GamePanels {
   	[GamePanelType.InfoviewMenu]: InfoviewMenu;
@@ -986,6 +988,7 @@ declare module "cs2/bindings" {
   	[GamePanelType.PhotoMode]: PhotoModePanel;
   	[GamePanelType.Notifications]: NotificationsPanel;
   	[GamePanelType.Glossary]: GlossaryPanel;
+  	[GamePanelType.ModsMenu]: ModsMenuPanel;
   }
   export type GamePanel = TypeFromMap<GamePanels>;
   function toggleInfoviewMenu(): void;
@@ -1048,6 +1051,8 @@ declare module "cs2/bindings" {
   export interface CinematicCameraPanel {
   }
   export interface NotificationsPanel {
+  }
+  export interface ModsMenuPanel {
   }
   export interface GlossaryPanel extends TabbedGamePanel {
   }
@@ -1563,6 +1568,8 @@ declare module "cs2/bindings" {
   	glossaryPanelEconomyTab: string;
   	glossaryPanelInterfaceTab: string;
   	glossaryPanelServicesTab: string;
+  	universalModPanel: string;
+  	universalModPanelButton: string;
   }
   export interface Infoview {
   	entity: Entity;
@@ -1603,12 +1610,21 @@ declare module "cs2/bindings" {
   	color: Color;
   	label: LocElement;
   }
+  export interface ZoneInfo {
+  	category: string;
+  	color: Color;
+  	edge: Color;
+  	fillAlpha: number;
+  	edgeAlpha: number;
+  }
   const infoviews$: ValueBinding<Infoview[]>;
   const activeInfoview$: ValueBinding<ActiveInfoview | null>;
+  const zoneInfos$: ValueBinding<ZoneInfo[]>;
   function closeInfoviewMenu(): void;
   function setActiveInfoview(entity: Entity): void;
   function clearActiveInfoview(): void;
   function setInfomodeActive(entity: Entity, active: boolean, priority: number): void;
+  function setZoneAlpha(category: string, fillAlpha: number, edgeAlpha: number): void;
   const electricityConsumption$: ValueBinding<number>;
   const electricityProduction$: ValueBinding<number>;
   const electricityTransmitted$: ValueBinding<number>;
@@ -2353,7 +2369,7 @@ declare module "cs2/bindings" {
   	modContentPrefab: string;
   }
   export interface PdxModsSection extends SelectedInfoSectionBase {
-  	modId: number | null;
+  	modId: string | null;
   }
   export interface DeveloperSection extends SelectedInfoSectionBase {
   	subsections: DeveloperSubsection[];
@@ -2415,6 +2431,9 @@ declare module "cs2/bindings" {
   export interface VisualCustomizeSection extends SelectedInfoSectionBase {
   	meshColor: ColorSet;
   	colorSets: ColorSet[];
+  	hasMeshColors: boolean;
+  	canBeHistorical: boolean;
+  	isHistorical: boolean;
   }
   export interface ScheduleSection extends SelectedInfoSectionBase {
   	schedule: number;
@@ -3181,6 +3200,9 @@ declare module "cs2/bindings" {
   const vegetationAges$: ValueBinding<Theme$1[]>;
   const assetPacks$: ValueBinding<AssetPack[]>;
   const selectedAssetPacks$: ValueBinding<Entity[]>;
+  const vanillaSelected$: ValueBinding<boolean>;
+  const modsSelected$: ValueBinding<boolean>;
+  const hasModAssets$: ValueBinding<boolean>;
   const selectedAssetMenu$: ValueBinding<Entity>;
   const selectedAssetCategory$: ValueBinding<Entity>;
   const selectedAsset$: ValueBinding<Entity>;
@@ -3189,6 +3211,8 @@ declare module "cs2/bindings" {
   const setAgeMask: (ageMask: number) => void;
   const setSelectedThemes: (themes: Entity[]) => void;
   const setSelectedAssetPacks: (packs: Entity[]) => void;
+  const setVanillaSelected: (vanillaSelected: boolean) => void;
+  const setModsSelected: (modsSelected: boolean) => void;
   const selectAssetMenu: (assetMenu: Entity) => void;
   const selectAssetCategory: (assetCategory: Entity) => void;
   const selectAsset: (asset: Entity, updateTool: boolean) => void;
@@ -3496,13 +3520,13 @@ declare module "cs2/bindings" {
   	export { EventData, EventInfo, eventMap$, events$, onCloseJournal, onOpenJournal };
   }
   export namespace game {
-  	export { ChirperPanel, CinematicCameraPanel, CityInfoPanel, CityInfoPanelTab, EconomyPanel, EconomyPanelTab, GamePanel, GamePanelType, GamePanels, GameScreen, GlossaryPanel, GlossaryPanelTab, InfoviewMenu, JournalPanel, LayoutPosition, LifePathPanel, NotificationsPanel, PhotoModePanel, ProgressionPanel, ProgressionPanelTab, RadioPanel, StatisticsPanel, TabbedGamePanel, TransportationOverviewPanel, TransportationOverviewPanelTab, activeGamePanel$, activeGameScreen$, activePanelPosition$, blockingPanelActive$, canUseSaveSystem$, closeActiveGamePanel, closeGamePanel, setActiveGameScreen, setGlossaryCategory, showCityInfoPanel, showEconomyPanel, showFreeCameraScreen, showGamePanel, showGlossaryPanel, showLifePathDetail, showLifePathList, showMainScreen, showPauseScreen, showProgressionPanel, showTransportationOverviewPanel, toggleGamePanel, toggleInfoviewMenu, toggleLifePathPanel, toggleRadioPanel, toggleTransportationOverviewPanel };
+  	export { ChirperPanel, CinematicCameraPanel, CityInfoPanel, CityInfoPanelTab, EconomyPanel, EconomyPanelTab, GamePanel, GamePanelType, GamePanels, GameScreen, GlossaryPanel, GlossaryPanelTab, InfoviewMenu, JournalPanel, LayoutPosition, LifePathPanel, ModsMenuPanel, NotificationsPanel, PhotoModePanel, ProgressionPanel, ProgressionPanelTab, RadioPanel, StatisticsPanel, TabbedGamePanel, TransportationOverviewPanel, TransportationOverviewPanelTab, activeGamePanel$, activeGameScreen$, activePanelPosition$, blockingPanelActive$, canUseSaveSystem$, closeActiveGamePanel, closeGamePanel, setActiveGameScreen, setGlossaryCategory, showCityInfoPanel, showEconomyPanel, showFreeCameraScreen, showGamePanel, showGlossaryPanel, showLifePathDetail, showLifePathList, showMainScreen, showPauseScreen, showProgressionPanel, showTransportationOverviewPanel, toggleGamePanel, toggleInfoviewMenu, toggleLifePathPanel, toggleRadioPanel, toggleTransportationOverviewPanel };
   }
   export namespace infoview {
-  	export { CargoSummary, ChartData, IndicatorValue, PassengerSummary, TransportSummaries, activeInfoview$, ageData$, arrestedCriminals$, attractiveness$, availableFertility$, availableFish$, availableForest$, availableOil$, availableOre$, averageAirPollution$, averageCrimeProbability$, averageFees$, averageFireHazard$, averageGroundPollution$, averageHealth$, averageHotelPrice$, averageIncome$, averageLandValue$, averageNoisePollution$, averageRent$, averageResourceCost$, averageUpkeep$, averageWaterPollution$, averageWealth$, batteryCharge$, bikeParking$, bikeParkingAvailability$, birthRate$, cemeteryAvailability$, cemeteryCapacity$, cemeteryUse$, clearActiveInfoview, closeInfoviewMenu, collectedMail$, collegeAvailability$, collegeCapacity$, collegeEligible$, collegeStudents$, commercialLevels$, commercialProfitability$, crimePerMonth$, crimeProbability$, crimeProducers$, criminals$, deathRate$, deathcareAvailability$, deliveredMail$, educationData$, electricityAvailability$, electricityConsumption$, electricityExport$, electricityImport$, electricityProduction$, electricityTrade$, electricityTransmission$, electricityTransmitted$, elementaryAvailability$, elementaryCapacity$, elementaryEligible$, elementaryStudents$, employed$, employeesData$, escapedRate$, fertilityExtractionRate$, fertilityRenewalRate$, fishExtractionRate$, fishRenewalRate$, forestExtractionRate$, forestRenewalRate$, garbageProcessingRate$, garbageProductionRate$, healthcareAvailability$, highSchoolAvailability$, highSchoolCapacity$, highSchoolEligible$, highSchoolStudents$, homeless$, homelessness$, inJail$, inPrison$, industrialLevels$, industrialProfitability$, infoviews$, jailAvailability$, jailCapacity$, jobs$, landfillAvailability$, landfillCapacity$, mailProductionRate$, movedAway$, movedIn$, officeLevels$, officeProfitability$, oilExtractionRate$, oreExtractionRate$, parkedCars$, parkingAvailability$, parkingCapacity$, parkingIncome$, patientCapacity$, patientCount$, population$, postServiceAvailability$, prisonAvailability$, prisonCapacity$, prisoners$, processingAvailability$, processingRate$, residentialLevels$, setActiveInfoview, setInfomodeActive, sewageAvailability$, sewageCapacity$, sewageConsumption$, sewageExport$, shelterAvailability$, shelterCapacity$, shelteredCount$, sickCount$, storedGarbage$, topExportColors$, topExportData$, topExportNames$, topImportColors$, topImportData$, topImportNames$, tourismRate$, trafficFlow$, transportSummaries$, unemployment$, universityAvailability$, universityCapacity$, universityEligible$, universityStudents$, useInfoviewToggle, waterAvailability$, waterCapacity$, waterConsumption$, waterExport$, waterImport$, waterTrade$, weatherEffect$, workers$, workplacesData$, worksplaces$ };
+  	export { CargoSummary, ChartData, IndicatorValue, PassengerSummary, TransportSummaries, activeInfoview$, ageData$, arrestedCriminals$, attractiveness$, availableFertility$, availableFish$, availableForest$, availableOil$, availableOre$, averageAirPollution$, averageCrimeProbability$, averageFees$, averageFireHazard$, averageGroundPollution$, averageHealth$, averageHotelPrice$, averageIncome$, averageLandValue$, averageNoisePollution$, averageRent$, averageResourceCost$, averageUpkeep$, averageWaterPollution$, averageWealth$, batteryCharge$, bikeParking$, bikeParkingAvailability$, birthRate$, cemeteryAvailability$, cemeteryCapacity$, cemeteryUse$, clearActiveInfoview, closeInfoviewMenu, collectedMail$, collegeAvailability$, collegeCapacity$, collegeEligible$, collegeStudents$, commercialLevels$, commercialProfitability$, crimePerMonth$, crimeProbability$, crimeProducers$, criminals$, deathRate$, deathcareAvailability$, deliveredMail$, educationData$, electricityAvailability$, electricityConsumption$, electricityExport$, electricityImport$, electricityProduction$, electricityTrade$, electricityTransmission$, electricityTransmitted$, elementaryAvailability$, elementaryCapacity$, elementaryEligible$, elementaryStudents$, employed$, employeesData$, escapedRate$, fertilityExtractionRate$, fertilityRenewalRate$, fishExtractionRate$, fishRenewalRate$, forestExtractionRate$, forestRenewalRate$, garbageProcessingRate$, garbageProductionRate$, healthcareAvailability$, highSchoolAvailability$, highSchoolCapacity$, highSchoolEligible$, highSchoolStudents$, homeless$, homelessness$, inJail$, inPrison$, industrialLevels$, industrialProfitability$, infoviews$, jailAvailability$, jailCapacity$, jobs$, landfillAvailability$, landfillCapacity$, mailProductionRate$, movedAway$, movedIn$, officeLevels$, officeProfitability$, oilExtractionRate$, oreExtractionRate$, parkedCars$, parkingAvailability$, parkingCapacity$, parkingIncome$, patientCapacity$, patientCount$, population$, postServiceAvailability$, prisonAvailability$, prisonCapacity$, prisoners$, processingAvailability$, processingRate$, residentialLevels$, setActiveInfoview, setInfomodeActive, setZoneAlpha, sewageAvailability$, sewageCapacity$, sewageConsumption$, sewageExport$, shelterAvailability$, shelterCapacity$, shelteredCount$, sickCount$, storedGarbage$, topExportColors$, topExportData$, topExportNames$, topImportColors$, topImportData$, topImportNames$, tourismRate$, trafficFlow$, transportSummaries$, unemployment$, universityAvailability$, universityCapacity$, universityEligible$, universityStudents$, useInfoviewToggle, waterAvailability$, waterCapacity$, waterConsumption$, waterExport$, waterImport$, waterTrade$, weatherEffect$, workers$, workplacesData$, worksplaces$, zoneInfos$ };
   }
   export namespace infoviewTypes {
-  	export { ActiveInfoview, Infomode, InfomodeColorLegend, InfomodeGradientLegend, Infoview };
+  	export { ActiveInfoview, Infomode, InfomodeColorLegend, InfomodeGradientLegend, Infoview, ZoneInfo };
   }
   export namespace life {
   	export { FollowedCitizen, LifePathDetails, LifePathEvent, LifePathItem, LifePathItemType, LifePathItems, followCitizen, followedCitizens$, lifePathDetails$, lifePathItems$, maxFollowedCitizens$, unfollowCitizen };
@@ -3559,7 +3583,7 @@ declare module "cs2/bindings" {
   	export { AREA_TOOL, BULLDOZE_TOOL, Brush, DEFAULT_TOOL, NET_TOOL, OBJECT_TOOL, ROUTE_TOOL, SELECTION_TOOL, TERRAIN_TOOL, Tool, ToolMode, UPGRADE_TOOL, WATER_TOOL, ZONE_TOOL, activeTool$, allSnapMask$, allowBrush$, availableSnapMask$, brushAngle$, brushHeight$, brushHeightMax$, brushHeightMin$, brushSize$, brushSizeMax$, brushSizeMin$, brushStrength$, brushes$, bulldozeConfirmationRequested$, changeElevation, color$, colorSupported$, confirmBulldoze, distance$, distanceScale$, elevation$, elevationDown, elevationDownDisabled$, elevationRange$, elevationScroll, elevationStep$, elevationUp, elevationUpDisabled$, isEditor$, parallelMode$, parallelModeSupported$, parallelOffset$, replacingTrees$, selectBrush, selectTool, selectToolMode, selectedBrush$, selectedSnapMask$, setBrushAngle, setBrushHeight, setBrushSize, setBrushStrength, setColor, setDistance, setElevationStep, setParallelOffset, setSelectedSnapMask, setShowWaterSourceNames, setSimulateBackdropWater, setUndergroundMode, setWaterSimSpeed, showWaterSourceNames$, simulateBackdropWater$, snapOptionNames$, toggleParallelMode, undergroundMode$, undergroundModeSupported$, waterSimSpeed$ };
   }
   export namespace toolbar$1 {
-  	export { AgeMask, Asset$1 as Asset, AssetCategory, AssetPack, CompareAssetsByPriority, Theme$1 as Theme, ToolbarGroup, ToolbarItem, ToolbarItemType, ageMask$, assetCategories$, assetPacks$, assets$, clearAssetSelection, decorationMode$, selectAsset, selectAssetCategory, selectAssetMenu, selectedAsset$, selectedAssetCategory$, selectedAssetMenu$, selectedAssetPacks$, selectedThemes$, setAgeMask, setDecorationMode, setSelectedAssetPacks, setSelectedThemes, themes$$1 as themes$, toggleToolOptions, toolbarGroups$, vegetationAges$ };
+  	export { AgeMask, Asset$1 as Asset, AssetCategory, AssetPack, CompareAssetsByPriority, Theme$1 as Theme, ToolbarGroup, ToolbarItem, ToolbarItemType, ageMask$, assetCategories$, assetPacks$, assets$, clearAssetSelection, decorationMode$, hasModAssets$, modsSelected$, selectAsset, selectAssetCategory, selectAssetMenu, selectedAsset$, selectedAssetCategory$, selectedAssetMenu$, selectedAssetPacks$, selectedThemes$, setAgeMask, setDecorationMode, setModsSelected, setSelectedAssetPacks, setSelectedThemes, setVanillaSelected, themes$$1 as themes$, toggleToolOptions, toolbarGroups$, vanillaSelected$, vegetationAges$ };
   }
   export namespace toolbarBottom {
   	export { cityName$, money$, moneyDelta$, moneyTrendThresholds$, population$$1 as population$, populationDelta$, populationTrendThresholds$, setCityName, unlimitedMoney$ };
