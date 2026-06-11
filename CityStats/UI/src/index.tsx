@@ -13,7 +13,7 @@ const register: ModRegistrar = (moduleRegistry) => {
   // NOTE: Mods are remounted at several times, but not always unmounted, which must be considered
   //         if using non-C# state or establishing other connections!
   //       Remount times: returning from pause menu
-  moduleRegistry.append("GameTopLeft", () => <StatsMenuButton />);
+  moduleRegistry.append("UniversalModMenu", () => <StatsMenuButton />);
   moduleRegistry.append("Game", () => <StatsPanel />);
 };
 

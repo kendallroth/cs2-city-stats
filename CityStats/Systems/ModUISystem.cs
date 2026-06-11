@@ -8,10 +8,26 @@ using Game.Settings;
 using Game.UI;
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace CityStats.Systems {
+    /// <summary>
+    /// Whether to skip/update global settings when related values are changed
+    /// </summary>
+    enum GlobalSettingsUpdate {
+        /// <summary>
+        /// Skip updates to global settings (ie. to avoid infinite loop)
+        /// </summary>
+        SKIP,
+        /// <summary>
+        /// Update global settings
+        /// </summary>
+        UPDATE
+    }
+
+
     internal partial class ModUISystem : UISystemBase, IDefaultSerializable, ISerializable {
         private const string defaultHiddenStats = "";
         private const int SAVE_VERSION = 0;
@@ -38,13 +54,14 @@ namespace CityStats.Systems {
         /// </remarks>
         private ValueBinding<string> hiddenStatsBinding;
         private ValueBinding<bool> modButtonVisibleBinding;
-        private ValueBinding<Vector2> panelPositionBinding;
+        private ValueBinding<float2> panelPositionBinding;
         private ValueBinding<bool> panelVisibleBinding;
         private ValueBinding<bool> panelShowDividersBinding;
         private ValueBinding<StatsPanelOrientation> panelOrientationBinding;
 
 
         #region Lifecycle
+        // Called when CS2 loads (not when save is loaded!)
         protected override void OnCreate() {
             base.OnCreate();
 
@@ -57,13 +74,16 @@ namespace CityStats.Systems {
             // Action Phases: Performed, Started, Cancelled, Waiting, Disabled
 
             // Value bindings
+            // NOTE: Value bindings tied to save files have default values applied here and should be initialized in 'OnGameLoaded'!
+            //         Currently save-based values are initialized during deserialization, but apparently this is not a good practice?
+            //         Value bindings tied to global settings can be initialized either here or in 'OnGameLoaded' as well.
             hiddenStatsBinding = new ValueBinding<string>(Mod.NAME, UIBindingData.VALUE_HIDDEN_STATS, defaultHiddenStats);
             AddBinding(hiddenStatsBinding);
-            modButtonVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_MOD_BUTTON_VISIBLE, true);
+            modButtonVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_MOD_BUTTON_VISIBLE, Mod.Settings.ModButtonVisible);
             AddBinding(modButtonVisibleBinding);
             panelVisibleBinding = new ValueBinding<bool>(Mod.NAME, UIBindingData.VALUE_PANEL_VISIBLE, false);
             AddBinding(panelVisibleBinding);
-            panelPositionBinding = new ValueBinding<Vector2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Vector2.zero);
+            panelPositionBinding = new ValueBinding<float2>(Mod.NAME, UIBindingData.VALUE_PANEL_POSITION, Mod.Settings.PanelPosition);
             AddBinding(panelPositionBinding);
             panelShowDividersBinding = new ValueBinding<bool>(
                 Mod.NAME,
@@ -87,13 +107,16 @@ namespace CityStats.Systems {
             AddBinding(setHiddenStatsTrigger);
             var setPanelVisibleTrigger = new TriggerBinding<bool>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_VISIBLE, SetPanelVisibility);
             AddBinding(setPanelVisibleTrigger);
-            var setPanelPositionTrigger = new TriggerBinding<Vector2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, SetPanelPosition);
+            var setPanelPositionTrigger = new TriggerBinding<float2>(Mod.NAME, UIBindingData.TRIGGER_SET_PANEL_POSITION, (float2 position) => {
+                SetPanelPosition(position, GlobalSettingsUpdate.UPDATE);
+            });
             AddBinding(setPanelPositionTrigger);
 
             Mod.Settings.onSettingsApplied += OnModSettingsApplied;
         }
 
 
+        // Called when game load begins
         protected override void OnGamePreload(Purpose purpose, GameMode mode) {
             base.OnGamePreload(purpose, mode);
 
@@ -101,11 +124,13 @@ namespace CityStats.Systems {
         }
 
 
+        // Called when game load completes
         protected override void OnGameLoaded(Context serializationContext) {
             base.OnGameLoaded(serializationContext);
 
             Mod.Log.Debug($"[{nameof(ModUISystem)}] OnGameLoaded");
 
+            // Ensure panel visibility is applied each save load (not just game startup)
             SetPanelVisibility(Mod.Settings.PanelOpenOnLoad);
         }
 
@@ -133,9 +158,13 @@ namespace CityStats.Systems {
             ModSettings settings = baseSettings as ModSettings;
             if (settings == null) return;
 
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Mod settings applied");
+
             SetModButtonVisibility(settings.ModButtonVisible);
             SetPanelOrientation(settings.PanelOrientation);
             SetPanelSectionDividerVisibility(settings.PanelShowSectionDividers);
+            // Skip updating global settings (when reacting to global changes) to avoid infinite loop!
+            SetPanelPosition(settings.PanelPosition, GlobalSettingsUpdate.SKIP);
         }
 
 
@@ -157,10 +186,16 @@ namespace CityStats.Systems {
 
 
         /// <summary>
-        /// Update stats panel position
+        /// Update stats panel position (local binding, global setting*)
         /// </summary>
-        private void SetPanelPosition(Vector2 position) {
+        private void SetPanelPosition(float2 position, GlobalSettingsUpdate globalUpdate) {
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Setting mod panel position");
+
             panelPositionBinding.Update(position);
+
+            if (globalUpdate != GlobalSettingsUpdate.SKIP) {
+                Mod.Settings.PanelPosition = position;
+            }
         }
 
 
@@ -195,6 +230,8 @@ namespace CityStats.Systems {
         /// Toggle stats panel visibility
         /// </summary>
         public void TogglePanelVisibility() {
+            Mod.Log.Debug($"[{nameof(ModUISystem)}] Toggling panel visibility");
+
             panelVisibleBinding.Update(!panelVisibleBinding.value);
         }
 
@@ -232,7 +269,7 @@ namespace CityStats.Systems {
         /// Reset stats panel position (if inaccessible, etc)
         /// </summary>
         public void ResetPanelPosition() {
-            panelPositionBinding.Update(Vector2.zero);
+            SetPanelPosition(float2.zero, GlobalSettingsUpdate.UPDATE);
             Mod.Log.Info($"[{nameof(ModUISystem)}] Reset panel position");
         }
         #endregion

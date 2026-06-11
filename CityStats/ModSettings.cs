@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine.Device;
 
 // TODO: Decide between referencing settings actions by constant variable OR by 'nameof' (might mainly matter for localization?)
@@ -55,7 +56,7 @@ namespace CityStats {
         public bool PanelOpenOnLoad { get; set; } = true;
 
         /// <summary>
-        /// Whether stats panel toggle button should be displayed
+        /// Whether stats panel toggle button should be displayed (in universal mod menu)
         /// </summary>
         [SettingsUISection(TAB_MAIN, GROUP_GENERAL)]
         public bool ModButtonVisible { get; set; } = true;
@@ -68,6 +69,12 @@ namespace CityStats {
         /// </summary>
         [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         public bool PanelShowSectionDividers { get; set; } = true;
+
+        /// <summary>
+        /// Panel position (stored across saves)
+        /// </summary>
+        [SettingsUIHidden]
+        public float2 PanelPosition { get; set; } = float2.zero;
 
         [SettingsUISection(TAB_MAIN, GROUP_DISPLAY)]
         [SettingsUIButton]
@@ -147,12 +154,18 @@ namespace CityStats {
         /// Reset settings to defaults
         /// </summary>
         public override void SetDefaults() {
+            ModButtonVisible = true;
+            PanelPosition = float2.zero;
+            PanelOpenOnLoad = true;
+            PanelOrientation = StatsPanelOrientation.Horizontal;
+            PanelShowSectionDividers = true;
+
             ResetKeyBindings();
         }
 
 
         public new string ToString() {
-            return $"ModButtonVisible={ModButtonVisible};PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad};PanelShowSectionDividers={PanelShowSectionDividers}";
+            return $"ModButtonVisible={ModButtonVisible};PanelOrientation={PanelOrientation};PanelOpenOnLoad={PanelOpenOnLoad};PanelPosition={PanelPosition};PanelShowSectionDividers={PanelShowSectionDividers}";
         }
         #endregion
     }

@@ -43,6 +43,7 @@ namespace CityStats.Localization {
                     locales.Add(localeKey, GetLocaleDictionary(resourceName));
                 } catch (Exception e) {
                     Mod.Log.Error($"[{nameof(LocaleLoader)}] Failed to load locale from resource ({resourceName}) with error '{e.Message}'");
+                    Mod.Log.Error(e.InnerException.Message);
                 }
             }
         }
@@ -80,7 +81,9 @@ namespace CityStats.Localization {
             }
 
             using var reader = new StreamReader(resourceStream, Encoding.UTF8);
-            JSON.MakeInto<Dictionary<string, string>>(JSON.Load(reader.ReadToEnd()), out var dictionary);
+            // NOTE: Nested JSON objects will result in an error (cannot convert JSON to string)!
+            string localeContent = reader.ReadToEnd();
+            JSON.MakeInto<Dictionary<string, string>>(JSON.Load(localeContent), out var dictionary);
 
             return dictionary;
         }

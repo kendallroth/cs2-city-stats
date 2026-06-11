@@ -23,8 +23,8 @@
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetHiddenStats]": "Elimina las estadísticas ocultas y muestra todas las estadísticas de nuevo.",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.TogglePanelBinding]": "Alternar panel",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.TogglePanelBinding]": "Asignación de tecla para cambiar la pantalla del panel",
-    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetBindings]": "Restablecer las teclas asignadas",
-    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetBindings]": "Restablecer todas las teclas asignadas del mod",
+    "Options.OPTION[CityStats.CityStats.Mod.ModSettings.ResetBindings]": "Restablecer asignaciones",
+    "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.ResetBindings]": "Restablecer todas las asignaciones de teclas del mod",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.LocalizationBetaAlert]": "La traducción de algunos idiomas puede estar todavía en estado beta, ¡por favor considere contribuir en Crowdin!",
     "Options.OPTION[CityStats.CityStats.Mod.ModSettings.OpenCrowdIn]": "Mostrar en Crowdin",
     "Options.OPTION_DESCRIPTION[CityStats.CityStats.Mod.ModSettings.OpenCrowdIn]": "Abra el proyecto en Crowdin para contribuir con las traducciones.",
@@ -47,11 +47,9 @@
     "CityStats.Stats[UniversityAvailability]": "Disponibilidad de universidades",
     "CityStats.Stats[MailAvailability]": "Disponibilidad del servicio de correos",
     "CityStats.Stats[ParkingAvailability]": "Disponibilidad de aparcamientos",
+    "CityStats.Stats[BikeParkingAvailability]": "Disponibilidad de aparcamiento para bicicletas",
     "CityStats.Stats[Homelessness]": "Sinhogarismo",
     "CityStats.Stats[Unemployment]": "Desempleo",
     "CityStats.StatsPanel.Actions[ToggleStats]": "Alternar visibilidad de estadísticas",
-    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "oculto",
-    "CityStats": {
-        "Stats[BikeParkingAvailability]": "Disponibilidad de aparcamiento para bicicletas"
-    }
+    "CityStats.StatsPanel.StatTooltip.Modifier[Hidden]": "oculto"
 }
