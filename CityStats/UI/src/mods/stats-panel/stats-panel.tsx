@@ -7,13 +7,13 @@ import Draggable, { type DraggableData, type DraggableEvent } from "react-dragga
 import settingsOffIcon from "assets/icons/gear-off.svg";
 import settingsIcon from "assets/icons/gear.svg";
 import StatIcon from "components/stat-icon/stat-icon";
-import { MOD_NAME, TriggerBindings, ValueBindings, panelEditingColor, statIds } from "constants";
+import { MOD_NAME, panelEditingColor, statIds, TriggerBindings, ValueBindings } from "constants";
 import { useLocalization } from "cs2/l10n";
 import { useGameInfo } from "hooks/use-game-info";
 import { logger } from "logger";
 import { StatsPanelOrientation } from "types/settings.types";
 import type { StatId } from "types/stats.types";
-import type { Vector2 } from "types/unity.types";
+import type { float2, Vector2 } from "types/unity.types";
 import { getHexOpacity } from "utilities/color.util";
 import { getExponentialPercentMapping } from "utilities/number.util";
 import StatsPanelHandle from "./stats-panel-handle";
@@ -28,7 +28,7 @@ const panelOrientation$ = bindValue<StatsPanelOrientation>(
   ValueBindings.panelOrientation,
   StatsPanelOrientation.Horizontal,
 );
-const panelPosition$ = bindValue<Vector2>(MOD_NAME, ValueBindings.panelPosition, { x: 0, y: 0 });
+const panelPosition$ = bindValue<float2>(MOD_NAME, ValueBindings.panelPosition, { x: 0, y: 0 });
 const panelShowDividers$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelShowSectionDividers, false);
 const panelVisible$ = bindValue<boolean>(MOD_NAME, ValueBindings.panelVisible, false);
 
